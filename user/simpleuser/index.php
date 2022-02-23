@@ -22,15 +22,16 @@ while($row = $result2->fetch_assoc()){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet"
         type="text/css">
     <script src="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript">
     </script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -55,7 +56,7 @@ while($row = $result2->fetch_assoc()){
                       });</script>";
                       echo '<script type="text/JavaScript"> setTimeout(function(){
                         window.location="index.php";
-                     }, 3000); </script>';
+                     }, 2000); </script>';
                 }
             }else{
                 echo "<script>  Swal.fire({
@@ -68,7 +69,7 @@ while($row = $result2->fetch_assoc()){
                   });</script>";
                   echo '<script type="text/JavaScript"> setTimeout(function(){
                    window.location="index.php";
-                }, 3000); </script>';
+                }, 2000); </script>';
             }
             break;
         case("Eliminar"):
@@ -85,7 +86,7 @@ while($row = $result2->fetch_assoc()){
                 });</script>";
                 echo '<script type="text/JavaScript"> setTimeout(function(){
                     window.location="index.php";
-                }, 3000); </script>';
+                }, 2000); </script>';
             }
             break;
 
@@ -93,8 +94,44 @@ while($row = $result2->fetch_assoc()){
 
     ?>
 
-    <div class="container section">
-        <ul id="slide-out" class="sidenav">
+    <div class="container">
+        <button class="btn btn-primary mt-5 mb-5" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <i class="fa-solid fa-bars"></i> Menu
+        </button>
+
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+            aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel"><img src="./img/logo-clinica-lircay.png" alt="">
+                </h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div>
+                    Gestion de estacionamientos
+                </div>
+                <div class="dropdown mt-3">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.php"><i class="fa-solid fa-house-user"></i> Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="ingresar.php"><i class="fa-solid fa-circle-plus"></i> Ingresar</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> Perfil
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="../../includes/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- <ul id="slide-out" class="sidenav">
             <li>
                 <div class="user-view">
                     <div class="background">
@@ -110,13 +147,14 @@ while($row = $result2->fetch_assoc()){
             <li><a href="ingresar.php"><i class="fa-solid fa-plus"></i>Ingresar</a></li>
             <li><a href="../../includes/logout.php"><i class="fa-solid fa-right-from-bracket"></i>Cerrar sesion</a></li>
         </ul>
-        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a>
-    </div>
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a> -->
 
-    <div class="container section">
-        <?php
-        echo '<input type="text" disabled class="input-field col s2" value="Espacios ocupados: '  . htmlspecialchars($total) . '" />'."\n";
-        ?>
+        <div class="container">
+
+            <?php
+            echo '<input type="text" disabled class="input w-50 text-center position-relative top-50 start-50 translate-middle" value="Espacios ocupados: '  . htmlspecialchars($total) . ' de 50" />'."\n";
+            ?>
+        </div>
 
         <table class="table table-bordered" id="tabla">
             <thead>
@@ -181,15 +219,11 @@ while($row = $result2->fetch_assoc()){
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="./js/sistema.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems);
-    });
-
-    M.AutoInit();
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
     </script>
 </body>
 
