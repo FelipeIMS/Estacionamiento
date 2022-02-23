@@ -23,9 +23,13 @@ while($row = $result2->fetch_assoc()){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet"type="text/css">
-    <script src="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet"
+        type="text/css">
+    <script src="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript">
+    </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -113,10 +117,10 @@ while($row = $result2->fetch_assoc()){
         <?php
         echo '<input type="text" disabled class="input-field col s2" value="Espacios ocupados: '  . htmlspecialchars($total) . '" />'."\n";
         ?>
-        
+
         <table class="table table-bordered" id="tabla">
             <thead>
-                
+
                 <tr>
                     <!-- <th>ID</th> -->
                     <th>Nombre</th>
@@ -141,7 +145,7 @@ while($row = $result2->fetch_assoc()){
                     <td><?php echo $row["patente"]; ?></td>
                     <td><?php echo $row["inicio"]; ?></td>
                     <td><?php echo $row["termino"]; ?></td>
-                    
+
                     <td>
                         <form method="post">
                             <input type="submit" name="accion" value="Finalizar" class="btn btn-danger">
@@ -165,7 +169,7 @@ while($row = $result2->fetch_assoc()){
                 </tr>
             </tbody>
         </table>
-        
+
 
     </div>
 
@@ -176,7 +180,7 @@ while($row = $result2->fetch_assoc()){
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script src="./js/main.js"></script>
+    <script src="./js/sistema.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
@@ -184,7 +188,7 @@ while($row = $result2->fetch_assoc()){
         var elems = document.querySelectorAll('.sidenav');
         var instances = M.Sidenav.init(elems);
     });
-    
+
     M.AutoInit();
     </script>
 </body>

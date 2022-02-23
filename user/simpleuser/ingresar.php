@@ -30,29 +30,30 @@
 
     <div class="container">
         <div class="row">
-            <form class="col s12">
-                <div class="row">
-                    <div class="input-field col s2">
-                        <input type="text" id="autocomplete-input" class="autocomplete">
-                        <label for="autocomplete-input"><i class="fa-solid fa-message"></i> Autocomplete</label>
-                        <a class="waves-effect waves-light btn"><i class="fa-solid fa-floppy-disk"></i> Guardar</a>
-                    </div>
+            <form action="" method="POST">
+                <div class="auto-widget">
+                    <input class="form-control autocomplete" id="search" type="text" name="product" placeholder="Ingrese patente"  />
                 </div>
             </form>
-         </div>
+        </div>
     </div>
 
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.autocomplete');
-        var instances = M.Autocomplete.init(elems);
-        M.AutoInit();
+    <!-- JQuery -->
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script> -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#search").autocomplete({
+            source: 'search.php',
+            minLength: 0,
+        });
     });
     </script>
-    <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.js"
-        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <!-- <script src="./js/sistema.js"></script> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 

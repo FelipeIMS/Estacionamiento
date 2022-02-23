@@ -1,28 +1,9 @@
-// Función autocompletar
-function autocompletar() {
-	var minimo_letras = 0; // minimo letras visibles en el autocompletar
-	var palabra = $('#pais_id').val();
-	//Contamos el valor del input mediante una condicional
-	if (palabra.length >= minimo_letras) {
-		$.ajax({
-			url: 'mostrar.php',
-			type: 'POST',
-			data: {palabra:palabra},
-			success:function(data){
-				$('#lista_id').show();
-				$('#lista_id').html(data);
-			}
-		});
-	} else {
-		//ocultamos la lista
-		$('#lista_id').hide();
-	}
-}
-
-// Funcion Mostrar valores
-function set_item(opciones) {
-	// Cambiar el valor del formulario input
-	$('#pais_id').val(opciones);
-	// ocultar lista de proposiciones
-	$('#lista_id').hide();
-}
+const tabla = document.querySelector("#tabla");
+const datatable = new DataTable(tabla,{
+    labels: {
+        placeholder: "Buscar...",
+        perPage: "{select} Ingresos por paginas",
+        noRows: "No hay mas ingresos",
+        info: "Mostrando {start} a {end} de {rows} ingresos",
+    }
+});
