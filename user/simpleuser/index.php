@@ -3,7 +3,15 @@ $query = "SELECT ficha.id_ficha as id, cliente.nombre_cliente, cliente.apellido_
 inner join vehiculo on vehiculo.id_vehiculo = ficha.vehiculo
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area;";
+$query2="SELECT sum(espacio_ocupado) as contador from ficha  where termino is null;";
 $result = mysqli_query($conn, $query);
+$result2=mysqli_query($conn, $query2);
+$total=0;
+while($row = $result2->fetch_assoc()){
+	$total = $total + $row['contador']; // Sumar variable $total + resultado de la consulta
+}
+
+
 
 ?>
 <!DOCTYPE html>
@@ -15,11 +23,9 @@ $result = mysqli_query($conn, $query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />z
-    <link href="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet"
-        type="text/css">
-    <script src="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript">
-    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet"type="text/css">
+    <script src="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -97,15 +103,20 @@ $result = mysqli_query($conn, $query);
                     <a href="#"><span class="#000-text email">user@user.com</span></a>
                 </div>
             </li>
-            <li><a href="ingresar.php"><i class="material-icons">add</i>Ingresar</a></li>
+            <li><a href="ingresar.php"><i class="fa-solid fa-plus"></i>Ingresar</a></li>
             <li><a href="../../includes/logout.php"><i class="fa-solid fa-right-from-bracket"></i>Cerrar sesion</a></li>
         </ul>
-        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a>
     </div>
 
     <div class="container section">
+        <?php
+        echo '<input type="text" disabled class="input-field col s2" value="Espacios ocupados: '  . htmlspecialchars($total) . '" />'."\n";
+        ?>
+        
         <table class="table table-bordered" id="tabla">
             <thead>
+                
                 <tr>
                     <!-- <th>ID</th> -->
                     <th>Nombre</th>
@@ -130,6 +141,7 @@ $result = mysqli_query($conn, $query);
                     <td><?php echo $row["patente"]; ?></td>
                     <td><?php echo $row["inicio"]; ?></td>
                     <td><?php echo $row["termino"]; ?></td>
+                    
                     <td>
                         <form method="post">
                             <input type="submit" name="accion" value="Finalizar" class="btn btn-danger">
@@ -153,6 +165,7 @@ $result = mysqli_query($conn, $query);
                 </tr>
             </tbody>
         </table>
+        
 
     </div>
 
@@ -171,6 +184,8 @@ $result = mysqli_query($conn, $query);
         var elems = document.querySelectorAll('.sidenav');
         var instances = M.Sidenav.init(elems);
     });
+    
+    M.AutoInit();
     </script>
 </body>
 
