@@ -30,7 +30,7 @@ header("Content-Disposition: attachment; filename=\"$filename\"");
     <?php
     include("settings.php");
     $sql = "SELECT cliente.nombre_cliente, cliente.apellido_cliente, area.nombre_area, vehiculo.patente, inicio, termino from ficha
-    inner join vehiculo on vehiculo.id_vehiculo = ficha.patente
+    inner join vehiculo on vehiculo.patente = ficha.patente
     inner join cliente on cliente.id_cliente = vehiculo.cliente
     inner join area on area.id_area = cliente.area
     where inicio and termino between '$date1' and '$date2';";
