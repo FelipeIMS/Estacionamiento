@@ -2,8 +2,8 @@
 /* $dbhost = "localhost"; //Host
 $dbuser = "root"; //Database user
 $dbpass = ""; //Database password */
- $dbname = "estacionamiento"; //Database name
- $dbhost = "192.168.2.175:3306"; //Host
+//$dbname = "estacionamiento"; //Database name
+$dbhost = "192.168.2.175:3306"; //Host
 $dbuser = "username"; //Database user
 $dbpass = "password"; //Database password
 $dbname = "estacionamiento"; //Database name
