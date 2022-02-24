@@ -41,7 +41,7 @@
     
             }else{
     
-                $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado)  VALUES(now(),'$search',1)";
+                $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado,user_ficha)  VALUES(now(),'$search',1,'{$_SESSION['id']}')";
                 if (mysqli_query($conn, $sql)) {
                     echo "<script>  Swal.fire({
                         position: 'center',
