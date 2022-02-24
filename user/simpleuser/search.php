@@ -5,7 +5,8 @@
 
 	$query = $conn->query("SELECT *  FROM vehiculo
 	INNER JOIN cliente ON cliente.id_cliente = vehiculo.cliente
-	 WHERE CONCAT(cliente.nombre_cliente,' ',cliente.apellido_cliente) LIKE '%$search%' OR vehiculo.patente LIKE '%$search%' ") or die(mysqli_connect_errno());
+	 WHERE cliente.estado='Activo' AND
+	CONCAT(cliente.nombre_cliente,' ',cliente.apellido_cliente) LIKE '%$search%' OR vehiculo.patente LIKE '%$search%'   ") or die(mysqli_connect_errno());
 	
 	$list = array();
 	$rows = $query->num_rows;

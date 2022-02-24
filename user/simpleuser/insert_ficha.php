@@ -9,9 +9,14 @@
     <?php
     if (!empty($_POST)) {
         $search = mysqli_real_escape_string($conn, $_POST["patente"]);
-        $registro = mysqli_query($conn,"SELECT patente, termino from ficha where termino is null and patente ='$search';");
+        $registro2 = mysqli_query($conn, "SELECT  * FROM ficha f
+        INNER JOIN  vehiculo v ON  v.patente = f.patente
+        INNER JOIN  cliente c ON  c.id_cliente = v.cliente
+        INNER JOIN  estado_cliente e ON e.id_estado = c.id_estado_cliente
+        WHERE f.termino is null and v.patente='$search';");
+        $registro = mysqli_query($conn, "SELECT patente, termino from ficha where termino is null and patente ='$search';");
         $contador = $_POST['contador'];
-        if(!$contador = 50){
+        if (!$contador = 50) {
             echo "<script>  Swal.fire({
                 position: 'center',
                 icon: 'warning',
@@ -20,13 +25,12 @@
                 showConfirmButton: false,
                 timer: 3000
               });</script>";
-               echo '<script type="text/JavaScript"> setTimeout(function(){
+            echo '<script type="text/JavaScript"> setTimeout(function(){
                window.location="registro_ficha.php";
             }, 3000); </script>';
+        } else {
 
-        }else{
-
-            if(mysqli_num_rows($registro)>0){
+            if (mysqli_num_rows($registro2) > 0) {
                 echo "<script>  Swal.fire({
                     position: 'center',
                     icon: 'warning',
@@ -35,13 +39,18 @@
                     showConfirmButton: false,
                     timer: 3000
                   });</script>";
-                   echo '<script type="text/JavaScript"> setTimeout(function(){
+                echo '<script type="text/JavaScript"> setTimeout(function(){
                    window.location="registro_ficha.php";
                 }, 3000); </script>';
-    
-            }else{
-    
+            } else {
+
                 $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado,user_ficha)  VALUES(now(),'$search',1,'{$_SESSION['id']}')";
+                $sql2="UPDATE cliente c
+                JOIN vehiculo v  ON c.id_cliente = v.cliente
+                SET c.estado= 'Inactivo'
+                WHERE v.patente='$search';";
+                mysqli_query($conn,$sql2);
+                echo ($sql2);
                 if (mysqli_query($conn, $sql)) {
                     echo "<script>  Swal.fire({
                         position: 'center',
@@ -51,20 +60,17 @@
                         showConfirmButton: false,
                         timer: 3000
                       });</script>";
-                      echo '<script type="text/JavaScript"> setTimeout(function(){
+                    echo '<script type="text/JavaScript"> setTimeout(function(){
                        window.location="index.php";
                     }, 3000); </script>';
                 }
-                $conn->close(); 
+                $conn->close();
             }
         }
-
-        
-
     }
 
 
-   
+
 
     ?>
 
