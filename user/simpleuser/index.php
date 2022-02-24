@@ -30,7 +30,7 @@ while($row = $result2->fetch_assoc()){
     switch($accion){
         case("Finalizar"):
             if($fin==null){
-                $sql = "UPDATE ficha set termino= now() where id_ficha = '$id'";
+                $sql = "UPDATE ficha set termino= now(), user_ficha_out = '{$_SESSION['id']}' where id_ficha = '$id'";
                 $resultado = $conn -> query($sql);
                 if($resultado){
                     echo "<script>  Swal.fire({
