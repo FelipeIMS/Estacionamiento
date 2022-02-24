@@ -117,6 +117,8 @@ while($row = $result2->fetch_assoc()){
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="../../includes/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesion</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
