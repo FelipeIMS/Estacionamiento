@@ -105,7 +105,7 @@ while($row = $result2->fetch_assoc()){
                             <a class="nav-link active" aria-current="page" href="index.php"><i class="fa-solid fa-house-user"></i> Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="ingresar.php"><i class="fa-solid fa-circle-plus"></i> Ingresar</a>
+                            <a class="nav-link" href="registro_ficha.php"><i class="fa-solid fa-circle-plus"></i> Ingresar</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="reporte.php"><i class="fa-solid fa-file-excel"></i> Generar reporte</a>
