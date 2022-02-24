@@ -20,7 +20,7 @@
             <h5 class="card-title text-center">Iniciar Sesion</h5>
             <form class="form-signin" action="includes/login.php" method="POST">
               <div class="form-label-group">
-                <input name="login" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <input name="login" type="text" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                 <label for="inputEmail">Correo</label>
               </div>
 
