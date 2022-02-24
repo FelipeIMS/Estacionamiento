@@ -8,7 +8,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- <script src="./js/datatable.js"></script> -->
-    <script src="./js/sweatAlert.js"></script>
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+    <script src="./js/sweatAlert.js"></script>
 
 </head>

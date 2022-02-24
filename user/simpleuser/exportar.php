@@ -12,8 +12,8 @@ $date2 = $_POST['date2'];
 if(isset($_POST['enviar'])){
 
 header("Content-Type: application/vnd.ms-excel");
-$timestamp = 'Reporte';
-$filename = 'Export_' . $timestamp . '.xls';
+$timestamp = time();
+$filename = 'Reporte_' . date("d-m-Y",$timestamp) . '.xls';
 header("Content-Disposition: attachment; filename=\"$filename\"");
 
 ?>

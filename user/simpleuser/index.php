@@ -1,6 +1,6 @@
 <?php include 'settings.php'; //include settings 
 $query = "SELECT ficha.id_ficha as id, cliente.nombre_cliente, cliente.apellido_cliente, area.nombre_area, vehiculo.patente, inicio, termino, espacio_ocupado FROM ficha
-inner join vehiculo on vehiculo.id_vehiculo = ficha.vehiculo
+inner join vehiculo on vehiculo.id_vehiculo = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 order by id;";
