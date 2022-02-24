@@ -20,7 +20,7 @@
                 </div>
                 <div class="card-footer text-muted">
                     <button type="submit" class="btn btn-success" name="enviar">Generar</button>
-                    <a href="index.php" class="btn btn-info" name="enviar">Volver</a> 
+                    <a href="index.php" class="btn btn-info">Volver</a> 
                 </div>
             </div>
         </form>
