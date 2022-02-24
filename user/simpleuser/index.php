@@ -1,6 +1,6 @@
 <?php include 'settings.php'; //include settings 
-$query = "SELECT ficha.id_ficha as id, cliente.nombre_cliente, cliente.apellido_cliente, area.nombre_area, vehiculo.patente, inicio, termino, espacio_ocupado FROM ficha
-inner join vehiculo on vehiculo.id_vehiculo = ficha.patente
+$query = "SELECT ficha.id_ficha as id, cliente.nombre_cliente, cliente.apellido_cliente, area.nombre_area, inicio, termino, vehiculo.patente from ficha
+inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 order by id;";
@@ -60,7 +60,7 @@ while($row = $result2->fetch_assoc()){
             }
             break;
         case("Eliminar"):
-            $sql = "DELETE from incidencias WHERE id_incidencias = '$id'";
+            $sql = "DELETE from ficha WHERE id_ficha = '$id'";
             $resultado = $conn -> query($sql);
             if($resultado){
                 echo "<script>  Swal.fire({
@@ -124,12 +124,7 @@ while($row = $result2->fetch_assoc()){
             </div>
         </div>
 
-        <div class="container">
-
-            <?php
-            echo '<input type="text" disabled class="input w-50 text-center position-relative top-50 start-50 translate-middle" value="Espacios ocupados: '  . htmlspecialchars($total) . ' de 50" />'."\n";
-            ?>
-        </div>
+        
 
         <table class="table table-bordered" id="tabla">
             <thead>

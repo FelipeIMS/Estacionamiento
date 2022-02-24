@@ -9,17 +9,58 @@
     <?php
     if (!empty($_POST)) {
         $search = mysqli_real_escape_string($conn, $_POST["patente"]);
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        $sql = " INSERT INTO ficha(inicio,patente)  VALUES(now(),'$search')";
+        $registro = mysqli_query($conn,"SELECT patente, termino from ficha where termino is null and patente ='$search';");
+        $contador = $_POST['contador'];
+        if(!$contador = 50){
+            echo "<script>  Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Error al ingresar ficha',
+                text: 'No hay espacio para estacionar',
+                showConfirmButton: false,
+                timer: 3000
+              });</script>";
+               echo '<script type="text/JavaScript"> setTimeout(function(){
+               window.location="registro_ficha.php";
+            }, 3000); </script>';
 
-        if (mysqli_query($conn, $sql)) {
-            echo "Registro ingresado correctamente";
-        } else {
-            echo "Error: " . $sql . "" . mysqli_error($conn);
+        }else{
+
+            if(mysqli_num_rows($registro)>0){
+                echo "<script>  Swal.fire({
+                    position: 'center',
+                    icon: 'warning',
+                    title: 'Error al ingresar ficha',
+                    text: 'No puede ingresar ficha si no finaliza la anterior',
+                    showConfirmButton: false,
+                    timer: 3000
+                  });</script>";
+                   echo '<script type="text/JavaScript"> setTimeout(function(){
+                   window.location="registro_ficha.php";
+                }, 3000); </script>';
+    
+            }else{
+    
+                $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado)  VALUES(now(),'$search',1)";
+                if (mysqli_query($conn, $sql)) {
+                    echo "<script>  Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Registro ingresado',
+                        text: 'Ficha ingresada correctamente',
+                        showConfirmButton: false,
+                        timer: 3000
+                      });</script>";
+                      echo '<script type="text/JavaScript"> setTimeout(function(){
+                       window.location="index.php";
+                    }, 3000); </script>';
+                }
+                $conn->close(); 
+            }
         }
-        $conn->close();
+
+        
+
     }
 
 
