@@ -2,7 +2,8 @@
 $query = "SELECT ficha.id_ficha as id, cliente.nombre_cliente, cliente.apellido_cliente, area.nombre_area, vehiculo.patente, inicio, termino, espacio_ocupado FROM ficha
 inner join vehiculo on vehiculo.id_vehiculo = ficha.vehiculo
 inner join cliente on cliente.id_cliente = vehiculo.cliente
-inner join area on area.id_area = cliente.area;";
+inner join area on area.id_area = cliente.area
+order by id;";
 $query2="SELECT sum(espacio_ocupado) as contador from ficha  where termino is null;";
 $result = mysqli_query($conn, $query);
 $result2=mysqli_query($conn, $query2);
@@ -16,7 +17,8 @@ while($row = $result2->fetch_assoc()){
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
+    <title>Inicio</title>
+    <link rel="stylesheet" href="./css/datatable.css">
 <?php include('header.php')?>
 
 <body>
@@ -82,13 +84,13 @@ while($row = $result2->fetch_assoc()){
     <div class="container">
         <button class="btn btn-primary mt-5 mb-5" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-            <i class="bi bi-list"></i> Menu
+            <i class="fa-solid fa-bars"></i> Menu
         </button>
 
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
             aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel"><img src="./img/logo-clinica-lircay.png" alt="">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel"><a href="index.php"><img src="./img/logo-clinica-lircay.png" alt=""></a>
                 </h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
@@ -105,6 +107,9 @@ while($row = $result2->fetch_assoc()){
                         <li class="nav-item">
                             <a class="nav-link" href="ingresar.php"><i class="fa-solid fa-circle-plus"></i> Ingresar</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="reporte.php"><i class="fa-solid fa-file-excel"></i> Generar reporte</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -116,23 +121,6 @@ while($row = $result2->fetch_assoc()){
                 </div>
             </div>
         </div>
-        <!-- <ul id="slide-out" class="sidenav">
-            <li>
-                <div class="user-view">
-                    <div class="background">
-                        <img src="./img/logo-clinica-lircay.png">
-                    </div>
-                    <br>
-                    <br>
-                    <a href="#"><img class="circle" src="https://aumentada.net/wp-content/uploads/2015/05/user.png"></a>
-                    <a href="#"><span class="black-text name">Usuario</span></a>
-                    <a href="#"><span class="#000-text email">user@user.com</span></a>
-                </div>
-            </li>
-            <li><a href="ingresar.php"><i class="fa-solid fa-plus"></i>Ingresar</a></li>
-            <li><a href="../../includes/logout.php"><i class="fa-solid fa-right-from-bracket"></i>Cerrar sesion</a></li>
-        </ul>
-        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="fa-solid fa-bars"></i></a> -->
 
         <div class="container">
 
@@ -179,9 +167,8 @@ while($row = $result2->fetch_assoc()){
 
                     <td>
                         <form method="post">
-                            <a href="editar.php?id=<?php echo $row["id"] ?>" class='btn btn-success'>Editar</a>
                             <input type="text" name="id" value="<?php echo $row["id"]; ?>" hidden>
-                            <input type="submit" name="accion" value="Eliminar" class='btn btn-danger'></input>
+                            <input type="submit" name="accion" value="Eliminar" class='btn btn-warning'></input>
                         </form>
                     </td>
                 </tr>
@@ -201,6 +188,9 @@ while($row = $result2->fetch_assoc()){
 
 
     <?php include('footer.php');?>
+    <script src="./js/datatable.js"></script>
+    <script src="./js/sistema.js"></script>
+
 </body>
 
 </html>
