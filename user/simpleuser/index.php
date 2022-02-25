@@ -4,13 +4,8 @@ inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 order by id ASC;";
-$query2 = "SELECT sum(espacio_ocupado) as contador from ficha  where termino is null;";
 $result = mysqli_query($conn, $query);
-$result2 = mysqli_query($conn, $query2);
-$total = 0;
-while ($row = $result2->fetch_assoc()) {
-    $total = $total + $row['contador']; // Sumar variable $total + resultado de la consulta
-}
+
 
 
 
