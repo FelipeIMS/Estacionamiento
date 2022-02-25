@@ -8,7 +8,7 @@ include('settings.php');
 
 
 <body>
-    <div class="container">
+    <div class="container w-25">
 
         <form  method="POST" action="insert_ficha.php">
             <div class="form-group mt-5">
@@ -31,6 +31,7 @@ include('settings.php');
             </div>
             <br>
             <input type="submit" name="insert" id="insert" value="Guardar" class="btn btn-success" style="margin-top: 20px;" />
+            <a class="btn btn-warning" style="margin-top: 20px; float: right;" href="index.php">Volver</a>
         </form>
 
 
