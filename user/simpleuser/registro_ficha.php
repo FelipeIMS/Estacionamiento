@@ -12,12 +12,8 @@ include('settings.php');
 
         <form  method="POST" action="insert_ficha.php">
             <div class="form-group mt-5">
-                <?php
-                $query2 = "SELECT sum(espacio_ocupado) as contador from ficha  where termino is null;"; 
-                $result2 = mysqli_query($conn,$query2);
-                $row = mysqli_fetch_array($result2);?>
                 
-                <input disabled class="form-control w-50 text-center position-relative top-50 start-50 translate-middle" id="contador" type="text" name="contador" value="Espacios ocupados<?php $max = $row[0]; ?> : de 50"" />
+                <input disabled class="form-control w-50 text-center position-relative top-50 start-50 translate-middle" id="contador" type="text" name="contador" value="Espacios ocupados : de 50"" />
                 
             </div>
             <div class="form-group">
