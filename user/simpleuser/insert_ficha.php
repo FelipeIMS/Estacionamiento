@@ -12,7 +12,6 @@
         $registro2 = mysqli_query($conn, "SELECT  * FROM ficha f
         INNER JOIN  vehiculo v ON  v.patente = f.patente
         INNER JOIN  cliente c ON  c.id_cliente = v.cliente
-        INNER JOIN  estado_cliente e ON e.id_estado = c.id_estado_cliente
         WHERE f.termino is null and v.patente='$search';");
         $registro = mysqli_query($conn, "SELECT patente, termino from ficha where termino is null and patente ='$search';");
         $contador = $_POST['contador'];
