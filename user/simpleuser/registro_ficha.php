@@ -54,7 +54,8 @@ $result2=mysqli_query($conn, $query2);
     $(document).ready(function() {
         $("#search").autocomplete({
             source: 'search.php',
-            minLength: 0,
+            cache:false,
+            minLength: 1,
         });
     });
 </script>

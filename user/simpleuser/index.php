@@ -1,15 +1,15 @@
 <?php include 'settings.php'; //include settings 
-$query = "SELECT ficha.id_ficha as id, cliente.nombre_cliente, cliente.apellido_cliente, area.nombre_area, inicio, termino, vehiculo.patente from ficha
+$query = "SELECT ficha.id_ficha as id,timediff(ficha.inicio,ficha.termino) as diferencia, cliente.nombre_cliente, cliente.apellido_cliente, area.nombre_area, inicio, termino, vehiculo.patente from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
-order by id;";
-$query2="SELECT sum(espacio_ocupado) as contador from ficha  where termino is null;";
+order by id ASC;";
+$query2 = "SELECT sum(espacio_ocupado) as contador from ficha  where termino is null;";
 $result = mysqli_query($conn, $query);
-$result2=mysqli_query($conn, $query2);
-$total=0;
-while($row = $result2->fetch_assoc()){
-	$total = $total + $row['contador']; // Sumar variable $total + resultado de la consulta
+$result2 = mysqli_query($conn, $query2);
+$total = 0;
+while ($row = $result2->fetch_assoc()) {
+    $total = $total + $row['contador']; // Sumar variable $total + resultado de la consulta
 }
 
 
@@ -17,22 +17,28 @@ while($row = $result2->fetch_assoc()){
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <title>Inicio</title>
-    <link rel="stylesheet" href="./css/datatable.css">
-<?php include('header.php')?>
+<title>Inicio</title>
+<link rel="stylesheet" href="./css/datatable.css">
+<?php include('header.php') ?>
 
 <body>
     <?php
-    $accion = isset($_POST['accion'])?$_POST['accion']:"";
-    $id= isset($_POST['id'])?$_POST['id']:"";
-    $fin= isset($_POST['termino'])?$_POST['termino']:"";
+    $accion = isset($_POST['accion']) ? $_POST['accion'] : "";
+    $id = isset($_POST['id']) ? $_POST['id'] : "";
+    $fin = isset($_POST['termino']) ? $_POST['termino'] : "";
 
-    switch($accion){
-        case("Finalizar"):
-            if($fin==null){
+    switch ($accion) {
+        case ("Finalizar"):
+            if ($fin == null) {
                 $sql = "UPDATE ficha set termino= now(), user_ficha_out = '{$_SESSION['id']}' where id_ficha = '$id'";
-                $resultado = $conn -> query($sql);
-                if($resultado){
+                $sql2 = "UPDATE cliente c
+                JOIN vehiculo v ON c.id_cliente= v.cliente
+                JOIN ficha f ON  v.patente = f.patente
+                SET c.estado= 'Activo'
+                WHERE f.id_ficha= '$id';";
+                mysqli_query($conn, $sql2);
+                $resultado = $conn->query($sql);
+                if ($resultado) {
                     echo "<script>  Swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -41,11 +47,11 @@ while($row = $result2->fetch_assoc()){
                         showConfirmButton: false,
                         timer: 3000
                       });</script>";
-                      echo '<script type="text/JavaScript"> setTimeout(function(){
+                    echo '<script type="text/JavaScript"> setTimeout(function(){
                         window.location="index.php";
                      }, 2000); </script>';
                 }
-            }else{
+            } else {
                 echo "<script>  Swal.fire({
                     position: 'center',
                     icon: 'warning',
@@ -54,15 +60,15 @@ while($row = $result2->fetch_assoc()){
                     showConfirmButton: false,
                     timer: 3000
                   });</script>";
-                  echo '<script type="text/JavaScript"> setTimeout(function(){
+                echo '<script type="text/JavaScript"> setTimeout(function(){
                    window.location="index.php";
                 }, 2000); </script>';
             }
             break;
-        case("Eliminar"):
+        case ("Eliminar"):
             $sql = "DELETE from ficha WHERE id_ficha = '$id'";
-            $resultado = $conn -> query($sql);
-            if($resultado){
+            $resultado = $conn->query($sql);
+            if ($resultado) {
                 echo "<script>  Swal.fire({
                     position: 'center',
                     icon: 'success',
@@ -76,24 +82,20 @@ while($row = $result2->fetch_assoc()){
                 }, 2000); </script>';
             }
             break;
-
     }
 
     ?>
 
     <div class="container">
-        <button class="btn btn-primary mt-5 mb-5" type="button" data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <button class="btn btn-primary mt-5 mb-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
             <i class="fa-solid fa-bars"></i> Menu
         </button>
 
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
-            aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasExampleLabel"><a href="index.php"><img src="./img/logo-clinica-lircay.png" alt=""></a>
                 </h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <div>
@@ -110,10 +112,12 @@ while($row = $result2->fetch_assoc()){
                         <li class="nav-item">
                             <a class="nav-link" href="reporte.php"><i class="fa-solid fa-file-excel"></i> Generar reporte</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="config.php"> <i class="fa-solid fa-gear"></i> Configuracion </a>
+                        </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user"></i> Perfil
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> <?php echo $_SESSION['name']; ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="../../includes/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesion</a></li>
@@ -124,7 +128,7 @@ while($row = $result2->fetch_assoc()){
             </div>
         </div>
 
-        
+
 
         <table class="table table-bordered" id="tabla">
             <thead>
@@ -137,6 +141,7 @@ while($row = $result2->fetch_assoc()){
                     <th>Patente</th>
                     <th>Ingreso</th>
                     <th>Salida</th>
+                    <th>Tiempo estacionado</th>
                     <th>Finalizar</th>
                     <th>Acciones</th>
                 </tr>
@@ -144,8 +149,8 @@ while($row = $result2->fetch_assoc()){
             <tbody>
                 <tr>
                     <?php
-                while ($row = mysqli_fetch_array($result)) {
-                ?>
+                    while ($row = mysqli_fetch_array($result)) {
+                    ?>
                 <tr>
                     <td><?php echo $row["nombre_cliente"]; ?></td>
                     <td><?php echo $row["apellido_cliente"]; ?></td>
@@ -153,6 +158,8 @@ while($row = $result2->fetch_assoc()){
                     <td><?php echo $row["patente"]; ?></td>
                     <td><?php echo $row["inicio"]; ?></td>
                     <td><?php echo $row["termino"]; ?></td>
+                    <td><?php echo $row["diferencia"]; ?></td>
+
 
                     <td>
                         <form method="post">
@@ -169,11 +176,11 @@ while($row = $result2->fetch_assoc()){
                         </form>
                     </td>
                 </tr>
-                <?php
-                }
-                ?>
+            <?php
+                    }
+            ?>
 
-                </tr>
+            </tr>
             </tbody>
         </table>
 
@@ -184,7 +191,7 @@ while($row = $result2->fetch_assoc()){
 
 
 
-    <?php include('footer.php');?>
+    <?php include('footer.php'); ?>
     <script src="./js/datatable.js"></script>
     <script src="./js/sistema.js"></script>
 
