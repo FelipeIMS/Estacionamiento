@@ -1,6 +1,7 @@
 <?php include 'settings.php'; //include settings 
-$query = "SELECT * FROM users
-order by id ASC;";
+$query = "SELECT * FROM cliente
+INNER JOIN  area ON area.id_area = cliente.area
+order by id_cliente ASC;";
 $result = mysqli_query($conn, $query);
 
 
@@ -29,10 +30,11 @@ $result = mysqli_query($conn, $query);
                 <tr>
                     <!-- <th>ID</th> -->
                     <th>ID</th>
+                    <th>RUT</th>
                     <th>Nombre</th>
-                    <th>Login</th>
-                    <th>Password</th>
-                    <th>Rol</th>
+                    <th>Apellidos</th>
+                    <th>Area</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -42,14 +44,16 @@ $result = mysqli_query($conn, $query);
                     while ($row = mysqli_fetch_array($result)) {
                     ?>
                 <tr>
-                    <td><?php echo $row["id"]; ?></td>
-                    <td><?php echo $row["name"]; ?></td>
-                    <td><?php echo $row["login"]; ?></td>
-                    <td><?php echo $row["password"]; ?></td>
-                    <td><?php echo $row["role"]; ?></td>
+                    <td><?php echo $row["id_cliente"]; ?></td>
+                    <td><?php echo $row["rut"]; ?></td>
+                    <td><?php echo $row["nombre_cliente"]; ?></td>
+                    <td><?php echo $row["apellido_cliente"]; ?></td>
+                    <td><?php echo $row["nombre_area"]; ?></td>
+                    <td><?php echo $row["estado"]; ?></td>
+
                     <td>
                         <form method="post">
-                            <input type="text" name="id" value="<?php echo $row["id"]; ?>" hidden>
+                            <input type="text" name="id" value="<?php echo $row["id_cliente"]; ?>" hidden>
                             <input type="submit" name="accion" value="Eliminar" class='btn btn-danger'></input>
                         </form>
                     </td>
