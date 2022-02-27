@@ -1,5 +1,5 @@
 <?php include 'settings.php'; //include settings 
-$query = "SELECT ficha.id_ficha as id, diferencia, cliente.nombre_cliente, cliente.apellido_cliente, area.nombre_area, inicio, termino, vehiculo.patente from ficha
+$query = "SELECT ficha.id_ficha as id, diferencia, cliente.nombre_cliente, cliente.apellido_cliente, area.nombre_area, inicio, termino, vehiculo.patente, total from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
@@ -147,6 +147,7 @@ $result = mysqli_query($conn, $query);
                     <th>Ingreso</th>
                     <th>Salida</th>
                     <th width=15%">Tiempo estacionado</th>
+                    <th width=15%">Total</th>
                     <th width="0">Finalizar</th>
                 </tr>
             </thead>
@@ -163,6 +164,7 @@ $result = mysqli_query($conn, $query);
                     <td><?php echo $row["inicio"]; ?></td>
                     <td><?php echo $row["termino"]; ?></td>
                     <td><?php echo $row["diferencia"]; ?></td>
+                    <td><?php echo $row["total"]; ?></td>
 
 
                     <td>
@@ -180,6 +182,7 @@ $result = mysqli_query($conn, $query);
 
 
     </div>
+    
 
     <div class="modal fade" id="dataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true" id="dataModal">
@@ -189,15 +192,11 @@ $result = mysqli_query($conn, $query);
                     <h4 class="modal-title">Detalle de ficha</h4>
                 </div>
                 <div class="modal-body" id="employee_detail">
-                <?php
-                    while ($row = mysqli_fetch_array($result)) {
-                    ?>
-                    <?php
-                    }
-            ?>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default cancelar" id="<?php echo $row["id"]; ?>" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default cancelar" id="<?php echo $row["id"]; ?>" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-default aceptar " id="<?php echo $row["id"]; ?>" data-bs-dismiss="modal">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -229,7 +228,39 @@ $result = mysqli_query($conn, $query);
             });
         });
     });
+    $(document).ready(function() {
+        $(document).on('click', '.aceptar', function() {
+            //$('#dataModal').modal();
+            var aceptar = $(this).attr("id");
+            $.ajax({
+                url: "select.php",
+                method: "POST",
+                data: {
+                    aceptar: aceptar
+                },
+                success: function(data) {
+                    location.reload();
 
+                }
+            });
+        });
+    });
+    $(document).ready(function() {
+        $(document).on('click', '.cancelar', function() {
+            //$('#dataModal').modal();
+            var cancelar = $(this).attr("id");
+            $.ajax({
+                url: "select.php",
+                method: "POST",
+                data: {
+                    cancelar: cancelar
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        });
+    });
     </script>
 
 </body>
