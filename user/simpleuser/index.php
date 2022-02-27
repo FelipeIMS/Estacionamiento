@@ -147,7 +147,7 @@ $result = mysqli_query($conn, $query);
                     <th>Ingreso</th>
                     <th>Salida</th>
                     <th width=15%">Tiempo estacionado</th>
-                    <th width="1%">Finalizar</th>
+                    <th width="0">Finalizar</th>
                 </tr>
             </thead>
             <tbody>
@@ -166,7 +166,8 @@ $result = mysqli_query($conn, $query);
 
 
                     <td>
-                        <button type="button" class="btn btn-danger view_data"data-bs-backdrop="static" data-bs-keyboard="false" id="<?php echo $row["id"]; ?>">Finalizar</button>
+                        <button type="button" class="btn btn-danger view_data" data-bs-backdrop="static"
+                            data-bs-keyboard="false" id="<?php echo $row["id"]; ?>">Marcar salida</button>
                     </td>
                 </tr>
                 <?php
@@ -180,17 +181,23 @@ $result = mysqli_query($conn, $query);
 
     </div>
 
-    <div class="modal fade" id="dataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="dataModal">
+    <div class="modal fade" id="dataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true" id="dataModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Detalle de ficha</h4>
                 </div>
                 <div class="modal-body" id="employee_detail">
-
+                <?php
+                    while ($row = mysqli_fetch_array($result)) {
+                    ?>
+                    <?php
+                    }
+            ?>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default cancelar" id="<?php echo $row["id"]; ?>" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -222,6 +229,7 @@ $result = mysqli_query($conn, $query);
             });
         });
     });
+
     </script>
 
 </body>
