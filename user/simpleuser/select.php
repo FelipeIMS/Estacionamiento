@@ -44,22 +44,44 @@ if(isset($_POST["employee_id"]))
                 $result2 = mysqli_query($conn, $query4);
                 $output .= '
                 <div class="">
-                    <label for="recipient-name" class="col-form-label">Nombre</label>
-                    <input disabled type="text" class="form-control" id="recipient-name" value='.$row["nombre_cliente"].'>
-                    <label for="message-text" class="col-form-label">Apellido</label>
-                    <input disabled type="text" class="form-control" id="recipient-name" value='.$row["apellido_cliente"].'>
-                    <label for="message-text" class="col-form-label">Patente</label>
-                    <input disabled type="text" class="form-control" id="recipient-name" value='.$row["patente"].'>
-                    <label for="message-text" class="col-form-label">Area</label>
-                    <input disabled type="text" class="form-control" id="recipient-name" value='.$row["nombre_area"].'>
-                    <label for="message-text" class="col-form-label">Llegada</label>
-                    <input disabled type="text" class="form-control" id="recipient-name" value='.$row["inicio"].'>
-                    <label for="message-text" class="col-form-label">Salida</label>
-                    <input disabled type="text" class="form-control" id="recipient-name" value='.$termino[0].'>
-                    <label for="message-text" class="col-form-label">Tiempo estacionado</label>
-                    <input disabled type="text" class="form-control" id="recipient-name" value='.$diferencia[0].'>
-                    <label for="message-text" class="col-form-label">Total</label>
-                    <input disabled type="text" class="form-control" id="recipient-name" value='.$total.'>
+                <tr>  
+                <td width="30%"><label>Nombre</label></td>  
+                <td width="70%">'.$row["nombre_cliente"].'</td>  
+                </tr>
+                <tr>  
+                <td width="30%"><label>Apellido</label></td>  
+                <td width="70%">'.$row["apellido_cliente"].'</td>  
+                </tr>
+                <tr>  
+                <td width="30%"><label>Patente</label></td>  
+                <td width="70%">'.$row["patente"].'</td>  
+                </tr>
+                <tr>  
+                <td width="30%"><label>Area</label></td>  
+                <td width="70%">'.$row["nombre_area"].'</td>  
+                </tr>
+                <tr>  
+                <td width="30%"><label>Llegada</label></td>  
+                <td width="70%">'.$row["inicio"].'</td>  
+                </tr>
+                <tr>  
+                <td width="30%"><label>Salida</label></td>  
+                <td width="70%">'.$termino[0].'</td>  
+                </tr>
+                <tr>  
+                <td width="30%"><label>Tiempo estacionado (Minutos)</label></td>  
+                <td width="70%">'.$diferencia[0].'</td>  
+                </tr>
+                <tr>  
+                <td width="30%"><label>A pagar</label></td>  
+                <td width="70%">'.$total.'</td>  
+                </tr>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
                 </div>
                 ';
                 echo $output;
@@ -71,22 +93,40 @@ if(isset($_POST["employee_id"]))
             }else{
                 $output .= '
           <div class="">
-            <label for="recipient-name" class="col-form-label">Nombre</label>
-            <input disabled type="text" class="form-control" id="recipient-name" value='.$row["nombre_cliente"].'>
-            <label for="message-text" class="col-form-label">Apellido</label>
-            <input disabled type="text" class="form-control" id="recipient-name" value='.$row["apellido_cliente"].'>
-            <label for="message-text" class="col-form-label">Patente</label>
-            <input disabled type="text" class="form-control" id="recipient-name" value='.$row["patente"].'>
-            <label for="message-text" class="col-form-label">Area</label>
-            <input disabled type="text" class="form-control" id="recipient-name" value='.$row["nombre_area"].'>
-            <label for="message-text" class="col-form-label">Llegada</label>
-            <input disabled type="text" class="form-control" id="recipient-name" value='.$row["inicio"].'>
-            <label for="message-text" class="col-form-label">Salida</label>
-            <input disabled type="text" class="form-control" id="recipient-name" value='.$row["termino"].'>
-            <label for="message-text" class="col-form-label">Tiempo estacionado</label>
-            <input disabled type="text" class="form-control" id="recipient-name" value='.$row["diferencia"].'>
-            <label for="message-text" class="col-form-label">Total</label>
-            <input disabled type="text" class="form-control" id="recipient-name" value='.$row["total"].'>
+
+            <tr>  
+            <td width="30%"><label>Nombre</label></td>  
+            <td width="70%">'.$row["nombre_cliente"].'</td>  
+            </tr>
+            <tr>  
+            <td width="30%"><label>Apellido</label></td>  
+            <td width="70%">'.$row["apellido_cliente"].'</td>  
+            </tr>
+            <tr>  
+            <td width="30%"><label>Patente</label></td>  
+            <td width="70%">'.$row["patente"].'</td>  
+            </tr>
+            <tr>  
+            <td width="30%"><label>Area</label></td>  
+            <td width="70%">'.$row["nombre_area"].'</td>  
+            </tr>
+            <tr>  
+            <td width="30%"><label>Llegada</label></td>  
+            <td width="70%">'.$row["inicio"].'</td>  
+            </tr>
+            <tr>  
+            <td width="30%"><label>Salida</label></td>  
+            <td width="70%">'.$row["termino"].'</td>  
+            </tr>
+            <tr>  
+            <td width="30%"><label>Tiempo estacionado (Minutos)</label></td>  
+            <td width="70%">'.$row["diferencia"].'</td>  
+            </tr>
+            <tr>  
+            <td width="30%"><label>A pagar</label></td>  
+            <td width="70%">'.$row["total"].'</td>  
+            </tr>
+            
           </div>
                 ';
                 echo $output;
@@ -97,3 +137,17 @@ if(isset($_POST["employee_id"]))
            
 
 ?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aa</title>
+</head>
+<body>
+    
+</body>
+</html>
