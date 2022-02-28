@@ -1,10 +1,12 @@
 <?php include 'settings.php'; //include settings 
-$query = "SELECT ficha.id_ficha as id, diferencia, cliente.nombre_cliente, cliente.apellido_cliente, area.nombre_area, inicio, termino, vehiculo.patente, total from ficha
+$query = "SELECT ficha.id_ficha as id, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, convenios.tiempo as conveniot from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
+inner join convenios on cliente.convenio = convenios.id_convenio
 order by id ASC;";
 $result = mysqli_query($conn, $query);
+
 
 
 
@@ -146,6 +148,7 @@ $result = mysqli_query($conn, $query);
                     <th>Patente</th>
                     <th>Ingreso</th>
                     <th>Salida</th>
+                    <th>Convenio</th>
                     <th width=15%">Tiempo estacionado</th>
                     <th width=15%">Total</th>
                     <th width="0">Finalizar</th>
@@ -163,6 +166,7 @@ $result = mysqli_query($conn, $query);
                     <td><?php echo $row["patente"]; ?></td>
                     <td><?php echo $row["inicio"]; ?></td>
                     <td><?php echo $row["termino"]; ?></td>
+                    <td><?php echo $row["convenion"]; ?></td>
                     <td><?php echo $row["diferencia"]; ?></td>
                     <td><?php echo $row["total"]; ?></td>
 
@@ -170,6 +174,7 @@ $result = mysqli_query($conn, $query);
                     <td>
                         <button type="button" class="btn btn-danger view_data" data-bs-backdrop="static"
                             data-bs-keyboard="false" id="<?php echo $row["id"]; ?>">Marcar salida</button>
+                            
                     </td>
                 </tr>
                 <?php
@@ -192,11 +197,12 @@ $result = mysqli_query($conn, $query);
                     <h4 class="modal-title">Detalle de ficha</h4>
                 </div>
                 <div class="modal-body" id="employee_detail">
+                
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default cancelar" id="<?php echo $row["id"]; ?>" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-default aceptar " id="<?php echo $row["id"]; ?>" data-bs-dismiss="modal">Aceptar</button>
+                    
                 </div>
             </div>
         </div>
@@ -211,58 +217,42 @@ $result = mysqli_query($conn, $query);
     <script src="./js/datatable.js"></script>
     <script src="./js/sistema.js"></script>
     <script>
-    $(document).ready(function() {
-        $(document).on('click', '.view_data', function() {
-            //$('#dataModal').modal();
-            var employee_id = $(this).attr("id");
-            $.ajax({
-                url: "select.php",
+     $(document).ready(function() {
+         $(document).on('click', '.view_data', function() {
+             //$('#dataModal').modal();
+             var employee_id = $(this).attr("id");
+             $.ajax({
+                 url: "select.php",
                 method: "POST",
-                data: {
-                    employee_id: employee_id
-                },
-                success: function(data) {
-                    $('#employee_detail').html(data);
+                 data: {
+                     employee_id: employee_id
+                 },
+                 success: function(data) {
+                     $('#employee_detail').html(data);
                     $('#dataModal').modal('show');
                 }
-            });
+             });
         });
     });
-    $(document).ready(function() {
-        $(document).on('click', '.aceptar', function() {
-            //$('#dataModal').modal();
-            var aceptar = $(this).attr("id");
-            $.ajax({
-                url: "select.php",
+     $(document).ready(function() {
+         $(document).on('click', '.cancelar', function() {
+             //$('#dataModal').modal();
+             var employee_id = $(this).attr("id");
+             $.ajax({
+                 url: "select.php",
                 method: "POST",
-                data: {
-                    aceptar: aceptar
-                },
-                success: function(data) {
-                    location.reload();
-
+                 data: {
+                     employee_id: employee_id
+                 },
+                 success: function(data) {
+                    $(document).ajaxStop(function(){
+                    window.location.reload();
+                });
                 }
-            });
+             });
         });
     });
-    $(document).ready(function() {
-        $(document).on('click', '.cancelar', function() {
-            //$('#dataModal').modal();
-            var cancelar = $(this).attr("id");
-            $.ajax({
-                url: "select.php",
-                method: "POST",
-                data: {
-                    cancelar: cancelar
-                },
-                success: function(data) {
-                    location.reload();
-                }
-            });
-        });
-    });
-    </script>
-
+        </script>
 </body>
 
 </html>
