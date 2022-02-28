@@ -1,5 +1,5 @@
 <?php include 'settings.php'; //include settings 
-$query = "SELECT ficha.id_ficha as id, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, convenios.tiempo as conveniot from ficha
+$query = "SELECT ficha.id_ficha as id, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, convenios.tiempo as conveniot, ficha.estado from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
@@ -84,8 +84,8 @@ $result = mysqli_query($conn, $query);
     // ?> -->
 
 
-    <div class="container">
-        <button class="btn btn-primary mt-5 mb-5" type="button" data-bs-toggle="offcanvas"
+    <div class="container mt-5">
+        <button class="btn btn-primary " type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
             <i class="fa-solid fa-bars"></i> Menu
         </button>
@@ -173,7 +173,7 @@ $result = mysqli_query($conn, $query);
 
                     <td>
                         <button type="button" class="btn btn-danger view_data" data-bs-backdrop="static"
-                            data-bs-keyboard="false" id="<?php echo $row["id"]; ?>">Marcar salida</button>
+                            data-bs-keyboard="false" id="<?php echo $row["id"]; ?>">Ver ficha</button>
                             
                     </td>
                 </tr>
@@ -187,7 +187,8 @@ $result = mysqli_query($conn, $query);
 
 
     </div>
-    
+
+
 
     <div class="modal fade" id="dataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true" id="dataModal">
@@ -201,7 +202,9 @@ $result = mysqli_query($conn, $query);
 
                 </div>
                 <div class="modal-footer">
+                    
                     <button type="button" class="btn btn-default cancelar" id="<?php echo $row["id"]; ?>" data-bs-dismiss="modal">Cerrar</button>
+                    
                     
                 </div>
             </div>
