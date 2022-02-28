@@ -7,7 +7,11 @@
 
 <body>
     <?php
-    if (!empty($_POST)) {
+    if (!empty($_POST['patente'])) {
+        if($_POST['contador'] > 3){
+            echo'Error no se puede ingresar, espacios insuficientes';
+
+        }
         $search = mysqli_real_escape_string($conn, $_POST["patente"]);
         $registro2 = mysqli_query($conn, "SELECT  * FROM ficha f
         INNER JOIN  vehiculo v ON  v.patente = f.patente
@@ -27,7 +31,7 @@
                 }, 3000); </script>';
             } else {
 
-                $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado,user_ficha)  VALUES(now(),'$search',1,'{$_SESSION['id']}')";
+                $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado,user_ficha, estado)  VALUES(now(),'$search',1,'{$_SESSION['id']}','No pagado')";
                 $sql2="UPDATE cliente c
                 JOIN vehiculo v  ON c.id_cliente = v.cliente
                 SET c.estado= 'Inactivo'
@@ -49,6 +53,18 @@
                 $conn->close();
             }
         
+    }else{
+        echo "<script>  Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'Error',
+            text: 'Ingrese datos nuevamente',
+            showConfirmButton: false,
+            timer: 3000
+          });</script>";
+        echo '<script type="text/JavaScript"> setTimeout(function(){
+           window.location="registro_ficha.php";
+        }, 3000); </script>';
     }
 
 
