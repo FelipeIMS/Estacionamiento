@@ -7,10 +7,13 @@
 
 <body>
     <?php
-    if (!empty($_POST['patente'])) {
-        if($_POST['contador'] > 3){
-            echo'Error no se puede ingresar, espacios insuficientes';
 
+
+    $contador = (isset($_POST['contador']))?$_POST['contador']:"";
+
+    if (!empty($_POST['patente'])) {
+        if($contador > 0){
+            echo'Error no se puede ingresar, espacios insuficientes';
         }
         $search = mysqli_real_escape_string($conn, $_POST["patente"]);
         $registro2 = mysqli_query($conn, "SELECT  * FROM ficha f

@@ -10,16 +10,13 @@ if(isset($_POST["employee_id"]))
     inner join area on area.id_area = cliente.area
     inner join convenios on cliente.convenio = convenios.id_convenio
     WHERE id_ficha ='".$_POST["employee_id"]."'";
-
-    
     
     $result1 = mysqli_query($conn, $query1);
+
     $output .= '  
         <div class="table-responsive">  
             <table class="table table-bordered">';
-        while($row = mysqli_fetch_array($result1))
-                
-                
+        while($row = mysqli_fetch_array($result1)){
                 $output .= '
                 <div class="">
                     <div class="input-group input-group-sm mb-3">
@@ -56,10 +53,12 @@ if(isset($_POST["employee_id"]))
                         ';
                         
                 echo $output;
+                
 
 
 
             }
+}
            
 
 ?>
