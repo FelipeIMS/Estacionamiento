@@ -124,13 +124,18 @@ if(isset($_POST["employee_id"]))
 
 
                     <form action="pagar.php" method="POST" >
-                        <a href="pagar.php?id='.$row["id_ficha"].'" class="btn btn-success">Pagar</a>
-                        <input type="text" id="total2" name="total2" value="" >
-                        <button type="submit" class="btn btn-primary">Sign in</button>
-
+                        <a href="pagar.php?id='.$row["id_ficha"].'" id= "send" class="btn btn-success" onClick="wea();">Pagar</a>
                     </form>
                     
                 </div>
+
+                <script>
+                function wea() {
+                    var total = $("#total").val();
+                    localStorage.setItem("total",total);
+                    alert(total);
+                }
+                </script>
                         ';
                         
                 echo $output;
@@ -163,12 +168,10 @@ if(isset($_POST["employee_id"]))
   var dift = diferencia - cantidad;
   total = dift*20;
   $("#total").val(total);
-  $("#total2").val(total);
-  var total2 = $("#total2").val();
-
-
-
 }
+
+
     </script>
+  
 </body>
 </html>

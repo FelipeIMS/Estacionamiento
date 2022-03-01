@@ -221,7 +221,7 @@ $result = mysqli_query($conn, $query);
     <script src="./js/sistema.js"></script>
     <script>
      $(document).ready(function() {
-         $(document).on('click', '.view_data', function() {
+         $(document).on("click", ".view_data", function() {
              //$('#dataModal').modal();
              var employee_id = $(this).attr("id");
              $.ajax({
@@ -231,8 +231,8 @@ $result = mysqli_query($conn, $query);
                      employee_id: employee_id
                  },
                  success: function(data) {
-                     $('#employee_detail').html(data);
-                    $('#dataModal').modal('show');
+                     $("#employee_detail").html(data);
+                    $("#dataModal").modal("show");
                 }
              });
         });
