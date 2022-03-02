@@ -16,7 +16,7 @@
 
     $id = $_GET["id"];
 
-    $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
+    $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, ficha.convenio_sn, ficha.convenio_t from ficha
     inner join vehiculo on vehiculo.patente = ficha.patente
     inner join cliente on cliente.id_cliente = vehiculo.cliente
     inner join area on area.id_area = cliente.area
@@ -53,7 +53,7 @@
         $result6 = mysqli_query($conn, $query6); 
 
         
-        $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
+        $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, ficha.convenio_sn, ficha.convenio_t from ficha
         inner join vehiculo on vehiculo.patente = ficha.patente
         inner join cliente on cliente.id_cliente = vehiculo.cliente
         inner join area on area.id_area = cliente.area
@@ -74,11 +74,15 @@
             $total = $diferencia[0]*20;
             $query6 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
             $result6 = mysqli_query($conn, $query6); 
+        }else{
+            $total=$diferencia[0]*0;
+            $query7 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
+            $result7 = mysqli_query($conn, $query7); 
         }
 
         #Se carga nuevamente
 
-        $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
+        $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, ficha.convenio_sn, ficha.convenio_t from ficha
         inner join vehiculo on vehiculo.patente = ficha.patente
         inner join cliente on cliente.id_cliente = vehiculo.cliente
         inner join area on area.id_area = cliente.area
@@ -111,11 +115,13 @@
                 <div class="form-group">
                     <label for="nombre">TIEMPO</label>
                     <input value="<?php echo $cliente['diferencia'] ?>" placeholder="entrada" class="form-control" type="text" name="diferencia" id="diferencia">
+                    <input value="<?php echo $cliente['convenio_sn'] ?>" placeholder="entrada" class="form-control" type="text" name="convenio_sn" id="diferencia">
+                    <input value="<?php echo $cliente['convenio_t'] ?>" placeholder="entrada" class="form-control" type="text" name="convenio_t" id="diferencia">
                 </div>
-                <label for="convenio">Hospitalizado</label>
-                <input id="checkbox" type="checkbox">
+                <label for="convenio" <?php if ($cliente['convenion'] == 'Gratis'){ ?> style="display: none;" <?php   } ?>>Hospitalizado</label>
+                <input id="checkbox" type="checkbox"  <?php if ($cliente['convenion'] == 'Gratis'){ ?> style="display: none;" <?php   } ?>>
         </div>
-        <div class="form-group">
+        <div class="form-group mt-3">
             <label for="nombre">Total</label>
             <input id="total" name="total" value="<?php echo $cliente["total"] ?>" placeholder="" class="form-control" type="text">
         </div>
