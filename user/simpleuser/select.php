@@ -36,10 +36,12 @@ if(isset($_POST["employee_id"]))
 
                 $sql5 = "SELECT timestampdiff(MINUTE,inicio,termino) from ficha where id_ficha='".$_POST["employee_id"]."';";
                 $result5 = mysqli_query($conn, $sql5);
-                $diferencia = mysqli_fetch_array($result5);
-                $query6 = "UPDATE ficha SET diferencia = $diferencia[0] where id_ficha='".$_POST["employee_id"]."'";
 
+                $diferencia = mysqli_fetch_array($result5);
+
+                $query6 = "UPDATE ficha SET diferencia = $diferencia[0] where id_ficha='".$_POST["employee_id"]."'";
                 $result6 = mysqli_query($conn, $query6); 
+                
                 $output .= '
                 <div class="">
                     <div class="input-group input-group-sm mb-3">

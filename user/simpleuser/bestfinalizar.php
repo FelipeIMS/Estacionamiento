@@ -16,17 +16,12 @@
 
     $id = $_GET["id"];
 
-    $horasalida= $conn->prepare("UPDATE ficha SET termino=now() WHERE id_ficha= ?");
-    $horasalida ->bind_param("i",$id);
-    $horasalida->execute();
-
-
     $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
-inner join vehiculo on vehiculo.patente = ficha.patente
-inner join cliente on cliente.id_cliente = vehiculo.cliente
-inner join area on area.id_area = cliente.area
-inner join convenios on cliente.convenio = convenios.id_convenio
-WHERE id_ficha = ?");
+    inner join vehiculo on vehiculo.patente = ficha.patente
+    inner join cliente on cliente.id_cliente = vehiculo.cliente
+    inner join area on area.id_area = cliente.area
+    inner join convenios on cliente.convenio = convenios.id_convenio
+    WHERE id_ficha = ?");
     $sentencia->bind_param("i", $id);
     $sentencia->execute();
     $resultado = $sentencia->get_result();
@@ -36,19 +31,81 @@ WHERE id_ficha = ?");
     if (!$cliente) {
         exit("No hay resultados para ese ID");
     }
-    #Registramos el usuario que finalizara la salida
-    $user_out = $conn->prepare("UPDATE ficha  SET user_ficha_out= '{$_SESSION['id']}' WHERE id_ficha= ?");
-    $user_out->bind_param("i", $id);
-    $user_out->execute();
+
+    if($cliente['termino'] == ''){
+
+        #agregamos el update de termino
+        $horasalida= $conn->prepare("UPDATE ficha SET termino=now() WHERE id_ficha= ?");
+        $horasalida ->bind_param("i",$id);
+        $horasalida->execute();
+
+        #Registramos el usuario que finalizara la salida
+        $user_out = $conn->prepare("UPDATE ficha  SET user_ficha_out= '{$_SESSION['id']}' WHERE id_ficha= ?");
+        $user_out->bind_param("i", $id);
+        $user_out->execute();
 
 
-    #Reactivamos cliente, para habilitar patentes asociadas
-    $activar_cliente = $conn->prepare("UPDATE cliente c
-       JOIN vehiculo v ON c.id_cliente = v.cliente
-       SET c.estado='Activo'
-       WHERE v.patente='" . $cliente['patente'] . "'");
-    $activar_cliente->execute();
- 
+        $termino_cliente = $conn ->prepare ("SELECT termino from ficha where WHERE id_ficha= ?");
+        $termino_cliente -> bind_param("i", $id);
+        $termino_cliente -> execute();
+        $resultado3 -> get_result($termino_cliente);
+        echo $resultado3[0];
+
+
+        $sql5 = "SELECT timestampdiff(MINUTE,inicio,termino) from ficha where id_ficha='".$_POST["employee_id"]."';";
+        $result5 = mysqli_query($conn, $sql5);
+
+        $diferencia = mysqli_fetch_array($result5);
+
+        $query6 = "UPDATE ficha SET diferencia = $diferencia[0] where id_ficha='".$_POST["employee_id"]."'";
+        $result6 = mysqli_query($conn, $query6); 
+    
+    
+        #Reactivamos cliente, para habilitar patentes asociadas
+        $activar_cliente = $conn->prepare("UPDATE cliente c
+           JOIN vehiculo v ON c.id_cliente = v.cliente
+           SET c.estado='Activo'
+           WHERE v.patente='" . $cliente['patente'] . "'");
+        $activar_cliente->execute();
+
+        $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
+        inner join vehiculo on vehiculo.patente = ficha.patente
+        inner join cliente on cliente.id_cliente = vehiculo.cliente
+        inner join area on area.id_area = cliente.area
+        inner join convenios on cliente.convenio = convenios.id_convenio
+        WHERE id_ficha = ?");
+        $sentencia->bind_param("i", $id);
+        $sentencia->execute();
+        $resultado = $sentencia->get_result();
+
+        # Obtenemos solo una fila, que será el CLIENTE a editar
+        $cliente = $resultado->fetch_assoc();
+        if (!$cliente) {
+            exit("No hay resultados para ese ID");
+        }
+    }else{
+        
+    
+    
+        $sentencia2 = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
+        inner join vehiculo on vehiculo.patente = ficha.patente
+        inner join cliente on cliente.id_cliente = vehiculo.cliente
+        inner join area on area.id_area = cliente.area
+        inner join convenios on cliente.convenio = convenios.id_convenio
+        WHERE id_ficha = ?");
+        $sentencia2->bind_param("i", $id);
+        $sentencia2->execute();
+        $resultado2 = $sentencia2->get_result();
+    
+        # Obtenemos solo una fila, que será el CLIENTE a editar
+        $cliente2 = $resultado2->fetch_assoc();
+        if (!$cliente2) {
+            exit("No hay resultados para ese ID");
+        }
+
+        echo $cliente2['termino'];
+
+    }
 
     ?>
 
