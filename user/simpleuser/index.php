@@ -173,6 +173,7 @@ $result = mysqli_query($conn, $query);
 
                     <td>
                         <a class="btn btn-warning" href="bestfinalizar.php?id=<?php echo $row["id"] ?>">DEMO</a>
+                    
                     </td>
                 </tr>
             <?php

@@ -15,6 +15,12 @@
     include 'settings.php';
 
     $id = $_GET["id"];
+
+    $horasalida= $conn->prepare("UPDATE ficha SET termino=now() WHERE id_ficha= ?");
+    $horasalida ->bind_param("i",$id);
+    $horasalida->execute();
+
+
     $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
@@ -24,7 +30,6 @@ WHERE id_ficha = ?");
     $sentencia->bind_param("i", $id);
     $sentencia->execute();
     $resultado = $sentencia->get_result();
-    $sentencia->close();
 
     # Obtenemos solo una fila, que será el CLIENTE a editar
     $cliente = $resultado->fetch_assoc();
@@ -43,11 +48,7 @@ WHERE id_ficha = ?");
        SET c.estado='Activo'
        WHERE v.patente='" . $cliente['patente'] . "'");
     $activar_cliente->execute();
-    #Insertamos hora termino para calcular diferencia en minutos
-    $horafinalizar = $conn->prepare("UPDATE ficha SET termino=now() WHERE id_ficha=?");
-    $horafinalizar->bind_param("i", $id);
-    $horafinalizar->execute();
-    date_default_timezone_set("America/Santiago");
+ 
 
     ?>
 
@@ -62,13 +63,12 @@ WHERE id_ficha = ?");
                 </div>
                 <div class="form-group">
                     <label for="nombre">SALIDA</label>
-                    <input value="<?php echo date("Y-m-d H:i:s"); ?>" placeholder="termino" class="form-control" type="text" name="termino" id="termino">
+                    <input value="<?php  echo $cliente["termino"] ?>" placeholder="termino" class="form-control" type="text" name="termino" id="termino">
                 </div>
                 <div class="form-group">
                     <label for="nombre">TIEMPO</label>
                     <input value="<?php echo $cliente["diferencia"] ?>" placeholder="entrada" class="form-control" type="text" name="diferencia" id="diferencia">
                 </div>
-           
                 <label for="convenio">Hospitalizado</label>
                 <input id="checkbox" type="checkbox">
         </div>
