@@ -44,30 +44,16 @@
         $user_out->bind_param("i", $id);
         $user_out->execute();
 
-
-        $termino_cliente = $conn ->prepare ("SELECT termino from ficha where WHERE id_ficha= ?");
-        $termino_cliente -> bind_param("i", $id);
-        $termino_cliente -> execute();
-        $resultado3 -> get_result($termino_cliente);
-        echo $resultado3[0];
-
-
-        $sql5 = "SELECT timestampdiff(MINUTE,inicio,termino) from ficha where id_ficha='".$_POST["employee_id"]."';";
+        $sql5 = "SELECT timestampdiff(MINUTE,inicio,termino) as diferencia from ficha where id_ficha='".$_GET["id"]."';";
         $result5 = mysqli_query($conn, $sql5);
+        
 
         $diferencia = mysqli_fetch_array($result5);
 
-        $query6 = "UPDATE ficha SET diferencia = $diferencia[0] where id_ficha='".$_POST["employee_id"]."'";
+        $query6 = "UPDATE ficha SET diferencia = $diferencia[0] where id_ficha='".$_GET["id"]."'";
         $result6 = mysqli_query($conn, $query6); 
-    
-    
-        #Reactivamos cliente, para habilitar patentes asociadas
-        $activar_cliente = $conn->prepare("UPDATE cliente c
-           JOIN vehiculo v ON c.id_cliente = v.cliente
-           SET c.estado='Activo'
-           WHERE v.patente='" . $cliente['patente'] . "'");
-        $activar_cliente->execute();
 
+        
         $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
         inner join vehiculo on vehiculo.patente = ficha.patente
         inner join cliente on cliente.id_cliente = vehiculo.cliente
@@ -102,9 +88,6 @@
         if (!$cliente2) {
             exit("No hay resultados para ese ID");
         }
-
-        echo $cliente2['termino'];
-
     }
 
     ?>
@@ -124,7 +107,7 @@
                 </div>
                 <div class="form-group">
                     <label for="nombre">TIEMPO</label>
-                    <input value="<?php echo $cliente["diferencia"] ?>" placeholder="entrada" class="form-control" type="text" name="diferencia" id="diferencia">
+                    <input value="<?php echo $cliente['diferencia'] ?>" placeholder="entrada" class="form-control" type="text" name="diferencia" id="diferencia">
                 </div>
                 <label for="convenio">Hospitalizado</label>
                 <input id="checkbox" type="checkbox">
@@ -165,12 +148,16 @@
             var total = $("#total").val();
             var dift = diferencia - cantidad;
             total = dift * 20;
+            if(total<0){
+                total=0;
+            }
             $("#total").val(total);
             alert(total);
         } else {
             off();
             var total = $("#total").val();
-            total = 0;
+            var diferencia = $("#diferencia").val();
+            total = diferencia * 20;
             $("#total").val(total);
             alert(total);
         }

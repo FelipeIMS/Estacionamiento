@@ -4,8 +4,13 @@ inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 inner join convenios on cliente.convenio = convenios.id_convenio
-order by id ASC;";
+order by inicio DESC;";
 $result = mysqli_query($conn, $query);
+
+
+$query2 = "SELECT count(espacio_ocupado) from ficha where termino is null; ";
+$result2 = mysqli_query($conn, $query2);
+$espacios2= mysqli_fetch_array($result2);
 
 
 
@@ -19,72 +24,10 @@ $result = mysqli_query($conn, $query);
 <?php include('header.php') ?>
 
 <body>
-    <!-- <?php
-            $accion = isset($_POST['accion']) ? $_POST['accion'] : "";
-            $id = isset($_POST['id']) ? $_POST['id'] : "";
-            $fin = isset($_POST['termino']) ? $_POST['termino'] : "";
 
-            // switch ($accion) {
-            //     case ("Finalizar"):
-            //         if ($fin == null) {
-            //             $sql = "UPDATE ficha set termino= now(), user_ficha_out = '{$_SESSION['id']}' where id_ficha = '$id'";
-            //             $sql2 = "UPDATE cliente c
-            //             JOIN vehiculo v ON c.id_cliente= v.cliente
-            //             JOIN ficha f ON  v.patente = f.patente
-            //             SET c.estado= 'Activo'
-            //             WHERE f.id_ficha= '$id';";
-            //             mysqli_query($conn, $sql2);
-            //             $resultado = $conn->query($sql);
-            //             if ($resultado) {
-            //                 echo "<script>  Swal.fire({
-            //                     position: 'center',
-            //                     icon: 'success',
-            //                     title: 'Salida registrada',
-            //                     text:'Salida registrada correctamente',
-            //                     showConfirmButton: false,
-            //                     timer: 3000
-            //                   });</script>";
-            //                 echo '<script type="text/JavaScript"> setTimeout(function(){
-            //                     window.location="index.php";
-            //                  }, 2000); </script>';
-            //             }
-            //         } else {
-            //             echo "<script>  Swal.fire({
-            //                 position: 'center',
-            //                 icon: 'warning',
-            //                 title: 'Error al registrar salida',
-            //                 text: 'Salida registrada anteriormente',
-            //                 showConfirmButton: false,
-            //                 timer: 3000
-            //               });</script>";
-            //             echo '<script type="text/JavaScript"> setTimeout(function(){
-            //                window.location="index.php";
-            //             }, 2000); </script>';
-            //         }
-            //         break;
-            //     case ("Eliminar"):
-            //         $sql = "DELETE from ficha WHERE id_ficha = '$id'";
-            //         $resultado = $conn->query($sql);
-            //         if ($resultado) {
-            //             echo "<script>  Swal.fire({
-            //                 position: 'center',
-            //                 icon: 'success',
-            //                 title: 'INCIDENCIA ELIMINADA',
-            //                 text:'INCIDENCIA ELIMINADA EXITOSAMENTE',
-            //                 showConfirmButton: false,
-            //                 timer: 3000
-            //             });</script>";
-            //             echo '<script type="text/JavaScript"> setTimeout(function(){
-            //                 window.location="index.php";
-            //             }, 2000); </script>';
-            //         }
-            //         break;
-            // }
-
-            // 
-            ?> -->
-
-
+            <div class="form-group mt-5"> 
+                <input disabled class="form-control w-50 text-center position-relative top-50 start-50 translate-middle" id="contador" type="text" name="contador" value="Espacios ocupados: <?php echo $espacios2[0]; ?> de 62" /> 
+            </div>
     <div class="container mt-5">
         <button class="btn btn-primary " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
             <i class="fa-solid fa-bars"></i> Menu
@@ -137,16 +80,15 @@ $result = mysqli_query($conn, $query);
                 <tr>
                     <!-- <th>ID</th> -->
                     <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Area</th>
                     <th>Patente</th>
                     <th>Ingreso</th>
                     <th>Salida</th>
+                    <th>Estado</th>
                     <th>Convenio</th>
-                    <th width=15%">Tiempo estacionado</th>
+                    <th width=12%">Tiempo estacionado</th>
                     <th width=15%">Total</th>
-                    <th width="0">Finalizar</th>
-                    <th width="0">DEMO</th>
+                    <th width="0%">Voucher</th>
+                    <th width="0%">Pagar</th>
                 </tr>
             </thead>
             <tbody>
@@ -156,23 +98,22 @@ $result = mysqli_query($conn, $query);
                     ?>
                 <tr>
                     <td><?php echo $row["nombre_cliente"]; ?></td>
-                    <td><?php echo $row["apellido_cliente"]; ?></td>
-                    <td><?php echo $row["nombre_area"]; ?></td>
                     <td><?php echo $row["patente"]; ?></td>
                     <td><?php echo $row["inicio"]; ?></td>
                     <td><?php echo $row["termino"]; ?></td>
+                    <td><?php echo $row["estado"]; ?></td>
                     <td><?php echo $row["convenion"]; ?></td>
                     <td><?php echo $row["diferencia"]; ?></td>
                     <td><?php echo $row["total"]; ?></td>
 
 
                     <td>
-                        <button type="button" class="btn btn-danger view_data" data-bs-backdrop="static" data-bs-keyboard="false" id="<?php echo $row["id"]; ?>">Ver ficha</button>
+                        <button type="button" class="btn btn-danger view_data" data-bs-backdrop="static" data-bs-keyboard="false" id="<?php echo $row["id"]; ?>"><i class="fa-brands fa-readme"></i></button>
 
                     </td>
 
                     <td>
-                        <a class="btn btn-warning" href="bestfinalizar.php?id=<?php echo $row["id"] ?>">DEMO</a>
+                        <a class="btn btn-warning" href="bestfinalizar.php?id=<?php echo $row["id"] ?>"  <?php if ($row['estado'] == 'Pagado'){ ?> style="display: none;" <?php   } ?>><i class="fa-solid fa-cash-register"></i></a>
                     
                     </td>
                 </tr>

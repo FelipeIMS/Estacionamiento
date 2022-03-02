@@ -1,13 +1,5 @@
 <?php
 include('settings.php');
-
-$query = "SELECT count(espacio_ocupado) from ficha where termino is null; ";
-$result = mysqli_query($conn, $query);
-$espacios= mysqli_fetch_array($result);
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,12 +10,7 @@ $espacios= mysqli_fetch_array($result);
 <body>
     <div class="container w-25">
 
-        <form  method="POST" action="insert_ficha.php">
-            <div class="form-group mt-5">
-                
-                <input disabled class="form-control w-50 text-center position-relative top-50 start-50 translate-middle" id="contador" type="text" name="contador" value="Espacios ocupados: <?php echo $espacios[0]; ?> de 62" />
-                
-            </div>
+        <form  method="POST" action="insert_ficha.php" class="mt-5">
             <div class="form-group">
                 <label>Busqueda de Clientes</label>
                 <input class="form-control" id="search" type="text" name="patente" />
