@@ -44,12 +44,11 @@
         $user_out->bind_param("i", $id);
         $user_out->execute();
 
+        #calculo de diferencia entre horas e inserta la diferencia en BD
+
         $sql5 = "SELECT timestampdiff(MINUTE,inicio,termino) as diferencia from ficha where id_ficha='".$_GET["id"]."';";
         $result5 = mysqli_query($conn, $sql5);
-        
-
         $diferencia = mysqli_fetch_array($result5);
-
         $query6 = "UPDATE ficha SET diferencia = $diferencia[0] where id_ficha='".$_GET["id"]."'";
         $result6 = mysqli_query($conn, $query6); 
 
@@ -64,28 +63,32 @@
         $sentencia->execute();
         $resultado = $sentencia->get_result();
 
+
+
         # Obtenemos solo una fila, que será el CLIENTE a editar
         $cliente = $resultado->fetch_assoc();
         if (!$cliente) {
             exit("No hay resultados para ese ID");
         }
-    }else{
-        
-    
-    
-        $sentencia2 = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
+        if($cliente['convenion'] == 'Publico'){
+            $total = $diferencia[0]*20;
+            $query6 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
+            $result6 = mysqli_query($conn, $query6); 
+        }
+
+        #Se carga nuevamente
+
+        $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
         inner join vehiculo on vehiculo.patente = ficha.patente
         inner join cliente on cliente.id_cliente = vehiculo.cliente
         inner join area on area.id_area = cliente.area
         inner join convenios on cliente.convenio = convenios.id_convenio
         WHERE id_ficha = ?");
-        $sentencia2->bind_param("i", $id);
-        $sentencia2->execute();
-        $resultado2 = $sentencia2->get_result();
-    
-        # Obtenemos solo una fila, que será el CLIENTE a editar
-        $cliente2 = $resultado2->fetch_assoc();
-        if (!$cliente2) {
+        $sentencia->bind_param("i", $id);
+        $sentencia->execute();
+        $resultado = $sentencia->get_result();
+        $cliente = $resultado->fetch_assoc();
+        if (!$cliente) {
             exit("No hay resultados para ese ID");
         }
     }
@@ -152,14 +155,12 @@
                 total=0;
             }
             $("#total").val(total);
-            alert(total);
         } else {
             off();
             var total = $("#total").val();
             var diferencia = $("#diferencia").val();
             total = diferencia * 20;
             $("#total").val(total);
-            alert(total);
         }
     }
 </script>
