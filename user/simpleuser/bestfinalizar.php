@@ -152,7 +152,7 @@
             <div class="form-group mt-3 mb-3">
                 <label for="nombre">Total</label>
                 <input class="text-center" id="total" name="total" value="$<?php echo $cliente["total"] ?>" placeholder=""
-                    class="form-control" type="text" disabled>
+                    class="form-control" type="text">
             </div>
         </div>
         <div class="card-footer text-muted">
