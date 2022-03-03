@@ -86,8 +86,9 @@
             $result6 = mysqli_query($conn, $query6); 
         }else if(!is_int($TD[1])){
             $total_sindesc=$diferencia[0]*20;
-            $total_condesc=$total_sindesc -($total_sindesc*$TD[1]);
-            $query7 = "UPDATE ficha SET total = $total_condesc where id_ficha='".$_GET["id"]."'";
+            $desc = $total_sindesc*$TD[1];
+            $total_condesc = $total_sindesc - $desc;
+            $query7 = "UPDATE ficha SET total = $total_condesc, convenio_v = $desc where id_ficha='".$_GET["id"]."'";
             $result7 = mysqli_query($conn, $query7); 
         }else{
             $total=$diferencia[0]*$TD[1];
