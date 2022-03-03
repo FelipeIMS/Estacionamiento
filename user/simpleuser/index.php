@@ -42,13 +42,13 @@ $espacios2= mysqli_fetch_array($result2);
                             </a>
                         </li>
                         <li>
-                            <a href="reporte.php" class="nav-link px-0 align-middle">
+                            <a href="reporte.php" class="nav-link px-0 align-middle not-active">
                                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Generar
                                     reporte</span></a>
                         </li>
                         <li>
-                            <a href="ingreso_manual.php" class="nav-link px-0 align-middle">
-                                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Ingreso manual</span></a>
+                            <a  href="ingreso_manual.php" class="nav-link px-0 align-middle disabled" >
+                                <i class="fs-4 bi-table"></i> <span  class="ms-1 d-none d-sm-inline">Ingreso manual</span></a>
                         </li>
                         <li>
                             <div class="dropdown mt-3">
@@ -68,7 +68,7 @@ $espacios2= mysqli_fetch_array($result2);
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                             id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Ei-user.svg" alt="hugenerd" width="30" height="30"
+                            <img src="https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png" alt="hugenerd" width="30" height="30"
                                 class="rounded-circle">
                             <span class="d-none d-sm-inline mx-1"><?php echo $_SESSION['name'] ?></span>
                         </a>
@@ -128,9 +128,9 @@ $espacios2= mysqli_fetch_array($result2);
                             <td><?php echo $row["patente"]; ?></td>
                             <td><?php echo $row["inicio"]; ?></td>
                             <td><?php echo $row["termino"]; ?></td>
-                            <td><?php echo $row["convenio_v"]; ?></td>
+                            <td>$<?php echo $row["convenio_v"]; ?></td>
                             <td><?php echo $row["estado"]; ?></td>
-                            <td><?php echo $row["total"]; ?></td>
+                            <td>$<?php echo $row["total"]; ?></td>
 
 
 

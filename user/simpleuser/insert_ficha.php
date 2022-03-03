@@ -4,6 +4,7 @@
 <html lang="es">
 
 <?php include('header.php') ?>
+<title>Nuevo ingreso</title>
 
 <body>
     <?php

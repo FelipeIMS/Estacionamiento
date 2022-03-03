@@ -125,17 +125,17 @@
                     <input type="hidden" name="id" value="<?php echo $cliente["id_ficha"] ?>">
                     <div class="form-group">
                         <label for="nombre">ENTRADA: </label>
-                        <input class="text-center mt-3 w-50" value="<?php echo $cliente["inicio"] ?>" placeholder="entrada" class="form-control"
+                        <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente["inicio"] ?>" placeholder="entrada" class="form-control"
                             type="text" name="entrada" id="entrada">
                     </div>
                     <div class="form-group">
                         <label for="nombre">SALIDA: </label>
-                        <input class="text-center mt-3 w-50" value="<?php  echo $cliente["termino"] ?>" placeholder="termino" class="form-control"
+                        <input disabled class="text-center mt-3 w-50" value="<?php  echo $cliente["termino"] ?>" placeholder="termino" class="form-control"
                             type="text" name="termino" id="termino">
                     </div>
                     <div class="form-group">
                         <label for="nombre">TIEMPO: </label>
-                        <input class="text-center mt-3 w-50" value="<?php echo $cliente['diferencia'] ?>" placeholder="entrada"
+                        <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente['diferencia'] ?>" placeholder="entrada"
                             class="form-control" type="text" name="diferencia" id="diferencia">
                         <input value="<?php echo $cliente['convenion'] ?>" placeholder="convenio si/no"
                             class="form-control" type="text" name="convenio_sn" id="convenio_sn" hidden>
@@ -151,8 +151,8 @@
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="nombre">Total</label>
-                <input class="text-center" id="total" name="total" value="<?php echo $cliente["total"] ?>" placeholder=""
-                    class="form-control" type="text">
+                <input class="text-center" id="total" name="total" value="$<?php echo $cliente["total"] ?>" placeholder=""
+                    class="form-control" type="text" disabled>
             </div>
         </div>
         <div class="card-footer text-muted">
@@ -196,7 +196,7 @@ function comprueba() {
         $("#convenio_sn").val("Hospitalizado");
         $("#convenio_t").val(60);
         $("#convenio_v").val(1200);
-        $("#total").val(total);
+        $("#total").val('$' +total);
     } else {
         off();
         var total = $("#total").val();
@@ -205,7 +205,7 @@ function comprueba() {
         $("#convenio_sn").val("<?php echo $cliente['convenion'] ?>");
         $("#convenio_t").val(0);
         $("#convenio_v").val(0);
-        $("#total").val(total);
+        $("#total").val('$' +total);
     }
 }
 </script>
