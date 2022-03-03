@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pago realizado</title>
+    <?php include('header.php') ?>
+</head>
+<body>
+
 <?php
 include 'settings.php';
 
@@ -55,5 +63,20 @@ $estado_pago->execute();
 $estado_pago = $conn->prepare("UPDATE ficha  SET convenio_sn= ?, convenio_t= ?, convenio_v= ?, fecha_pago = now()  WHERE id_ficha= ?;");
 $estado_pago->bind_param("siii", $convenio_sn, $convenio_t, $convenio_v, $id);
 $estado_pago->execute();
-header('Location: index.php');
+
+echo "<script>  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'Pago realizado correctamente',
+    showConfirmButton: false,
+    timer: 2000
+  });</script>";
+echo '<script type="text/JavaScript"> setTimeout(function(){
+   window.location="index.php";
+}, 2000); </script>';
 ?>
+
+
+    
+</body>
+</html>

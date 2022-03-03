@@ -68,7 +68,7 @@ $espacios2= mysqli_fetch_array($result2);
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                             id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30"
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Ei-user.svg" alt="hugenerd" width="30" height="30"
                                 class="rounded-circle">
                             <span class="d-none d-sm-inline mx-1"><?php echo $_SESSION['name'] ?></span>
                         </a>
