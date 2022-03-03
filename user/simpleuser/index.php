@@ -47,6 +47,10 @@ $espacios2= mysqli_fetch_array($result2);
                                     reporte</span></a>
                         </li>
                         <li>
+                            <a href="ingreso_manual.php" class="nav-link px-0 align-middle">
+                                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Ingreso manual</span></a>
+                        </li>
+                        <li>
                             <div class="dropdown mt-3">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                     data-bs-toggle="dropdown" disabled>
@@ -93,14 +97,11 @@ $espacios2= mysqli_fetch_array($result2);
                             <!-- <th>ID</th> -->
                             <th width="0%">Voucher</th>
                             <th width="0%">Pagar</th>
-                            <th>Nombre</th>
                             <th>Patente</th>
                             <th>Ingreso</th>
                             <th>Salida</th>
-                            <th>Estado</th>
-                            <th>Convenio</th>
                             <th>Descuento</th>
-                            <th width=12%">Tiempo estacionado</th>
+                            <th>Estado</th>
                             <th width=15%">Total</th>
 
                         </tr>
@@ -124,14 +125,11 @@ $espacios2= mysqli_fetch_array($result2);
                                         class="fa-solid fa-cash-register"></i></a>
 
                             </td>
-                            <td><?php echo $row["nombre_cliente"]; ?></td>
                             <td><?php echo $row["patente"]; ?></td>
                             <td><?php echo $row["inicio"]; ?></td>
                             <td><?php echo $row["termino"]; ?></td>
-                            <td><?php echo $row["estado"]; ?></td>
-                            <td><?php echo $row["convenio_sn"]; ?></td>
                             <td><?php echo $row["convenio_v"]; ?></td>
-                            <td><?php echo $row["diferencia"]; ?></td>
+                            <td><?php echo $row["estado"]; ?></td>
                             <td><?php echo $row["total"]; ?></td>
 
 
@@ -205,7 +203,7 @@ $espacios2= mysqli_fetch_array($result2);
                             </div>
                             <div class="form-floating mt-4">
                                 <textarea disabled readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                                    style="height: 100px"></textarea>
+                                    style="height: 100px">° Busque por nombre o patente y luego haga click en agregar.</textarea>
                                 <label for="floatingTextarea2">Instrucciones</label>
                             </div>
 
