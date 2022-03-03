@@ -4,7 +4,7 @@ include('settings.php');
 if(isset($_POST["employee_id"]))
 {
     $output = '';
-    $query1 = "SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
+    $query1 = "SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado,ficha.convenio_v, convenios.tiempo, ficha.convenio_sn, ficha.convenio_t from ficha
     inner join vehiculo on vehiculo.patente = ficha.patente
     inner join cliente on cliente.id_cliente = vehiculo.cliente
     inner join area on area.id_area = cliente.area
@@ -21,20 +21,24 @@ if(isset($_POST["employee_id"]))
                 $output .= '
                 <div class="input-group mb-3">
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Patente</span>
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Patente: </span>
                         <input type="text" class="form-control" aria-label="Sizing example input" value="'.$row['patente'].'" disabled readonly">
                     </div>
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Ingreso</span>
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Ingreso: </span>
                         <input type="text" class="form-control" aria-label="Sizing example input" value="'.$row['inicio'].'" disabled readonly">
                     </div>
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Salida</span>
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Salida: </span>
                         <input type="text" class="form-control" aria-label="Sizing example input" value="'.$row['termino'].'" disabled readonly">
                     </div>
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Tiempo estacionado</span>
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Tiempo estacionado: </span>
                         <input type="text" class="form-control" id="diferencia" aria-label="Sizing example input"value="'.$row['diferencia'].'" disabled readonly">
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Desc: </span>
+                        <input type="text" class="form-control" id="diferencia" aria-label="Sizing example input"value="'.$row['convenio_v'].'" disabled readonly">
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Total a pagar:</span>

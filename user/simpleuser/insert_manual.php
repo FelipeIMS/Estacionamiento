@@ -2,11 +2,16 @@
 ?>
 <!DOCTYPE html>
 <html lang="es">
+    <title>Ingreso manual</title>
 
 <?php include('header.php') ?>
 
 <body>
     <?php
+
+    $entrada=$_POST['entrada'];
+    $termino=$_POST['termino'];
+    $obs=$_POST['obs'];
 
     if (!empty($_POST['patente'])) {
         $search = mysqli_real_escape_string($conn, $_POST["patente"]);
@@ -27,11 +32,11 @@
                    window.location="index.php";
                 }, 2000); </script>';
             } else {
-
-                $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado,user_ficha, estado)  VALUES(now(),'$search',1,'{$_SESSION['id']}','No pagado')";
+                
+                $sql = " INSERT INTO ficha(inicio,termino,patente,user_ficha, estado,observacion)  VALUES('$entrada','$termino','$search','{$_SESSION['id']}','No pagado','$obs')";
                 $sql2="UPDATE cliente c
                 JOIN vehiculo v  ON c.id_cliente = v.cliente
-                SET c.estado= 'Inactivo'
+                SET c.estado= 'Activo'
                 WHERE v.patente='$search';";
                 mysqli_query($conn,$sql2);
                 if (mysqli_query($conn, $sql)) {

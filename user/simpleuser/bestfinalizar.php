@@ -5,9 +5,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagar</title>
 </head>
 
 <body>
@@ -16,7 +14,7 @@
 
     $id = $_GET["id"];
 
-    $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, ficha.convenio_sn, ficha.convenio_t from ficha
+    $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, convenios.tiempo,ficha.estado, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v from ficha
     inner join vehiculo on vehiculo.patente = ficha.patente
     inner join cliente on cliente.id_cliente = vehiculo.cliente
     inner join area on area.id_area = cliente.area
@@ -71,21 +69,36 @@
         //     exit("No hay resultados para ese ID");
         // }
 
+
+        $traerTiempoDesc = "SELECT id_ficha,convenios.tiempo as tiempo_c from ficha
+        inner join vehiculo on vehiculo.patente = ficha.patente
+        inner join cliente on cliente.id_cliente = vehiculo.cliente
+        inner join area on area.id_area = cliente.area
+        inner join convenios on cliente.convenio = convenios.id_convenio
+        WHERE id_ficha = '".$_GET["id"]."'";
+        $resultadoTD = mysqli_query($conn, $traerTiempoDesc);
+        $TD = mysqli_fetch_array($resultadoTD);
         
 
         if($cliente['convenion'] == 'Sin convenio'){
             $total = $diferencia[0]*20;
             $query6 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
             $result6 = mysqli_query($conn, $query6); 
+        }else if(!is_int($TD[1])){
+            $total_sindesc=$diferencia[0]*20;
+            $desc = $total_sindesc*$TD[1];
+            $total_condesc = $total_sindesc - $desc;
+            $query7 = "UPDATE ficha SET total = $total_condesc, convenio_v = $desc where id_ficha='".$_GET["id"]."'";
+            $result7 = mysqli_query($conn, $query7); 
         }else{
-            $total=$diferencia[0]*0;
+            $total=$diferencia[0]*$TD[1];
             $query7 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
             $result7 = mysqli_query($conn, $query7); 
         }
 
         #Se carga nuevamente
 
-        $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, ficha.convenio_sn, ficha.convenio_t from ficha
+        $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v from ficha
         inner join vehiculo on vehiculo.patente = ficha.patente
         inner join cliente on cliente.id_cliente = vehiculo.cliente
         inner join area on area.id_area = cliente.area
@@ -98,6 +111,7 @@
         if (!$cliente) {
             exit("No hay resultados para ese ID");
         }
+
     }
 
     ?>
@@ -127,6 +141,8 @@
                             class="form-control" type="text" name="convenio_sn" id="convenio_sn" hidden>
                         <input value="<?php echo $cliente['convenio_t'] ?> 0" placeholder="convenio_t"
                             class="form-control" type="text" name="convenio_t" id="convenio_t" hidden>
+                        <input value="<?php echo $cliente['convenio_v'] ?> 0" placeholder="convenio_t"
+                            class="form-control" type="text" name="convenio_v" id="convenio_v" hidden>
                     </div>
                     <label class="mt-3" for="convenio" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
                         style="display: none;" <?php   } ?>>Hospitalizado</label>
@@ -142,7 +158,6 @@
         <div class="card-footer text-muted">
             <div class="form-group text-center">
                 <button class="btn btn-success">Pagar</button>
-                <a class="btn btn-warning" href="index.php">Volver</a>
                 <a class="btn btn-danger" href="cancelar.php?id=<?php echo $cliente["id_ficha"] ?>">Cancelar</a>
             </div>
         </div>
@@ -180,6 +195,7 @@ function comprueba() {
 
         $("#convenio_sn").val("Hospitalizado");
         $("#convenio_t").val(60);
+        $("#convenio_v").val(1200);
         $("#total").val(total);
     } else {
         off();
@@ -188,6 +204,7 @@ function comprueba() {
         total = diferencia * 20;
         $("#convenio_sn").val("<?php echo $cliente['convenion'] ?>");
         $("#convenio_t").val(0);
+        $("#convenio_v").val(0);
         $("#total").val(total);
     }
 }
