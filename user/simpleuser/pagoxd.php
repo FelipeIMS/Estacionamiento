@@ -3,6 +3,9 @@ include 'settings.php';
 
 $id = $_POST["id"];
 $pago = $_POST["total"];
+$convenio_sn = $_POST["convenio_sn"];
+$convenio_t = $_POST["convenio_t"];
+
 
 
 #llamamos a toda la ficha para poder activar al cliente al momento de pagar.
@@ -43,4 +46,14 @@ $user_out->execute();
 $estado_pago = $conn->prepare("UPDATE ficha  SET estado= 'Pagado' WHERE id_ficha= ?");
 $estado_pago->bind_param("i", $id);
 $estado_pago->execute();
+
+
+
+#Hacemos el update a los campos convenios_sn y convenios_t
+
+$estado_pago = $conn->prepare("UPDATE ficha  SET convenio_sn= ?, convenio_t= ?  WHERE id_ficha= ?;");
+$estado_pago->bind_param("sii", $convenio_sn, $convenio_t, $id);
+$estado_pago->execute();
+
+
 header("Location: index.php");

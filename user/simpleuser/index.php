@@ -1,5 +1,5 @@
 <?php include 'settings.php'; //include settings 
-$query = "SELECT ficha.id_ficha as id, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
+$query = "SELECT ficha.id_ficha as id, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, ficha.convenio_sn, ficha.convenio_t from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
@@ -57,7 +57,7 @@ $espacios2= mysqli_fetch_array($result2);
                                 reporte</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="config.php"> <i class="fa-solid fa-gear"></i> Configuracion </a>
+                            <a class="nav-link" href="#"> <i class="fa-solid fa-gear"></i> Configuracion </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -102,7 +102,7 @@ $espacios2= mysqli_fetch_array($result2);
                     <td><?php echo $row["inicio"]; ?></td>
                     <td><?php echo $row["termino"]; ?></td>
                     <td><?php echo $row["estado"]; ?></td>
-                    <td><?php echo $row["convenion"]; ?></td>
+                    <td><?php echo $row["convenio_sn"]; ?></td>
                     <td><?php echo $row["diferencia"]; ?></td>
                     <td><?php echo $row["total"]; ?></td>
 

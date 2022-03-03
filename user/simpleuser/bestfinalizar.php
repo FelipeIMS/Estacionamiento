@@ -53,24 +53,27 @@
         $result6 = mysqli_query($conn, $query6); 
 
         
-        $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, ficha.convenio_sn, ficha.convenio_t from ficha
-        inner join vehiculo on vehiculo.patente = ficha.patente
-        inner join cliente on cliente.id_cliente = vehiculo.cliente
-        inner join area on area.id_area = cliente.area
-        inner join convenios on cliente.convenio = convenios.id_convenio
-        WHERE id_ficha = ?");
-        $sentencia->bind_param("i", $id);
-        $sentencia->execute();
-        $resultado = $sentencia->get_result();
+        // $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, ficha.convenio_sn, ficha.convenio_t from ficha
+        // inner join vehiculo on vehiculo.patente = ficha.patente
+        // inner join cliente on cliente.id_cliente = vehiculo.cliente
+        // inner join area on area.id_area = cliente.area
+        // inner join convenios on cliente.convenio = convenios.id_convenio
+        // WHERE id_ficha = ?");
+        // $sentencia->bind_param("i", $id);
+        // $sentencia->execute();
+        // $resultado = $sentencia->get_result();
 
 
 
-        # Obtenemos solo una fila, que será el CLIENTE a editar
-        $cliente = $resultado->fetch_assoc();
-        if (!$cliente) {
-            exit("No hay resultados para ese ID");
-        }
-        if($cliente['convenion'] == 'Publico'){
+        // # Obtenemos solo una fila, que será el CLIENTE a editar
+        // $cliente = $resultado->fetch_assoc();
+        // if (!$cliente) {
+        //     exit("No hay resultados para ese ID");
+        // }
+
+        
+
+        if($cliente['convenion'] == 'Sin convenio'){
             $total = $diferencia[0]*20;
             $query6 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
             $result6 = mysqli_query($conn, $query6); 
@@ -98,77 +101,96 @@
     }
 
     ?>
-
-    <div class="row">
-        <div class="col-12">
-            <h1>PAGO Cliente</h1>
-            <form action="pagoxd.php" method="POST">
-                <input type="hidden" name="id" value="<?php echo $cliente["id_ficha"] ?>">
-                <div class="form-group">
-                    <label for="nombre">ENTRADA</label>
-                    <input value="<?php echo $cliente["inicio"] ?>" placeholder="entrada" class="form-control" type="text" name="entrada" id="entrada">
-                </div>
-                <div class="form-group">
-                    <label for="nombre">SALIDA</label>
-                    <input value="<?php  echo $cliente["termino"] ?>" placeholder="termino" class="form-control" type="text" name="termino" id="termino">
-                </div>
-                <div class="form-group">
-                    <label for="nombre">TIEMPO</label>
-                    <input value="<?php echo $cliente['diferencia'] ?>" placeholder="entrada" class="form-control" type="text" name="diferencia" id="diferencia">
-                    <input value="<?php echo $cliente['convenio_sn'] ?>" placeholder="entrada" class="form-control" type="text" name="convenio_sn" id="diferencia">
-                    <input value="<?php echo $cliente['convenio_t'] ?>" placeholder="entrada" class="form-control" type="text" name="convenio_t" id="diferencia">
-                </div>
-                <label for="convenio" <?php if ($cliente['convenion'] == 'Gratis'){ ?> style="display: none;" <?php   } ?>>Hospitalizado</label>
-                <input id="checkbox" type="checkbox"  <?php if ($cliente['convenion'] == 'Gratis'){ ?> style="display: none;" <?php   } ?>>
+    <div class="container mt-5 ">
+        <div class="card text-center">
+            <div class="card-header">
+                PAGO Cliente
+            </div>
+            <div class="card-body ">
+                <form action="pagoxd.php" method="POST">
+                    <input type="hidden" name="id" value="<?php echo $cliente["id_ficha"] ?>">
+                    <div class="form-group">
+                        <label for="nombre">ENTRADA: </label>
+                        <input class="text-center mt-3 w-50" value="<?php echo $cliente["inicio"] ?>" placeholder="entrada" class="form-control"
+                            type="text" name="entrada" id="entrada">
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">SALIDA: </label>
+                        <input class="text-center mt-3 w-50" value="<?php  echo $cliente["termino"] ?>" placeholder="termino" class="form-control"
+                            type="text" name="termino" id="termino">
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">TIEMPO: </label>
+                        <input class="text-center mt-3 w-50" value="<?php echo $cliente['diferencia'] ?>" placeholder="entrada"
+                            class="form-control" type="text" name="diferencia" id="diferencia">
+                        <input value="<?php echo $cliente['convenion'] ?>" placeholder="convenio si/no"
+                            class="form-control" type="text" name="convenio_sn" id="convenio_sn" hidden>
+                        <input value="<?php echo $cliente['convenio_t'] ?> 0" placeholder="convenio_t"
+                            class="form-control" type="text" name="convenio_t" id="convenio_t" hidden>
+                    </div>
+                    <label class="mt-3" for="convenio" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
+                        style="display: none;" <?php   } ?>>Hospitalizado</label>
+                    <input class="mt-3 text-center" id="checkbox" type="checkbox" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
+                        style="display: none;" <?php   } ?>>
+            </div>
+            <div class="form-group mt-3 mb-3">
+                <label for="nombre">Total</label>
+                <input class="text-center" id="total" name="total" value="<?php echo $cliente["total"] ?>" placeholder=""
+                    class="form-control" type="text">
+            </div>
         </div>
-        <div class="form-group mt-3">
-            <label for="nombre">Total</label>
-            <input id="total" name="total" value="<?php echo $cliente["total"] ?>" placeholder="" class="form-control" type="text">
+        <div class="card-footer text-muted">
+            <div class="form-group text-center">
+                <button class="btn btn-success">Pagar</button>
+                <a class="btn btn-warning" href="index.php">Volver</a>
+                <a class="btn btn-danger" href="cancelar.php?id=<?php echo $cliente["id_ficha"] ?>">Cancelar</a>
+            </div>
         </div>
-
-        <div class="form-group">
-            <button class="btn btn-success">Guardar</button>
-            <a class="btn btn-warning" href="index.php">Volver</a>
-        </div>
-        </form>
+    </form>
     </div>
     </div>
+
 </body>
 <?php include('footer.php'); ?>
 
 
 <script>
-    function on() {
-        console.log(" on");
-    }
+function on() {
+    console.log(" on");
+}
 
-    function off() {
-        console.log("off");
-    }
+function off() {
+    console.log("off");
+}
 
-    var checkbox = document.getElementById('checkbox');
-    checkbox.addEventListener("change", comprueba, false);
+var checkbox = document.getElementById('checkbox');
+checkbox.addEventListener("change", comprueba, false);
 
-    function comprueba() {
-        if (checkbox.checked) {
-            on();
-            var cantidad = 60;
-            var diferencia = $("#diferencia").val();
-            var total = $("#total").val();
-            var dift = diferencia - cantidad;
-            total = dift * 20;
-            if(total<0){
-                total=0;
-            }
-            $("#total").val(total);
-        } else {
-            off();
-            var total = $("#total").val();
-            var diferencia = $("#diferencia").val();
-            total = diferencia * 20;
-            $("#total").val(total);
+function comprueba() {
+    if (checkbox.checked) {
+        on();
+        var cantidad = 60;
+        var diferencia = $("#diferencia").val();
+        var total = $("#total").val();
+        var dift = diferencia - cantidad;
+        total = dift * 20;
+        if (total < 0) {
+            total = 0;
         }
+
+        $("#convenio_sn").val("Hospitalizado");
+        $("#convenio_t").val(60);
+        $("#total").val(total);
+    } else {
+        off();
+        var total = $("#total").val();
+        var diferencia = $("#diferencia").val();
+        total = diferencia * 20;
+        $("#convenio_sn").val("<?php echo $cliente['convenion'] ?>");
+        $("#convenio_t").val(0);
+        $("#total").val(total);
     }
+}
 </script>
 
 </html>
