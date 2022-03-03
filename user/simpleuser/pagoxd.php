@@ -5,11 +5,12 @@ $id = $_POST["id"];
 $pago = $_POST["total"];
 $convenio_sn = $_POST["convenio_sn"];
 $convenio_t = $_POST["convenio_t"];
+$convenio_v = $_POST["convenio_v"];
 
 
 
 #llamamos a toda la ficha para poder activar al cliente al momento de pagar.
-$sentencia3 = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado from ficha
+$sentencia3 = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, convenios.tiempo, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
@@ -51,9 +52,8 @@ $estado_pago->execute();
 
 #Hacemos el update a los campos convenios_sn y convenios_t
 
-$estado_pago = $conn->prepare("UPDATE ficha  SET convenio_sn= ?, convenio_t= ?  WHERE id_ficha= ?;");
-$estado_pago->bind_param("sii", $convenio_sn, $convenio_t, $id);
+$estado_pago = $conn->prepare("UPDATE ficha  SET convenio_sn= ?, convenio_t= ?, convenio_v= ?, fecha_pago = now()  WHERE id_ficha= ?;");
+$estado_pago->bind_param("siii", $convenio_sn, $convenio_t, $convenio_v, $id);
 $estado_pago->execute();
-
-
-header("Location: index.php");
+header('Location: index.php');
+?>

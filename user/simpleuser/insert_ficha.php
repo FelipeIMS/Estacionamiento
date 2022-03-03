@@ -8,13 +8,7 @@
 <body>
     <?php
 
-
-    $contador = (isset($_POST['contador']))?$_POST['contador']:"";
-
     if (!empty($_POST['patente'])) {
-        if($contador > 0){
-            echo'Error no se puede ingresar, espacios insuficientes';
-        }
         $search = mysqli_real_escape_string($conn, $_POST["patente"]);
         $registro2 = mysqli_query($conn, "SELECT  * FROM ficha f
         INNER JOIN  vehiculo v ON  v.patente = f.patente
@@ -27,11 +21,11 @@
                     title: 'Error al ingresar ficha',
                     text: 'No puede ingresar ficha si no finaliza la anterior',
                     showConfirmButton: false,
-                    timer: 3000
+                    timer: 2000
                   });</script>";
                 echo '<script type="text/JavaScript"> setTimeout(function(){
-                   window.location="registro_ficha.php";
-                }, 3000); </script>';
+                   window.location="index.php";
+                }, 2000); </script>';
             } else {
 
                 $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado,user_ficha, estado)  VALUES(now(),'$search',1,'{$_SESSION['id']}','No pagado')";
@@ -47,11 +41,11 @@
                         title: 'Registro ingresado',
                         text: 'Ficha ingresada correctamente',
                         showConfirmButton: false,
-                        timer: 3000
+                        timer: 2000
                       });</script>";
                     echo '<script type="text/JavaScript"> setTimeout(function(){
-                       window.location="registro_ficha.php";
-                    }, 3000); </script>';
+                       window.location="index.php";
+                    }, 2000); </script>';
                 }
                 $conn->close();
             }
@@ -63,11 +57,11 @@
             title: 'Error',
             text: 'Ingrese datos nuevamente',
             showConfirmButton: false,
-            timer: 3000
+            timer: 2000
           });</script>";
         echo '<script type="text/JavaScript"> setTimeout(function(){
-           window.location="registro_ficha.php";
-        }, 3000); </script>';
+           window.location="index.php";
+        }, 2000); </script>';
     }
 
 
