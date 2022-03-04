@@ -7,7 +7,7 @@ if (!isset($_GET["id"])) {
 }
 $mysqli = include_once "conexion.php";
 $id = $_GET["id"];
-$estado='Inactivo';
+$estado='Activo';
 $sentencia = $mysqli->prepare("UPDATE vehiculo SET
 estado_v = ?
 WHERE id_vehiculo = ?");
