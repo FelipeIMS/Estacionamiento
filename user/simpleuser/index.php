@@ -53,7 +53,7 @@ $espacios2= mysqli_fetch_array($result2);
                         <li>
                             <div class="dropdown mt-3">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                    data-bs-toggle="dropdown" disabled>
+                                    data-bs-toggle="dropdown" >
                                     Configuracion
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -97,6 +97,7 @@ $espacios2= mysqli_fetch_array($result2);
                             <!-- <th>ID</th> -->
                             <th width="0%">Voucher</th>
                             <th width="0%">Pagar</th>
+                            <th>Nombre</th>
                             <th>Patente</th>
                             <th>Ingreso</th>
                             <th>Salida</th>
@@ -125,6 +126,7 @@ $espacios2= mysqli_fetch_array($result2);
                                         class="fa-solid fa-cash-register"></i></a>
 
                             </td>
+                            <td><?php echo $row["nombre_cliente"]; ?></td>
                             <td><?php echo $row["patente"]; ?></td>
                             <td><?php echo $row["inicio"]; ?></td>
                             <td><?php echo $row["termino"]; ?></td>
