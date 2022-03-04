@@ -151,8 +151,8 @@
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="nombre">Total</label>
-                <input class="text-center" id="total" name="total" value="$<?php echo $cliente["total"] ?>" placeholder=""
-                    class="form-control" type="text">
+                <input class="text-center" id="total" name="total" value="<?php echo $cliente["total"] ?>" placeholder=""
+                    class="form-control" type="text" readonly>
             </div>
         </div>
         <div class="card-footer text-muted">
@@ -196,7 +196,7 @@ function comprueba() {
         $("#convenio_sn").val("Hospitalizado");
         $("#convenio_t").val(60);
         $("#convenio_v").val(1200);
-        $("#total").val('$' +total);
+        $("#total").val(total);
     } else {
         off();
         var total = $("#total").val();
@@ -205,7 +205,7 @@ function comprueba() {
         $("#convenio_sn").val("<?php echo $cliente['convenion'] ?>");
         $("#convenio_t").val(0);
         $("#convenio_v").val(0);
-        $("#total").val('$' +total);
+        $("#total").val(total);
     }
 }
 </script>

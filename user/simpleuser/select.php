@@ -37,12 +37,16 @@ if(isset($_POST["employee_id"]))
                         <input type="text" class="form-control" id="diferencia" aria-label="Sizing example input"value="'.$row['diferencia'].'" disabled readonly">
                     </div>
                     <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Convenio: </span>
+                        <input type="text" class="form-control" id="diferencia" aria-label="Sizing example input"value="'.$row['convenio_sn'].'" disabled readonly">
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Desc: </span>
-                        <input type="text" class="form-control" id="diferencia" aria-label="Sizing example input"value="'.$row['convenio_v'].'" disabled readonly">
+                        <input type="text" class="form-control" id="diferencia" aria-label="Sizing example input"value="$ '.$row['convenio_v'].'" disabled readonly">
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Total a pagar:</span>
-                        <input type="text" class="form-control" id="total" aria-label="Sizing example input" value="'.$row['total'].'" disabled readonly">
+                        <input type="text" class="form-control" id="total" aria-label="Sizing example input" value="$ '.$row['total'].'" disabled readonly">
                     </div>
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Estado:</span>
