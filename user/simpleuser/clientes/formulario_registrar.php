@@ -65,7 +65,7 @@ $t2 = mysqli_num_rows($resultado2);
 
                 <div class="form-group">
                     <button class="btn btn-success">Guardar</button>
-                    <a href="../index.php" class="btn btn-warning" style="float: right;">Atras</a>
+                    <a href="listar.php" class="btn btn-warning" style="float: right;">Atras</a>
                 </div>
 
 

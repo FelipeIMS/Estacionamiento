@@ -1,5 +1,7 @@
 
 <?php
+include_once "encabezado.php";
+
 if (!isset($_GET["id"])) {
     exit("No hay id");
 }
@@ -8,4 +10,5 @@ $id = $_GET["id"];
 $sentencia = $mysqli->prepare("DELETE FROM area WHERE id_area = ?");
 $sentencia->bind_param("i", $id);
 $sentencia->execute();
-header("Location: listar.php");
+echo '<script>toastr.error("Registro Eliminado ")</script>';
+header("refresh: 1; url=listar.php");

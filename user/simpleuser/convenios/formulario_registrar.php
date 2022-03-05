@@ -18,7 +18,7 @@ $mysqli = include_once "conexion.php";
 
                 <div class="form-group">
                     <button class="btn btn-success">Guardar</button>
-                    <a href="../index.php" class="btn btn-warning" style="float: right;">Volver</a>
+                    <a href="listar.php" class="btn btn-warning" style="float: right;">Volver</a>
                 </div>
 
 

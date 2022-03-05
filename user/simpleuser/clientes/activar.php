@@ -3,8 +3,8 @@
 include_once "encabezado.php";
 include "conexion.php";
 $id = $_GET["id"];
-$estado = 'Inactivo';
 $estaoficha = 'No pagado';
+$estado = 'Activo';
 $wea = mysqli_query($mysqli, "SELECT * FROM ficha
 INNER JOIN vehiculo ON vehiculo.patente= ficha.patente
 INNER JOIN cliente ON cliente.id_cliente = vehiculo.cliente
@@ -19,6 +19,6 @@ estado = ?
 WHERE id_cliente = ?");
     $sentencia->bind_param("si", $estado, $id);
     $sentencia->execute();
-    echo '<script>toastr.error("Cliente Inactivo")</script>';
+    echo '<script>toastr.success("Cliente Activo")</script>';
     header("refresh: 1; url=listar.php");
 }

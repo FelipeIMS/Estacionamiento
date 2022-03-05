@@ -198,7 +198,7 @@ $espacios2= mysqli_fetch_array($result2);
                         <form method="POST" action="insert_ficha.php" class="">
                             <div class="form-group">
                                 <label>Busqueda de Clientes</label>
-                                <input class="form-control" id="search" type="text" name="patente" />
+                                <input class="form-control" id="search" type="text" name="patente" autofocus=TRUE />
 
                             </div>
                             <div class="form-floating mt-4">
@@ -229,7 +229,7 @@ $espacios2= mysqli_fetch_array($result2);
         $("#search").autocomplete({
             source: 'search.php',
             cache:false,
-            minLength: 1,
+            minLength: 2,
         });
     });
 </script>
@@ -249,6 +249,7 @@ $espacios2= mysqli_fetch_array($result2);
                 success: function(data) {
                     $("#employee_detail").html(data);
                     $("#dataModal").modal("show");
+
                 }
             });
         });
