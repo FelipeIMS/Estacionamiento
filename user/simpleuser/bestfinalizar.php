@@ -79,9 +79,6 @@
         $resultadoTD = mysqli_query($conn, $traerTiempoDesc);
         $TD = mysqli_fetch_array($resultadoTD);
         
-        echo $TD[1];
-        echo 'a';
-        
 
         if($cliente['convenion'] == 'Sin convenio'){
             $total = $diferencia[0]*20;
@@ -99,7 +96,6 @@
             $total_condesc = $total_sindesc - $desc;
             $query7 = "UPDATE ficha SET total = $total_condesc, convenio_v = $desc where id_ficha='".$_GET["id"]."'";
             $result7 = mysqli_query($conn, $query7); 
-            echo $total_condesc;
         }
 
         #Se carga nuevamente
