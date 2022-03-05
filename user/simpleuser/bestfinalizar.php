@@ -84,15 +84,17 @@
             $total = $diferencia[0]*20;
             $query6 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
             $result6 = mysqli_query($conn, $query6); 
-        }else if(!is_int($TD[1])){
+        }else if($cliente['convenion'] == 'Gratis'){
+            $total = $TD[1]*20;
+            $query6 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
+            $result6 = mysqli_query($conn, $query6); 
+
+        }else{
+            $cambio = $TD[1]/100;
             $total_sindesc=$diferencia[0]*20;
-            $desc = $total_sindesc*$TD[1];
+            $desc = $total_sindesc*$cambio;
             $total_condesc = $total_sindesc - $desc;
             $query7 = "UPDATE ficha SET total = $total_condesc, convenio_v = $desc where id_ficha='".$_GET["id"]."'";
-            $result7 = mysqli_query($conn, $query7); 
-        }else{
-            $total=$diferencia[0]*$TD[1];
-            $query7 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
             $result7 = mysqli_query($conn, $query7); 
         }
 
@@ -141,7 +143,7 @@
                             class="form-control" type="text" name="convenio_sn" id="convenio_sn" hidden>
                         <input value="<?php echo $cliente['convenio_t'] ?> 0" placeholder="convenio_t"
                             class="form-control" type="text" name="convenio_t" id="convenio_t" hidden>
-                        <input value="<?php echo $cliente['convenio_v'] ?> 0" placeholder="convenio_t"
+                        <input value="<?php echo $cliente['convenio_v'] ?> 0" placeholder="convenio_v"
                             class="form-control" type="text" name="convenio_v" id="convenio_v" hidden>
                     </div>
                     <label class="mt-3" for="convenio" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>

@@ -36,7 +36,7 @@ if (!$cliente3) {
 
 #cambiar valores a null
 
-$restaurar = $conn->prepare("UPDATE ficha  SET termino= null, user_ficha_out = null, total= null, diferencia = null WHERE id_ficha= ?");
+$restaurar = $conn->prepare("UPDATE ficha  SET termino= null, user_ficha_out = null, total= null, diferencia = null, convenio_v= null WHERE id_ficha= ?");
 $restaurar->bind_param("i", $id);
 $restaurar->execute();
 
