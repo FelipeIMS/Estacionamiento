@@ -14,6 +14,9 @@
 
     $id = $_GET["id"];
 
+    $resultadoB = $conn->query("SELECT * FROM beneficios ORDER BY nombre_beneficio");
+    $tB = mysqli_num_rows($resultadoB);
+
     $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, convenios.tiempo,ficha.estado, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v from ficha
     inner join vehiculo on vehiculo.patente = ficha.patente
     inner join cliente on cliente.id_cliente = vehiculo.cliente
@@ -49,26 +52,6 @@
         $diferencia = mysqli_fetch_array($result5);
         $query6 = "UPDATE ficha SET diferencia = $diferencia[0] where id_ficha='".$_GET["id"]."'";
         $result6 = mysqli_query($conn, $query6); 
-
-        
-        // $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, ficha.convenio_sn, ficha.convenio_t from ficha
-        // inner join vehiculo on vehiculo.patente = ficha.patente
-        // inner join cliente on cliente.id_cliente = vehiculo.cliente
-        // inner join area on area.id_area = cliente.area
-        // inner join convenios on cliente.convenio = convenios.id_convenio
-        // WHERE id_ficha = ?");
-        // $sentencia->bind_param("i", $id);
-        // $sentencia->execute();
-        // $resultado = $sentencia->get_result();
-
-
-
-        // # Obtenemos solo una fila, que será el CLIENTE a editar
-        // $cliente = $resultado->fetch_assoc();
-        // if (!$cliente) {
-        //     exit("No hay resultados para ese ID");
-        // }
-
 
         $traerTiempoDesc = "SELECT id_ficha,convenios.tiempo as tiempo_c from ficha
         inner join vehiculo on vehiculo.patente = ficha.patente
@@ -127,34 +110,54 @@
                     <input type="hidden" name="id" value="<?php echo $cliente["id_ficha"] ?>">
                     <div class="form-group">
                         <label for="nombre">ENTRADA: </label>
-                        <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente["inicio"] ?>" placeholder="entrada" class="form-control"
-                            type="text" name="entrada" id="entrada">
+                        <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente["inicio"] ?>"
+                            placeholder="entrada" class="form-control" type="text" name="entrada" id="entrada">
                     </div>
                     <div class="form-group">
                         <label for="nombre">SALIDA: </label>
-                        <input disabled class="text-center mt-3 w-50" value="<?php  echo $cliente["termino"] ?>" placeholder="termino" class="form-control"
-                            type="text" name="termino" id="termino">
+                        <input disabled class="text-center mt-3 w-50" value="<?php  echo $cliente["termino"] ?>"
+                            placeholder="termino" class="form-control" type="text" name="termino" id="termino">
                     </div>
                     <div class="form-group">
                         <label for="nombre">TIEMPO: </label>
-                        <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente['diferencia'] ?>" placeholder="entrada"
-                            class="form-control" type="text" name="diferencia" id="diferencia">
+                        <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente['diferencia'] ?>"
+                            placeholder="entrada" class="form-control" type="text" name="diferencia" id="diferencia">
                         <input value="<?php echo $cliente['convenion'] ?>" placeholder="convenio si/no"
-                            class="form-control" type="text" name="convenio_sn" id="convenio_sn" hidden>
+                            class="form-control" type="text" name="convenio_sn" id="convenio_sn" >
                         <input value="<?php echo $cliente['convenio_t'] ?> 0" placeholder="convenio_t"
                             class="form-control" type="text" name="convenio_t" id="convenio_t" hidden>
                         <input value="<?php echo $cliente['convenio_v'] ?> 0" placeholder="convenio_v"
                             class="form-control" type="text" name="convenio_v" id="convenio_v" hidden>
                     </div>
-                    <label class="mt-3" for="convenio" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
+
+
+                    <div class="form-group">
+                            <label for="descripcion">Beneficio: </label>
+                            <select class="w-25 mt-3" id="beneficio" name="beneficio">
+                                <option value="Sin beneficio">Sin beneficio</option>
+                                <?php
+    
+                                    if ($tB >= 1) {
+                                        while ($row = $resultadoB->fetch_object()) {
+                                    ?>
+                                        
+                                        <option value="<?php echo $row->nombre_beneficio ?>"><?php echo $row->nombre_beneficio ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                            </select>
+                            <button type="button" class="btn btn-primary" onclick='aplicacion.select()'>Aplicar descuento</button>
+                    </div>
+                    <!-- <label class="mt-3" for="convenio" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
                         style="display: none;" <?php   } ?>>Hospitalizado</label>
                     <input class="mt-3 text-center" id="checkbox" type="checkbox" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
-                        style="display: none;" <?php   } ?>>
+                        style="display: none;" <?php   } ?>> -->
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="nombre">Total</label>
-                <input class="text-center" id="total" name="total" value="<?php echo $cliente["total"] ?>" placeholder=""
-                    class="form-control" type="text" readonly>
+                <input class="text-center" id="total" name="total" value="<?php echo $cliente["total"] ?>"
+                    placeholder="" class="form-control" type="text" readonly>
             </div>
         </div>
         <div class="card-footer text-muted">
@@ -163,7 +166,7 @@
                 <a class="btn btn-danger" href="cancelar.php?id=<?php echo $cliente["id_ficha"] ?>">Cancelar</a>
             </div>
         </div>
-    </form>
+        </form>
     </div>
     </div>
 
@@ -171,7 +174,7 @@
 <?php include('footer.php'); ?>
 
 
-<script>
+<!-- <script>
 function on() {
     console.log(" on");
 }
@@ -210,6 +213,23 @@ function comprueba() {
         $("#total").val(total);
     }
 }
-</script>
+</script> -->
 
+<script>
+    const aplicacion = new function(){
+        this.beneficio = document.getElementById("beneficio");
+        this.convenio_sn = document.getElementById("convenio_sn");
+
+
+        this.select = ()=>{
+            console.log(beneficio.value);
+            $("#convenio_sn").val(beneficio.value);
+        }
+    }
+
+
+
+
+
+</script>
 </html>
