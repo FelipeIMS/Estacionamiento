@@ -14,9 +14,6 @@
 
     $id = $_GET["id"];
 
-    $resultadoB = $conn->query("SELECT * FROM beneficios ORDER BY nombre_beneficio");
-    $tB = mysqli_num_rows($resultadoB);
-
     $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, convenios.tiempo,ficha.estado, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v from ficha
     inner join vehiculo on vehiculo.patente = ficha.patente
     inner join cliente on cliente.id_cliente = vehiculo.cliente
@@ -129,30 +126,10 @@
                         <input value="<?php echo $cliente['convenio_v'] ?> 0" placeholder="convenio_v"
                             class="form-control" type="text" name="convenio_v" id="convenio_v" hidden>
                     </div>
-
-
-                    <div class="form-group">
-                            <label for="descripcion">Beneficio: </label>
-                            <select class="w-25 mt-3" id="beneficio" name="beneficio">
-                                <option value="Sin beneficio">Sin beneficio</option>
-                                <?php
-    
-                                    if ($tB >= 1) {
-                                        while ($row = $resultadoB->fetch_object()) {
-                                    ?>
-                                        
-                                        <option value="<?php echo $row->nombre_beneficio ?>"><?php echo $row->nombre_beneficio ?></option>
-                                    <?php
-                                        }
-                                    }
-                                    ?>
-                            </select>
-                            <button type="button" class="btn btn-primary" onclick='aplicacion.select()'>Aplicar descuento</button>
-                    </div>
-                    <!-- <label class="mt-3" for="convenio" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
+                    <label class="mt-3" for="convenio" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
                         style="display: none;" <?php   } ?>>Hospitalizado</label>
                     <input class="mt-3 text-center" id="checkbox" type="checkbox" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
-                        style="display: none;" <?php   } ?>> -->
+                        style="display: none;" <?php   } ?>>
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="nombre">Total</label>
@@ -174,7 +151,7 @@
 <?php include('footer.php'); ?>
 
 
-<!-- <script>
+<script>
 function on() {
     console.log(" on");
 }
@@ -213,23 +190,5 @@ function comprueba() {
         $("#total").val(total);
     }
 }
-</script> -->
-
-<script>
-    const aplicacion = new function(){
-        this.beneficio = document.getElementById("beneficio");
-        this.convenio_sn = document.getElementById("convenio_sn");
-
-
-        this.select = ()=>{
-            console.log(beneficio.value);
-            $("#convenio_sn").val(beneficio.value);
-        }
-    }
-
-
-
-
-
 </script>
 </html>
