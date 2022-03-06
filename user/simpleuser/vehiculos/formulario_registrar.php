@@ -15,12 +15,12 @@ $t3 = mysqli_num_rows($resultado3);
             <form action="registrar.php" method="POST">
                 <div class="form-group mb-3">
                     <label for="nombre">Patente</label>
-                    <input placeholder="" class="form-control" type="text" name="patente" id="patente">
+                    <input placeholder="" class="form-control" type="text" name="patente" id="patente"   minlength="9" maxlength="8" size="10" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="descripcion">Tipo Vehiculo</label>
 
-                    <select class="form-select" id="tipo" name="tipo">
+                    <select class="form-select" id="tipo" name="tipo" required>
                         <?php
 
                         if ($t >= 1) {
@@ -36,7 +36,7 @@ $t3 = mysqli_num_rows($resultado3);
                 <div class="form-group mb-3">
                     <label for="descripcion">Marca</label>
 
-                    <select class="form-select" id="marca" name="marca">
+                    <select class="form-select" id="marca" name="marca" required>
                         <?php
 
                         if ($t2 >= 1) {
@@ -52,7 +52,7 @@ $t3 = mysqli_num_rows($resultado3);
                 <div class="form-group mb-3">
                     <label for="descripcion">Cliente</label>
 
-                    <select class="form-select" id="cliente" name="cliente">
+                    <select class="form-select" id="cliente" name="cliente" required>
                         <?php
 
                         if ($t3 >= 1) {

@@ -42,7 +42,7 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
         <div id="wrapper" class="col-12">
             <a class="btn btn-success my-2" href="formulario_registrar.php"><i class="fa-solid fa-plus"></i></a>
             <a class="btn btn-warning my-2" style="float:right" href="../index.php"><i class="fa-solid fa-arrow-left"></i></a>
-            <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Buscar...." >
+            <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Buscar....">
 
             <table id="tabla" class="table">
                 <thead>
@@ -63,16 +63,14 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
                     foreach ($clientes as $cliente) { ?>
                         <tr>
                             <td>
-
-                                <?php if ($cliente["estado"] == "Activo") { ?>
-                                    <a class="btn btn-danger" href="eliminar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-circle-xmark"></i></i></a>
-
-                                <?php } ?>
-                                <?php if ($cliente["estado"] == "Inactivo") { ?>
-                                    <a class="btn btn-success" href="activar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-check"></i></a>
-
-                                <?php } ?>
-
+                                <?php
+                                switch ($cliente["estado"]) : case 'Activo': ?>
+                                      <a class="btn btn-danger" href="eliminar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-circle-xmark"></i></a>
+                                      <?php break; ?>
+                                      <?php case 'Inactivo': ?>
+                                       <a class="btn btn-success" href="activar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-check"></i></a>
+                                       <?php break; ?>
+                                       <?php endswitch; ?>
                                 <a class="btn btn-warning" href="editar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
 
                             </td>
@@ -95,19 +93,21 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
 </div>
 <?php include_once "pie.php" ?>
 <script>
-  const myFunction = () => {
-  const trs = document.querySelectorAll('#tabla tr:not(.header)')
-  const filter = document.querySelector('#myInput').value
-  const regex = new RegExp(filter, 'i')
-  const isFoundInTds = td => regex.test(td.innerHTML)
-  const isFound = childrenArr => childrenArr.some(isFoundInTds)
-  const setTrStyleDisplay = ({ style, children }) => {
-    style.display = isFound([
-      ...children // <-- All columns
-    ]) ? '' : 'none' 
-  }
-  
-  trs.forEach(setTrStyleDisplay)
-}
-    
+    const myFunction = () => {
+        const trs = document.querySelectorAll('#tabla tr:not(.header)')
+        const filter = document.querySelector('#myInput').value
+        const regex = new RegExp(filter, 'i')
+        const isFoundInTds = td => regex.test(td.innerHTML)
+        const isFound = childrenArr => childrenArr.some(isFoundInTds)
+        const setTrStyleDisplay = ({
+            style,
+            children
+        }) => {
+            style.display = isFound([
+                ...children // <-- All columns
+            ]) ? '' : 'none'
+        }
+
+        trs.forEach(setTrStyleDisplay)
+    }
 </script>

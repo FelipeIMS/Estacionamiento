@@ -1,16 +1,16 @@
 <?php include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
-$resultado = $mysqli->query("SELECT * FROM area ORDER BY nombre_area");
+include 'settings.php';
+$resultado = $conn->query("SELECT * FROM area ORDER BY id_area");
 $t = mysqli_num_rows($resultado);
 
-$resultado2 = $mysqli->query("SELECT * FROM convenios ORDER BY nombre_convenio");
+$resultado2 = $conn->query("SELECT * FROM convenios ORDER BY id_convenio");
 $t2 = mysqli_num_rows($resultado2);
 ?>
 <div class="container">
     <div class="row">
         <div class="col-12">
             <h1 class="text-center">Registrar Cliente</h1>
-            <form action="registrar.php" method="POST">
+            <form action="registrar_cliente.php" method="POST">
                 <div class="form-group mb-3">
                     <label for="nombre">RUT</label>
                     <input placeholder="" class="form-control" type="text" name="rut" id="rut" oninput="checkRut(this)">
@@ -65,7 +65,7 @@ $t2 = mysqli_num_rows($resultado2);
 
                 <div class="form-group">
                     <button class="btn btn-success">Guardar</button>
-                    <a href="listar.php" class="btn btn-warning" style="float: right;">Atras</a>
+                    <a href="listar_cliente.php" class="btn btn-warning" style="float: right;">Atras</a>
                 </div>
 
 

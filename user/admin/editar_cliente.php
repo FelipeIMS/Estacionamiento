@@ -1,18 +1,18 @@
 <?php
 include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
+include 'settings.php';
 $id = $_GET["id"];
-$sentencia = $mysqli->prepare("SELECT * FROM cliente
+$sentencia = $conn->prepare("SELECT * FROM cliente
 INNER JOIN area on area.id_area = cliente.area
 INNER JOIN convenios on convenios.id_convenio=cliente.convenio WHERE id_cliente = ?");
 $sentencia->bind_param("i", $id);
 $sentencia->execute();
 $resultado = $sentencia->get_result();
 
-$resultado2 = $mysqli->query("SELECT * FROM area ORDER BY nombre_area");
+$resultado2 = $conn->query("SELECT * FROM area ORDER BY id_area");
 $t2 = mysqli_num_rows($resultado2);
 
-$resultado3 = $mysqli->query("SELECT * FROM convenios ORDER BY nombre_convenio");
+$resultado3 = $conn->query("SELECT * FROM convenios ORDER BY id_convenio");
 $t3 = mysqli_num_rows($resultado3);
 # Obtenemos solo una fila, que será el CLIENTE a editar
 $cliente = $resultado->fetch_assoc();
@@ -21,18 +21,19 @@ if (!$cliente) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Cliente</title>
 </head>
 
 <body>
     <div class="container">
         <h1 class="text-center">Actualizar Cliente</h1>
-        <form action="actualizar.php" method="POST">
+        <form action="actualizar_cliente.php" method="POST">
             <input type="hidden" name="id" value="<?php echo $cliente["id_cliente"] ?>">
             <div class="form-group">
                 <label for="nombre">RUT</label>
@@ -73,9 +74,8 @@ if (!$cliente) {
             <div class="form-group mb-3">
                 <label for="descripcion">Convenio</label>
 
-                <select class="form-select" id="convenio" name="convenio" value="<?php echo $cliente["convenio"] ?>">
+                <select class="form-select" value="<?php echo $cliente["convenio"] ?>" id="convenio" name="convenio" >
                     <?php
-
                     if ($t3 >= 1) {
                         while ($row = $resultado3->fetch_object()) {
                     ?>
@@ -88,7 +88,7 @@ if (!$cliente) {
             </div>
             <div class="form-group">
                 <button class="btn btn-success">Guardar</button>
-                <a class="btn btn-warning" href="listar.php">Volver</a>
+                <a class="btn btn-warning" href="listar_cliente.php">Volver</a>
             </div>
         </form>
 

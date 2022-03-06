@@ -8,11 +8,11 @@ $mysqli = include_once "conexion.php";
             <form action="registrar.php" method="POST">
                 <div class="form-group mb-3">
                     <label for="nombre">Nombre convenio</label>
-                    <input placeholder="" class="form-control" type="text" name="nombreconvenio" id="nombreconvenio">
+                    <input placeholder="" class="form-control" type="text" name="nombreconvenio" id="nombreconvenio" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="nombre"> % Descuento </label>
-                    <input placeholder="" class="form-control" type="number" name="descuento" id="descuento">
+                    <input placeholder="" class="form-control" type="number" name="descuento" id="descuento" required>
                 </div>
     
 
