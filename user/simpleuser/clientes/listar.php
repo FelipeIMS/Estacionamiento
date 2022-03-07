@@ -4,6 +4,7 @@ $mysqli = include_once "conexion.php";
 $resultado = $mysqli->query("SELECT * FROM cliente
 INNER JOIN area on area.id_area = cliente.area
 INNER JOIN convenios on convenios.id_convenio=cliente.convenio
+INNER JOIN cargo ON cargo.id_cargo=cliente.cargo
 ORDER BY id_cliente");
 $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
 ?>
@@ -55,6 +56,7 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
                         <th>Area</th>
                         <th>Estado</th>
                         <th>Convenio</th>
+                        <th>Cargo</th>
 
                     </tr>
                 </thead>
@@ -82,7 +84,7 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
                             <td><?php echo $cliente["nombre_area"] ?></td>
                             <td><?php echo $cliente["estado"] ?></td>
                             <td><?php echo $cliente["nombre_convenio"] ?></td>
-
+                            <td><?php echo $cliente["nombre_cargo"] ?></td>
 
                         </tr>
                     <?php } ?>

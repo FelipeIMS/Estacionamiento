@@ -252,6 +252,7 @@ $espacios2 = mysqli_fetch_array($result2);
         });
     </script>
 
+
 </body>
 
 </html>

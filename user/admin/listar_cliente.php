@@ -45,7 +45,7 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
             <a class="btn btn-warning my-2" style="float:right" href="index.php"><i class="fa-solid fa-arrow-left"></i></a>
             <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Buscar...." >
 
-            <a class="btn btn-success my-2" style="float:center" href="exportar_cliente.php"><i class="fa-solid fa-file-excel"></i></a>
+            <a class="btn btn-success my-2" style="float:center" href="exportar_clientes.php"><i class="fa-solid fa-file-excel"></i></a>
 
             <table id="tabla" class="table">
                 <thead>
