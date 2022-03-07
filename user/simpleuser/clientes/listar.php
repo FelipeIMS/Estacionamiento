@@ -8,6 +8,7 @@ INNER JOIN cargo ON cargo.id_cargo=cliente.cargo
 ORDER BY id_cliente");
 $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
 ?>
+
 <div class="container">
     <style>
         #wrapper {
@@ -65,14 +66,7 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
                     foreach ($clientes as $cliente) { ?>
                         <tr>
                             <td>
-                                <?php
-                                switch ($cliente["estado"]) : case 'Activo': ?>
-                                      <a class="btn btn-danger" href="eliminar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-circle-xmark"></i></a>
-                                      <?php break; ?>
-                                      <?php case 'Inactivo': ?>
-                                       <a class="btn btn-success" href="activar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-check"></i></a>
-                                       <?php break; ?>
-                                       <?php endswitch; ?>
+                             
                                 <a class="btn btn-warning" href="editar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
 
                             </td>

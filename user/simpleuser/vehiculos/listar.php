@@ -11,7 +11,7 @@ ORDER BY id_vehiculo ASC");
 $vehiculos = $resultado->fetch_all(MYSQLI_ASSOC);
 ?>
 <div class="container">
-<style>
+    <style>
         #wrapper {
             width: 100%;
         }
@@ -64,14 +64,6 @@ $vehiculos = $resultado->fetch_all(MYSQLI_ASSOC);
                     <tr>
                         <td>
 
-                            <?php if ($vehiculo["estado_v"] == "Activo") { ?>
-                                <a class="btn btn-danger" href="eliminar.php?id=<?php echo $vehiculo["id_vehiculo"] ?>"><i class="fa-solid fa-circle-xmark"></i></i></a>
-
-                            <?php } ?>
-                            <?php if ($vehiculo["estado_v"] == "Inactivo") { ?>
-                                <a class="btn btn-success" href="activar.php?id=<?php echo $vehiculo["id_vehiculo"] ?>"><i class="fa-solid fa-check"></i></a>
-
-                            <?php } ?>
 
 
                             <a class="btn btn-warning" href="editar.php?id=<?php echo $vehiculo["id_vehiculo"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
@@ -81,7 +73,7 @@ $vehiculos = $resultado->fetch_all(MYSQLI_ASSOC);
                         <td><?php echo $vehiculo["patente"] ?></td>
                         <td><?php echo $vehiculo["nombre_tpv"] ?></td>
                         <td><?php echo $vehiculo["nombre_marca"] ?></td>
-                        <td><?php echo $vehiculo["nombres"]?></td>
+                        <td><?php echo $vehiculo["nombres"] ?></td>
                         <td><?php echo $vehiculo["estado_v"] ?></td>
 
 
