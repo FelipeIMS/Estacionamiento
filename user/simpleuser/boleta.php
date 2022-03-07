@@ -34,7 +34,6 @@ $printer = new Printer($connector);
 	el salto de línea o llamar muchas
 	veces a $printer->text()
 */
-$printer->text("felipe se la come");
  
 /*
 	Hacemos que el papel salga. Es como 

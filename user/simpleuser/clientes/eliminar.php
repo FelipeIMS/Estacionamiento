@@ -11,7 +11,7 @@ INNER JOIN cliente ON cliente.id_cliente = vehiculo.cliente
 WHERE  ficha.estado='$estaoficha'  and cliente.id_cliente='$id'");
 
 if (mysqli_num_rows($wea) > 0) {
-    echo '<script>toastr.error("LLegue aqui ")</script>';
+    echo '<script>toastr.error("Cliente tiene ficha pendiente de pago ")</script>';
     header("refresh: 1; url=listar.php");
 } else {
     $sentencia = $mysqli->prepare("UPDATE cliente SET

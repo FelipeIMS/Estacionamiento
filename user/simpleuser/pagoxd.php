@@ -16,7 +16,7 @@
     $convenio_sn = $_POST["convenio_sn"];
     $convenio_t = $_POST["convenio_t"];
     $convenio_v = $_POST["convenio_v"];
-  
+
 
 
     #llamamos a toda la ficha para poder activar al cliente al momento de pagar.
@@ -71,11 +71,11 @@ WHERE id_ficha = ?");
     icon: 'success',
     title: 'Pago realizado correctamente',
     showConfirmButton: false,
-    timer: 2000
+    timer: 1000
   });</script>";
     echo '<script type="text/JavaScript"> setTimeout(function(){
    window.location="index.php";
-}, 2000); </script>';
+}, 1000); </script>';
 
 
     ?>
@@ -115,22 +115,16 @@ WHERE id_ficha = ?");
      el salto de línea o llamar muchas
      veces a $printer->text()
  */
-
     $printer->text(" Clinica Lircay" . "\n");
-    $printer->text("Voucher Salida" . "\n");
-    #La fecha también
-    $printer->text(date("Y-m-d H:i:s") . "\n");
-
-
-
+    $printer->text("Ticket  Salida" . "\n");
     $printer->setJustification(Printer::JUSTIFY_LEFT);
 
-    $printer->text("ID: " . $id . "\n");
-    $printer->text("Patente: " .$cliente3['patente']  . "\n");
-    $printer->text("Minutos: " .$cliente3['diferencia']  . "\n");
-    $printer->text("Inicio: " .$cliente3['inicio']  . "\n");
-    $printer->text("Termino: " .$cliente3['termino'] . "\n");
+    $printer->text("Boleta N°: " . $id . "\n");
+    $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+    $printer->text("Termino: " . $cliente3['termino'] . "\n");
+    $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
     $printer->text("TOTAL: $" . $pago . "\n");
+
 
     /*
      Hacemos que el papel salga. Es como 
@@ -138,7 +132,7 @@ WHERE id_ficha = ?");
  */
     $printer->feed();
 
-    
+
 
     /*
      Cortamos el papel. Si nuestra impresora
