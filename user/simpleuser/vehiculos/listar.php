@@ -1,11 +1,13 @@
 <?php
 include_once "encabezado.php";
 $mysqli = include_once "conexion.php";
-$resultado = $mysqli->query("SELECT * FROM vehiculo
+$resultado = $mysqli->query("SELECT CONCAT(cliente.nombre_cliente,' ',cliente.apellido_cliente) as nombres,vehiculo.id_vehiculo,vehiculo.patente,tipo_vehiculo.nombre_tpv,marca_vehiculo.nombre_marca,vehiculo.estado_v FROM vehiculo
 INNER JOIN marca_vehiculo ON marca_vehiculo.id_mv=vehiculo.marca_vehiculo
 INNER JOIN tipo_vehiculo ON tipo_vehiculo.id_tpv = vehiculo.tipo_vehiculo
 INNER JOIN cliente ON  cliente.id_cliente=vehiculo.cliente
 ORDER BY id_vehiculo ASC");
+
+
 $vehiculos = $resultado->fetch_all(MYSQLI_ASSOC);
 ?>
 <div class="container">
@@ -79,7 +81,7 @@ $vehiculos = $resultado->fetch_all(MYSQLI_ASSOC);
                         <td><?php echo $vehiculo["patente"] ?></td>
                         <td><?php echo $vehiculo["nombre_tpv"] ?></td>
                         <td><?php echo $vehiculo["nombre_marca"] ?></td>
-                        <td><?php echo $vehiculo["nombre_cliente"] ?></td>
+                        <td><?php echo $vehiculo["nombres"]?></td>
                         <td><?php echo $vehiculo["estado_v"] ?></td>
 
 

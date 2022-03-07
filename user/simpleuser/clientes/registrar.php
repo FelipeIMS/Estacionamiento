@@ -8,6 +8,8 @@ $apellidos = $_POST["apellidos"];
 $area = $_POST["area"];
 $estado = $_POST["estado"];
 $convenio = $_POST["convenio"];
+$cargo = $_POST["cargo"];
+
 if (!empty($_POST)) {
     
     $resultado = $mysqli->query("SELECT * FROM cliente  WHERE nombre_cliente ='$nombre'");
@@ -16,10 +18,10 @@ if (!empty($_POST)) {
         header("refresh: 1; url=formulario_registrar.php");
     }else{
         $sentencia = $mysqli->prepare("INSERT INTO cliente
-        (rut, nombre_cliente,apellido_cliente,area,estado,convenio)
+        (rut, nombre_cliente,apellido_cliente,area,estado,convenio,cargo)
         VALUES
-        (?, ?,?,?,?,?)");
-        $sentencia->bind_param("ssssss", $rut, $nombre, $apellidos, $area, $estado, $convenio);
+        (?, ?,?,?,?,?,?)");
+        $sentencia->bind_param("sssssss", $rut, $nombre, $apellidos, $area, $estado, $convenio,$cargo);
         $sentencia->execute();
         echo '<script>toastr.success("Cliente Registrado")</script>';
         header("refresh: 1; url=listar.php");

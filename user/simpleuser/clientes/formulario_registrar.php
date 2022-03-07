@@ -1,9 +1,9 @@
 <?php include_once "encabezado.php";
 $mysqli = include_once "conexion.php";
-$resultado = $mysqli->query("SELECT * FROM area ORDER BY nombre_area");
+$resultado = $mysqli->query("SELECT * FROM area ORDER BY id_area ASC");
 $t = mysqli_num_rows($resultado);
 
-$resultado2 = $mysqli->query("SELECT * FROM convenios ORDER BY nombre_convenio");
+$resultado2 = $mysqli->query("SELECT * FROM convenios ORDER BY id_convenio ASC");
 $t2 = mysqli_num_rows($resultado2);
 $resultado3 = $mysqli->query("SELECT * FROM cargo ORDER BY id_cargo ASC");
 $t3 = mysqli_num_rows($resultado3);
@@ -44,7 +44,7 @@ $t3 = mysqli_num_rows($resultado3);
                 <div class="form-group mb-3">
                     <label for="descripcion">Cargo</label>
 
-                    <select class="form-select" id="area" name="area">
+                    <select class="form-select" id="cargo" name="cargo">
                         <?php
 
                         if ($t3 >= 1) {
