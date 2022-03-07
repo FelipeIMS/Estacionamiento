@@ -21,7 +21,7 @@ if (!empty($_POST)) {
         (?, ?,?,?,?,?)");
         $sentencia->bind_param("ssssss", $rut, $nombre, $apellidos, $area, $estado, $convenio);
         $sentencia->execute();
-        echo '<script>toastr.sucess("Cliente Registrado")</script>';
+        echo '<script>toastr.success("Cliente Registrado")</script>';
         header("refresh: 1; url=listar.php");
     }
 

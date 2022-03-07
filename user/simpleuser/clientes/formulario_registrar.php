@@ -5,6 +5,8 @@ $t = mysqli_num_rows($resultado);
 
 $resultado2 = $mysqli->query("SELECT * FROM convenios ORDER BY nombre_convenio");
 $t2 = mysqli_num_rows($resultado2);
+$resultado3 = $mysqli->query("SELECT * FROM cargo ORDER BY id_cargo ASC");
+$t3 = mysqli_num_rows($resultado3);
 ?>
 <div class="container">
     <div class="row">
@@ -33,6 +35,22 @@ $t2 = mysqli_num_rows($resultado2);
                             while ($row = $resultado->fetch_object()) {
                         ?>
                                 <option value="<?php echo $row->id_area ?>"><?php echo $row->nombre_area ?></option>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="descripcion">Cargo</label>
+
+                    <select class="form-select" id="area" name="area">
+                        <?php
+
+                        if ($t3 >= 1) {
+                            while ($row = $resultado3->fetch_object()) {
+                        ?>
+                                <option value="<?php echo $row->id_cargo ?>"><?php echo $row->nombre_cargo ?></option>
                         <?php
                             }
                         }
