@@ -114,7 +114,7 @@ WHERE id_ficha = ?");
 
 
     try{
-        $logo = EscposImage::load("logo.png", false);
+        $logo = EscposImage::load("./Logo/lircay-logo.png", false);
         $printer->bitImage($logo);
     }catch(Exception $e){/*No hacemos nada si hay error*/}
      
@@ -138,7 +138,7 @@ WHERE id_ficha = ?");
      Hacemos que el papel salga. Es como 
      dejar muchos saltos de línea sin escribir nada
  */
-    $printer->feed(8);
+    $printer->feed(10);
 
 
 
