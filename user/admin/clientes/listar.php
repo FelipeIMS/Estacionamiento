@@ -43,9 +43,15 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
         </div>
         <div id="wrapper" class="col-12">
             <a class="btn btn-success my-2" href="formulario_registrar.php"><i class="fa-solid fa-plus"></i></a>
+            <form action="reporte.php" method="post">
+                <button type="submit" class="btn btn-success" name="enviar"><i class="fa-solid fa-file-excel"></i></button>
+            </form>
             <a class="btn btn-warning my-2" style="float:right" href="../index.php"><i class="fa-solid fa-arrow-left"></i></a>
             <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Buscar....">
 
+            <form action="reporte.php" method="POST">
+
+            </form>
             <table id="tabla" class="table">
                 <thead>
                     <tr class="header">
@@ -66,7 +72,7 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
                     foreach ($clientes as $cliente) { ?>
                         <tr>
                             <td>
-                             
+
                                 <a class="btn btn-warning" href="editar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
 
                             </td>
