@@ -16,6 +16,7 @@
     $convenio_sn = $_POST["convenio_sn"];
     $convenio_t = $_POST["convenio_t"];
     $convenio_v = $_POST["convenio_v"];
+    $sii = $_POST["sii"];
 
 
 
@@ -62,8 +63,8 @@ WHERE id_ficha = ?");
 
     #Hacemos el update a los campos convenios_sn y convenios_t
 
-    $estado_pago = $conn->prepare("UPDATE ficha  SET convenio_sn= ?, convenio_t= ?, convenio_v= ?, fecha_pago = now()  WHERE id_ficha= ?;");
-    $estado_pago->bind_param("siii", $convenio_sn, $convenio_t, $convenio_v, $id);
+    $estado_pago = $conn->prepare("UPDATE ficha  SET convenio_sn= ?, convenio_t= ?, convenio_v= ?, fecha_pago = now(), boleta_sii = ?  WHERE id_ficha= ?;");
+    $estado_pago->bind_param("siiii", $convenio_sn, $convenio_t, $convenio_v, $sii,$id);
     $estado_pago->execute();
 
     echo "<script>  Swal.fire({

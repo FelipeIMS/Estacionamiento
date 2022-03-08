@@ -97,7 +97,7 @@
     }
 
     ?>
-    <div class="container mt-5 ">
+    <div class="container mt-5  w-25">
         <div class="card text-center">
             <div class="card-header">
                 PAGO Cliente
@@ -120,7 +120,7 @@
                         <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente['diferencia'] ?>"
                             placeholder="entrada" class="form-control" type="text" name="diferencia" id="diferencia">
                         <input value="<?php echo $cliente['convenion'] ?>" placeholder="convenio si/no"
-                            class="form-control" type="text" name="convenio_sn" id="convenio_sn" >
+                            class="form-control" type="text" name="convenio_sn" id="convenio_sn" hidden>
                         <input value="<?php echo $cliente['convenio_t'] ?> 0" placeholder="convenio_t"
                             class="form-control" type="text" name="convenio_t" id="convenio_t" hidden>
                         <input value="<?php echo $cliente['convenio_v'] ?> 0" placeholder="convenio_v"
@@ -135,6 +135,10 @@
                 <label for="nombre">Total</label>
                 <input class="text-center" id="total" name="total" value="<?php echo $cliente["total"] ?>"
                     placeholder="" class="form-control" type="text" readonly>
+            </div>
+            <div class="form-group mt-3 mb-3">
+                <label for="nombre">Boleta SII</label>
+                <input  type="number" class="" id="sii" name="sii" placeholder="Ingrese Nro boleta" class="form-control"  required>
             </div>
         </div>
         <div class="card-footer text-muted">
