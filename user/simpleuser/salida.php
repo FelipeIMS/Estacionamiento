@@ -59,10 +59,20 @@ $printer->text("Ticket  Salida" . "\n");
 $printer->setJustification(Printer::JUSTIFY_LEFT);
 
 $printer->text("Boleta N°: " . $id . "\n");
+$printer->text("\n");
+
 $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+$printer->text("\n");
+
 $printer->text("Termino: " . $cliente3['termino'] . "\n");
+$printer->text("\n");
+
 $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
+$printer->text("\n");
+
 $printer->text("TOTAL: $" . $cliente3['total'] . "\n");
+$printer->text("\n");
+
 $printer->text("\n");
 
 
@@ -70,18 +80,6 @@ $printer->text("\n");
      Hacemos que el papel salga. Es como 
      dejar muchos saltos de línea sin escribir nada
  */
-$printer->feed(6);
-
-$printer->text(" Clinica Lircay" . "\n");
-$printer->text("Ticket  Salida" . "\n");
-$printer->setJustification(Printer::JUSTIFY_LEFT);
-
-$printer->text("Boleta N°: " . $id . "\n");
-$printer->text("Inicio: " . $cliente3['inicio']  . "\n");
-$printer->text("Termino: " . $cliente3['termino'] . "\n");
-$printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
-$printer->text("TOTAL: $" . $cliente3['total'] . "\n");
-$printer->text("\n");
 $printer->feed(6);
 
 /*

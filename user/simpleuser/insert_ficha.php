@@ -106,7 +106,7 @@ $printer->text("Inicio: " . $row['inicio']  . "\n");
      Hacemos que el papel salga. Es como 
      dejar muchos saltos de línea sin escribir nada
  */
-$printer->feed(10);
+$printer->feed(8);
 
 
 
