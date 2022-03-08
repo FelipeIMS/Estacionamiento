@@ -112,7 +112,7 @@ $espacios2 = mysqli_fetch_array($result2);
                                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Generar
                                     reporte</span></a>
                         </li>
-                        
+
                         <li>
                             <div class="dropdown mt-3">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
@@ -139,14 +139,17 @@ $espacios2 = mysqli_fetch_array($result2);
             </div>
             <div class="col py-3">
                 <div class="form-group mt-5">
-                    <input disabled
-                        class="form-control w-50 text-center position-relative top-50 start-50 translate-middle"
-                        id="contador" type="text" name="contador"
-                        value="Espacios ocupados: <?php echo $espacios2[0]; ?> de 62" />
+                    <input disabled class="form-control w-50 text-center position-relative top-50 start-50 translate-middle" id="contador" type="text" name="contador" value="Espacios ocupados: <?php echo $espacios2[0]; ?> de 62" />
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Nuevo ingreso</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Nuevo ingreso</button>
+                    <?php
+                    if ($_SESSION['permiso_voucher']=0) {
+                        echo ' <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Cargar Voucher</button>';
+                    }
+                    ?>
+
                 </div>
                 <table class="table table-bordered" id="tabla">
                     <thead>
@@ -174,25 +177,19 @@ $espacios2 = mysqli_fetch_array($result2);
                             ?>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-danger view_data" data-bs-backdrop="static"
-                                    data-bs-keyboard="false" id="<?php echo $row["id"]; ?>"><i
-                                        class="fa-brands fa-readme"></i></button>
+                                <button type="button" class="btn btn-danger view_data" data-bs-backdrop="static" data-bs-keyboard="false" id="<?php echo $row["id"]; ?>"><i class="fa-brands fa-readme"></i></button>
 
                             </td>
 
                             <td>
-                                <a class="btn btn-warning" href="bestfinalizar.php?id=<?php echo $row["id"] ?>"
-                                    <?php if ($row['estado'] == 'Pagado') { ?> style="display: none;" <?php   } ?>><i
-                                        class="fa-solid fa-cash-register"></i></a>
+                                <a class="btn btn-warning" href="bestfinalizar.php?id=<?php echo $row["id"] ?>" <?php if ($row['estado'] == 'Pagado') { ?> style="display: none;" <?php   } ?>><i class="fa-solid fa-cash-register"></i></a>
 
                             </td>
                             <td>
-                                <a class="btn btn-info" href="imprimir.php?id=<?php echo $row["id"] ?>"><i
-                                        class="fa-solid fa-print"></i></a>
+                                <a class="btn btn-info" href="imprimir.php?id=<?php echo $row["id"] ?>"><i class="fa-solid fa-print"></i></a>
 
                             </td>
-                            <td> <a class="btn btn-info" href="salida.php?id=<?php echo $row["id"] ?>"><i
-                                        class="fa-solid fa-print"></i></a>
+                            <td> <a class="btn btn-info" href="salida.php?id=<?php echo $row["id"] ?>"><i class="fa-solid fa-print"></i></a>
                             </td>
                             <td><?php echo $row["nombre_cliente"]; ?></td>
                             <td><?php echo $row["patente"]; ?></td>
@@ -205,11 +202,11 @@ $espacios2 = mysqli_fetch_array($result2);
 
 
                         </tr>
-                        <?php
+                    <?php
                             }
                     ?>
 
-                        </tr>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -226,8 +223,7 @@ $espacios2 = mysqli_fetch_array($result2);
 
 
 
-    <div class="modal fade" id="dataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true" id="dataModal">
+    <div class="modal fade" id="dataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="dataModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -239,8 +235,7 @@ $espacios2 = mysqli_fetch_array($result2);
                 </div>
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-default cancelar" id="<?php echo $row["id"]; ?>"
-                        data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-default cancelar" id="<?php echo $row["id"]; ?>" data-bs-dismiss="modal">Cerrar</button>
 
 
                 </div>
@@ -266,9 +261,7 @@ $espacios2 = mysqli_fetch_array($result2);
 
                             </div>
                             <div class="form-floating mt-4">
-                                <textarea disabled readonly class="form-control" placeholder="Leave a comment here"
-                                    id="floatingTextarea2"
-                                    style="height: 100px">° Busque por nombre o patente y luego haga click en agregar.</textarea>
+                                <textarea disabled readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">° Busque por nombre o patente y luego haga click en agregar.</textarea>
                                 <label for="floatingTextarea2">Instrucciones</label>
                             </div>
 
@@ -290,35 +283,35 @@ $espacios2 = mysqli_fetch_array($result2);
 
     <?php include('footer.php'); ?>
     <script>
-    $(document).ready(function() {
-        $("#search").autocomplete({
-            source: 'search.php',
-            cache: false,
-            minLength: 2,
+        $(document).ready(function() {
+            $("#search").autocomplete({
+                source: 'search.php',
+                cache: false,
+                minLength: 2,
+            });
         });
-    });
     </script>
     <script src="./js/datatable.js"></script>
     <script src="./js/sistema.js"></script>
     <script>
-    $(document).ready(function() {
-        $(document).on("click", ".view_data", function() {
-            //$('#dataModal').modal();
-            var employee_id = $(this).attr("id");
-            $.ajax({
-                url: "select.php",
-                method: "POST",
-                data: {
-                    employee_id: employee_id
-                },
-                success: function(data) {
-                    $("#employee_detail").html(data);
-                    $("#dataModal").modal("show");
+        $(document).ready(function() {
+            $(document).on("click", ".view_data", function() {
+                //$('#dataModal').modal();
+                var employee_id = $(this).attr("id");
+                $.ajax({
+                    url: "select.php",
+                    method: "POST",
+                    data: {
+                        employee_id: employee_id
+                    },
+                    success: function(data) {
+                        $("#employee_detail").html(data);
+                        $("#dataModal").modal("show");
 
-                }
+                    }
+                });
             });
         });
-    });
     </script>
 
 
