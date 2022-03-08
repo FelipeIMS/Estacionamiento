@@ -11,7 +11,6 @@
     <!-- <script src="./js/datatable.js"></script> -->
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
     <script src="./js/sweatAlert.js"></script>
-    <link rel="stylesheet" href="./css/sidevar.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
 </head>
 
