@@ -212,12 +212,6 @@ $espacios2 = mysqli_fetch_array($result2);
                         </tr>
                     </tbody>
                 </table>
-
-
-
-
-
-
             </div>
         </div>
     </div>

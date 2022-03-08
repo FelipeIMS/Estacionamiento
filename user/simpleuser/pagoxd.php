@@ -111,6 +111,14 @@ WHERE id_ficha = ?");
     $connector = new WindowsPrintConnector($nombre_impresora);
     $printer = new Printer($connector);
 
+
+
+    try{
+        $logo = EscposImage::load("logo.png", false);
+        $printer->bitImage($logo);
+    }catch(Exception $e){/*No hacemos nada si hay error*/}
+     
+
     /*
      Imprimimos un mensaje. Podemos usar
      el salto de línea o llamar muchas
@@ -119,7 +127,6 @@ WHERE id_ficha = ?");
     $printer->text(" Clinica Lircay" . "\n");
     $printer->text("Ticket  Salida" . "\n");
     $printer->setJustification(Printer::JUSTIFY_LEFT);
-
     $printer->text("Boleta N°: " . $id . "\n");
     $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
     $printer->text("Termino: " . $cliente3['termino'] . "\n");
@@ -131,7 +138,7 @@ WHERE id_ficha = ?");
      Hacemos que el papel salga. Es como 
      dejar muchos saltos de línea sin escribir nada
  */
-    $printer->feed();
+    $printer->feed(8);
 
 
 

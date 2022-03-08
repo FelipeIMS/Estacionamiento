@@ -51,6 +51,14 @@
                     echo '<script type="text/JavaScript"> setTimeout(function(){
                        window.location="index.php";
                     }, 2000); </script>';
+
+
+                    $selectUltimo = "SELECT * from ficha order by id_ficha desc limit 1;";
+
+                    $resultado = mysqli_query($conn, $selectUltimo);
+
+                    $row = mysqli_fetch_array($resultado);
+
                 }
 
 
@@ -84,24 +92,21 @@ $printer = new Printer($connector);
      veces a $printer->text()
  */
 $printer->text("Clinica Lircay" . "\n");
+$printer->text( "\n");
 $printer->text("Ticket  Entrada" . "\n");
+$printer->text( "\n");
 $printer->setJustification(Printer::JUSTIFY_LEFT);
+$printer->text("Boleta N°: " . $row['id_ficha'] . "\n");
+$printer->text( "\n");
+$printer->text("Inicio: " . $row['inicio']  . "\n");
 
-$printer->text("Boleta N°: " . $id . "\n");
- $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
- $printer->text( "\n");
- $printer->text( "\n");
- $printer->text( "\n");
- $printer->text( "\n");
- $printer->text( "\n");
- $printer->text( "\n");
 
 
 /*
      Hacemos que el papel salga. Es como 
      dejar muchos saltos de línea sin escribir nada
  */
-$printer->feed();
+$printer->feed(10);
 
 
 
