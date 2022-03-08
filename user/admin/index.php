@@ -19,7 +19,7 @@ $espacios2 = mysqli_fetch_array($result2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<title>Inicio</title>
+<title>Panel administrador</title>
 <link rel="stylesheet" href="./css/datatable.css">
 <?php include('header.php') ?>
 
@@ -41,28 +41,37 @@ $espacios2 = mysqli_fetch_array($result2);
                         </li>
                         <li>
                             <a href="reporte.php" class="nav-link px-0 align-middle not-active">
-                                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Generar
-                                    reporte</span></a>
+                                <span class="ms-1 d-none d-sm-inline">
+                                    Reporte</span></a>
                         </li>
                         <li>
-                            <a href="ingreso_manual.php" class="nav-link px-0 align-middle disabled">
-                                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Ingreso manual</span></a>
+                            <a href="./clientes/listar.php" class="nav-link px-0 align-middle not-active">
+                                <span class="ms-1 d-none d-sm-inline">
+                                    Clientes</span></a>
                         </li>
                         <li>
-                            <div class="dropdown mt-3">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
-                                    Configuracion
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="./clientes/listar.php">Clientes</a></li>
-                                    <li><a class="dropdown-item" href="./convenios/listar.php">Convenios</a></li>
-                                    <li><a class="dropdown-item" href="./vehiculos/listar.php">Vehiculos</a></li>
-                                    <li><a class="dropdown-item" href="./vehiculos/listar.php">Marcas</a></li>
-                                    <li><a class="dropdown-item" href="./vehiculos/listar.php">Modelos</a></li>
+                            <a href="./convenios/listar.php" class="nav-link px-0 align-middle not-active">
+                                <span class="ms-1 d-none d-sm-inline">
+                                    Convenios</span></a>
+                        </li>
+                        <li>
+                            <a href="./vehiculos/listar.php" class="nav-link px-0 align-middle not-active">
+                                <span class="ms-1 d-none d-sm-inline">
+                                    Vehiculos</span></a>
+                        </li>
+                        <li>
+                            <a href="./vehiculos/listar.php" class="nav-link px-0 align-middle not-active">
+                                <span class="ms-1 d-none d-sm-inline">
+                                    Marcas</span></a>
+                        </li>
+                        <li>
+                            <a href="./vehiculos/listar.php" class="nav-link px-0 align-middle not-active">
+                                <span class="ms-1 d-none d-sm-inline">
+                                    Tipo Vehiculo</span></a>
+                        </li>
+                        
 
-                                </ul>
-                            </div>
-                        </li>
+                     
                     </ul>
                     <hr>
                     <div class="dropdown pb-4">
@@ -82,6 +91,12 @@ $espacios2 = mysqli_fetch_array($result2);
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Nuevo ingreso</button>
+                    <?php
+                    if ($_SESSION['permiso_voucher'] = 1) {
+                        echo ' <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Cargar Voucher</button>';
+                    }
+                    ?>
                 </div>
                 <table class="table table-bordered" id="tabla">
                     <thead>
