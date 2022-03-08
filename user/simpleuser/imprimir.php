@@ -55,11 +55,16 @@ $printer = new Printer($connector);
      veces a $printer->text()
  */
 $printer->text("Clinica Lircay" . "\n");
+$printer->text("\n");
 $printer->text("Ticket  Entrada" . "\n");
+$printer->text("\n");
 $printer->setJustification(Printer::JUSTIFY_LEFT);
 
 $printer->text("Boleta N°: " . $id . "\n");
+$printer->text("\n");
+
  $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+$printer->text("\n");
  $printer->text( "\n");
 
 
@@ -67,7 +72,7 @@ $printer->text("Boleta N°: " . $id . "\n");
      Hacemos que el papel salga. Es como 
      dejar muchos saltos de línea sin escribir nada
  */
-$printer->feed();
+$printer->feed(8);
 
 
 

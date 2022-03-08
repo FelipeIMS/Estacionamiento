@@ -111,12 +111,11 @@ WHERE id_ficha = ?");
     $connector = new WindowsPrintConnector($nombre_impresora);
     $printer = new Printer($connector);
 
+   
 
 
-    try{
-        $logo = EscposImage::load("./Logo/lircay-logo.png", false);
-        $printer->bitImage($logo);
-    }catch(Exception $e){/*No hacemos nada si hay error*/}
+
+
      
 
     /*
@@ -124,21 +123,46 @@ WHERE id_ficha = ?");
      el salto de línea o llamar muchas
      veces a $printer->text()
  */
-    $printer->text(" Clinica Lircay" . "\n");
-    $printer->text("Ticket  Salida" . "\n");
+    $printer->setJustification(Printer::JUSTIFY_CENTER);
+    $printer->text("Clinica Lircay" . "\n");
+    $printer->text("\n");
     $printer->setJustification(Printer::JUSTIFY_LEFT);
+    $printer->text("Ticket  Salida" . "\n");
+    $printer->text("\n");
     $printer->text("Boleta N°: " . $id . "\n");
+    $printer->text("\n");
     $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+    $printer->text("\n");
     $printer->text("Termino: " . $cliente3['termino'] . "\n");
+    $printer->text("\n");
     $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
+    $printer->text("\n");
     $printer->text("TOTAL: $" . $pago . "\n");
+    $printer->feed(8);
 
 
     /*
      Hacemos que el papel salga. Es como 
      dejar muchos saltos de línea sin escribir nada
  */
-    $printer->feed(10);
+
+
+$printer->setJustification(Printer::JUSTIFY_CENTER);
+$printer->text("Clinica Lircay" . "\n");
+$printer->text("\n");
+$printer->setJustification(Printer::JUSTIFY_LEFT);
+$printer->text("Ticket  Salida" . "\n");
+$printer->text("\n");
+$printer->text("Boleta N°: " . $id . "\n");
+$printer->text("\n");
+$printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+$printer->text("\n");
+$printer->text("Termino: " . $cliente3['termino'] . "\n");
+$printer->text("\n");
+$printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
+$printer->text("\n");
+$printer->text("TOTAL: $" . $pago . "\n");
+$printer->feed(8);
 
 
 
