@@ -4,20 +4,20 @@ $mysqli = include_once "conexion.php";
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h1 class="text-center">Registrar Marca</h1>
+            <h1 class="text-center">Registrar Tipo Vehiculo</h1>
             <form action="registrar.php" method="POST">
                 <div class="form-group mb-3">
-                    <label for="nombre">Nombre Marca</label>
-                    <input placeholder="" class="form-control" type="text" name="marca" id="marca" required>
+                    <label for="nombre">Tipo</label>
+                    <input placeholder="" class="form-control" type="text" name="tipo  " id="tipo" required>
                 </div>
                 <div class="form-group">
                     <label for="Default select example">Estado</label>
-                    <select class="form-select mb-3" aria-label="Default select example" id="estado_m" name="estado_m">
+                    <select class="form-select mb-3" aria-label="Default select example" id="estado_t" name="estado_t">
                         <option value="Activo">Activo</option>
                         <option value="Inactivo">Inactivo</option>
                     </select>
                 </div>
-    
+
 
                 <div class="form-group">
                     <button class="btn btn-success">Guardar</button>

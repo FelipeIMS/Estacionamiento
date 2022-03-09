@@ -3,21 +3,21 @@
 include_once "encabezado.php";
 
 $mysqli = include_once "conexion.php";
-$nombre = $_POST["nombreconvenio"];
-$tiempo = $_POST["descuento"];
+$marca = $_POST["marca"];
+$estado = $_POST["estado_m"];
 
 
-$buscarconvenio= mysqli_query($mysqli,"SELECT  * FROM convenios WHERE nombre_convenio='$nombre'");
+$buscarmarca= mysqli_query($mysqli,"SELECT  * FROM marca_vehiculo WHERE nombre_marca='$marca'");
 
-if(mysqli_num_rows($buscarconvenio)>0){
-    echo '<script>toastr.error("Convenio ya existe  ")</script>';
+if(mysqli_num_rows($buscarmarca)>0){
+    echo '<script>toastr.error("Marca ya existe  ")</script>';
     header("refresh: 1; url=listar.php");
 }else{
-    $sentencia = $mysqli->prepare("INSERT INTO convenios
-    (nombre_convenio,tiempo)
+    $sentencia = $mysqli->prepare("INSERT INTO marca_vehiculo
+    (nombre_marca,estado_m)
     VALUES
     (?,?)");
-    $sentencia->bind_param("si",$nombre,$tiempo);
+    $sentencia->bind_param("ss",$marca,$estado);
     $sentencia->execute();
     echo '<script>toastr.success("Registro OK ")</script>';
     header("refresh: 1; url=listar.php");

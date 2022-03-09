@@ -9,13 +9,13 @@ $sentencia->bind_param("i", $id);
 $sentencia->execute();
 $resultado = $sentencia->get_result();
 
-$resultado2 = $mysqli->query("SELECT * FROM area ORDER BY nombre_area");
-$t2 = mysqli_num_rows($resultado2);
+
 
 $resultado3 = $mysqli->query("SELECT * FROM convenios ORDER BY nombre_convenio");
 $t3 = mysqli_num_rows($resultado3);
 # Obtenemos solo una fila, que será el CLIENTE a editar
 $cliente = $resultado->fetch_assoc();
+
 if (!$cliente) {
     exit("No hay resultados para ese ID");
 }
@@ -49,13 +49,13 @@ if (!$cliente) {
             </div>
             <div class="form-group mb-3">
                 <label for="descripcion">Area</label>
-
-                <select class="form-select" id="area" name="area" value="<?php echo $cliente["area"] ?>">
+                <select class="form-select"  value="<?php echo $cliente["nombre_area"] ?>" >
                     <?php
-
+                    $resultado2 = $mysqli->query("SELECT * FROM area");
+                    $t2 = mysqli_num_rows($resultado2);
                     if ($t2 >= 1) {
                         while ($row = $resultado2->fetch_object()) {
-                    ?>
+                    ?>     
                             <option value="<?php echo $row->id_area ?>"><?php echo $row->nombre_area ?></option>
                     <?php
                         }

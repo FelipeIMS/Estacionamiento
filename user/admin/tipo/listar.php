@@ -1,8 +1,8 @@
 <?php
 include_once "encabezado.php";
 $mysqli = include_once "conexion.php";
-$resultado = $mysqli->query("SELECT * FROM marca_vehiculo");
-$marcas = $resultado->fetch_all(MYSQLI_ASSOC);
+$resultado = $mysqli->query("SELECT * FROM tipo_vehiculo");
+$tipos = $resultado->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <div class="container">
@@ -33,7 +33,7 @@ $marcas = $resultado->fetch_all(MYSQLI_ASSOC);
     </style>
     <div class="row">
         <div class="col-12">
-            <h1 class="text-center">Listado de Marcas</h1>
+            <h1 class="text-center">Listado de Tipo vehiculo</h1>
             <a class="btn btn-success my-2" href="formulario_registrar.php"><i class="fa-solid fa-plus"></i></a>
             <a class="btn btn-warning my-2" style="float:right" href="../index.php"><i class="fa-solid fa-arrow-left"></i></a>
             <form action="reporte.php" method="post">
@@ -50,30 +50,31 @@ $marcas = $resultado->fetch_all(MYSQLI_ASSOC);
                 <tr>
                     <th>Acciones</th>
                     <th>ID</th>
-                    <th>Marca</th>
+                    <th>Tipo</th>
 
                 </tr>
             </thead>
             <tbody>
                 <?php
-                foreach ($marcas as $marca) { ?>
+                foreach ($tipos as $tipo) { ?>
                     <tr>
                         <td>
 
-                            <?php if ($marca["estado_m"] == "Activo") { ?>
-                                <a class="btn btn-danger" href="eliminar.php?id=<?php echo $marca["id_mv"] ?>"><i class="fa-solid fa-circle-xmark"></i></i></a>
+                            <?php if ($tipo["estado_t"] == "Activo") { ?>
+                                <a class="btn btn-danger" href="eliminar.php?id=<?php echo $tipo["id_tpv"] ?>"><i class="fa-solid fa-circle-xmark"></i></i></a>
 
                             <?php } ?>
-                            <?php if ($marca["estado_m"] == "Inactivo") { ?>
-                                <a class="btn btn-success" href="activar.php?id=<?php echo $marca["id_mv"] ?>"><i class="fa-solid fa-check"></i></a>
+                            <?php if ($tipo["estado_t"] == "Inactivo") { ?>
+                                <a class="btn btn-success" href="activar.php?id=<?php echo $tipo["id_tpv"] ?>"><i class="fa-solid fa-check"></i></a>
 
                             <?php } ?>
 
-                            <a class="btn btn-warning" href="editar.php?id=<?php echo $marca["id_mv"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a class="btn btn-warning" href="editar.php?id=<?php echo $tipo["id_tpv"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
 
                         </td>
-                        <td><?php echo $marca["id_mv"] ?></td>
-                        <td><?php echo $marca["nombre_marca"] ?></td>
+                        <td><?php echo $tipo["id_tpv"] ?></td>
+                        <td><?php echo $tipo["nombre_tpv"] ?></td>
+                        <td><?php echo $tipo["estado_t"] ?></td>
 
 
                     </tr>

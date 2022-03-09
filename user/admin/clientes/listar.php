@@ -1,6 +1,7 @@
 <?php
 include_once "encabezado.php";
 $mysqli = include_once "conexion.php";
+
 $resultado = $mysqli->query("SELECT * FROM cliente
 INNER JOIN area on area.id_area = cliente.area
 INNER JOIN convenios on convenios.id_convenio=cliente.convenio
@@ -71,9 +72,22 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
                     <?php
                     foreach ($clientes as $cliente) { ?>
                         <tr>
+
                             <td>
 
-                                <a class="btn btn-warning" href="editar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <?php if ($cliente["estado"] == "Activo") { ?>
+                                    <a class="btn btn-danger" href="eliminar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-circle-xmark"></i></i></a>
+
+                                <?php } ?>
+                                <?php if ($cliente["estado"] == "Inactivo") { ?>
+                                    <a class="btn btn-success" href="activar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-check"></i></a>
+
+                                <?php } ?>
+                             
+                       
+                               <a class="btn btn-warning" href="editar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                             
+
 
                             </td>
 

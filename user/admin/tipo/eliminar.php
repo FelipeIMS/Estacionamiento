@@ -4,18 +4,18 @@ include_once "encabezado.php";
 include 'conexion.php';
 $id = $_GET["id"];
 $estado = 'Inactivo';
-$query = mysqli_query($mysqli, "SELECT * FROM marca_vehiculo
-WHERE id_mv='$id'");
+$query = mysqli_query($mysqli, "SELECT * FROM tipo_vehiculo
+WHERE id_tpv='$id'");
 
 if (mysqli_num_rows($query) < 0) {
-    echo '<script>toastr.error("Marca no existe")</script>';
+    echo '<script>toastr.error("Tipo no existe")</script>';
     header("refresh: 1; url=listar.php");
 } else {
-    $sentencia = $mysqli->prepare("UPDATE marca_vehiculo SET
-estado_m = ?
-WHERE id_mv = ?");
+    $sentencia = $mysqli->prepare("UPDATE tipo_vehiculo SET
+estado_t = ?
+WHERE id_tpv = ?");
     $sentencia->bind_param("si", $estado, $id);
     $sentencia->execute();
-    echo '<script>toastr.error("Marca Inactivo")</script>';
+    echo '<script>toastr.error("Tipo Inactivo")</script>';
     header("refresh: 1; url=listar.php");
 }

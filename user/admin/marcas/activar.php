@@ -3,7 +3,7 @@
 include_once "encabezado.php";
 include 'conexion.php';
 $id = $_GET["id"];
-$estado = 'Inactivo';
+$estado = 'Activo';
 $query = mysqli_query($mysqli, "SELECT * FROM marca_vehiculo
 WHERE id_mv='$id'");
 
@@ -16,6 +16,6 @@ estado_m = ?
 WHERE id_mv = ?");
     $sentencia->bind_param("si", $estado, $id);
     $sentencia->execute();
-    echo '<script>toastr.error("Marca Inactivo")</script>';
+    echo '<script>toastr.success("Marca Activa")</script>';
     header("refresh: 1; url=listar.php");
 }
