@@ -2,6 +2,8 @@
 include_once "encabezado.php";
 $mysqli = include_once "conexion.php";
 
+
+
 $resultado = $mysqli->query("SELECT * FROM cliente
 INNER JOIN area on area.id_area = cliente.area
 INNER JOIN convenios on convenios.id_convenio=cliente.convenio
@@ -83,10 +85,10 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
                                     <a class="btn btn-success" href="activar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-check"></i></a>
 
                                 <?php } ?>
-                             
-                       
-                               <a class="btn btn-warning" href="editar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                             
+
+
+                                <a class="btn btn-warning" href="editar.php?id=<?php echo $cliente["id_cliente"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+
 
 
                             </td>

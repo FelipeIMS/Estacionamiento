@@ -1,5 +1,6 @@
 <?php include_once "encabezado.php";
 $mysqli = include_once "conexion.php";
+
 $resultado = $mysqli->query("SELECT * FROM area ORDER BY id_area ASC");
 $t = mysqli_num_rows($resultado);
 
