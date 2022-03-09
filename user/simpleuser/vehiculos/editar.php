@@ -80,6 +80,9 @@ if (!$vehiculo) {
                     <?php
 
                     if ($t3 >= 1) {
+                        ?>
+                        <option value="0"><?php echo $vehiculo['nombre_cliente'] ?></option>
+                    <?php
                         while ($row = $resultado3->fetch_object()) {
                     ?>
                             <option value="<?php echo $row->id_cliente ?>"><?php echo $row->nombre_cliente ?></option>
