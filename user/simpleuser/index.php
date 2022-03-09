@@ -12,7 +12,16 @@ $query2 = "SELECT count(espacio_ocupado) from ficha where termino is null; ";
 $result2 = mysqli_query($conn, $query2);
 $espacios2 = mysqli_fetch_array($result2);
 
-
+$ficha_sin_sii = $conn->query("SELECT ficha.id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,  vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, 
+convenios.nombre_convenio, 
+cargo.nombre_cargo, ficha.boleta_sii from ficha
+inner join vehiculo on vehiculo.patente = ficha.patente
+inner join cliente on cliente.id_cliente = vehiculo.cliente
+inner join area on area.id_area = cliente.area
+inner join convenios on cliente.convenio = convenios.id_convenio
+inner join cargo on cargo.id_cargo = cliente.cargo
+where ficha.boleta_sii = 0;");
+$tfsii = mysqli_num_rows($ficha_sin_sii);
 
 
 
@@ -76,9 +85,9 @@ $espacios2 = mysqli_fetch_array($result2);
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Nuevo ingreso</button>
                     <?php
-                    if ($_SESSION['permiso_voucher']==0) {
+                    if ($_SESSION["permiso_voucher"]==1) {
                         echo ' <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Cargar Voucher</button>';
+                            data-bs-target="#insert_voucher"><i class="fa-solid fa-circle-plus"></i> Cargar Voucher</button>';
                     }
                     ?>
 
@@ -202,6 +211,61 @@ $espacios2 = mysqli_fetch_array($result2);
                 </div>
                 <div class="modal-footer">
                     <input type="submit" name="insert" id="insert" value="Agregar" class="btn btn-success" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="insert_voucher" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ingreso Manual Voucher</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body ui-front">
+                    <div class="container ">
+
+                        <form method="POST" action="insert_boletaSII.php" class="">
+                            <div class="form-group">
+                            <label for="descripcion">Ficha: </label>
+                            <select  id="id_ficha" name="id_ficha" required>
+                                <?php
+
+                                if ($tfsii >= 1) {
+
+                                    ?>
+                                        <option value="0">Escoja ficha</option>
+                                    <?php
+                                    while ($row = $ficha_sin_sii->fetch_object()) {
+                                ?>
+                                        <option value="<?php echo $row->id_ficha ?>"><?php echo $row->id_ficha ?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                            <br>
+                            <br>
+                            <div class="form-group">
+                                <label>Nro Boleta SII</label>
+                                <input class="form-control" id="nro_boleta" type="number" name="nro_boleta" required />
+
+                            </div>
+
+                            </div>
+                            <div class="form-floating mt-4">
+                                <textarea disabled readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">° Seleccina patente e ingresa el numero de la boleta SII.</textarea>
+                                <label for="floatingTextarea2">Instrucciones</label>
+                            </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" name="guardar" id="guardar" value="Guardar" class="btn btn-success" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
                     </form>
                 </div>

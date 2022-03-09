@@ -44,6 +44,9 @@ class Login {
     $_SESSION["id"] = $row["id"];
     $_SESSION["name"] = $row["name"];
     $_SESSION["role"] = $row["role"];
+    $_SESSION["permiso_voucher"] = $row["permiso_voucher"];
+    $_SESSION["permiso_editar"] = $row["permiso_editar"];
+    $_SESSION["permiso_eliminar"] = $row["permiso_eliminar"];
   }
   public function UserType() {
     //if user role is 1, redirect to admin page
