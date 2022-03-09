@@ -54,6 +54,10 @@ if (!$cliente) {
                     <?php
 
                     if ($t2 >= 1) {
+
+                        ?>
+                            <option value="0"><?php echo $cliente['nombre_area'] ?></option>
+                        <?php
                         while ($row = $resultado2->fetch_object()) {
                     ?>
                             <option value="<?php echo $row->id_area ?>"><?php echo $row->nombre_area ?></option>
