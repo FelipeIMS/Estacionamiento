@@ -76,7 +76,7 @@ $espacios2 = mysqli_fetch_array($result2);
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Nuevo ingreso</button>
                     <?php
-                    if ($_SESSION['permiso_voucher']==0) {
+                    if ($_SESSION["permiso_voucher"]==1) {
                         echo ' <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Cargar Voucher</button>';
                     }
