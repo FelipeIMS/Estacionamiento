@@ -1,10 +1,8 @@
 <?php
 include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
 
-
-
-$resultado = $mysqli->query("SELECT * FROM cliente
+include '../settings.php'; 
+$resultado = $conn->query("SELECT * FROM cliente
 INNER JOIN area on area.id_area = cliente.area
 INNER JOIN convenios on convenios.id_convenio=cliente.convenio
 INNER JOIN cargo ON cargo.id_cargo=cliente.cargo

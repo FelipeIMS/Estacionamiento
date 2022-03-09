@@ -1,8 +1,8 @@
 <?php
 include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
+include '../settings.php'; 
 $id = $_GET["id"];
-$sentencia = $mysqli->prepare("SELECT * FROM cliente
+$sentencia = $conn->prepare("SELECT * FROM cliente
 INNER JOIN area on area.id_area = cliente.area
 INNER JOIN convenios on convenios.id_convenio=cliente.convenio WHERE id_cliente = ?");
 $sentencia->bind_param("i", $id);
@@ -11,7 +11,7 @@ $resultado = $sentencia->get_result();
 
 
 
-$resultado3 = $mysqli->query("SELECT * FROM convenios ORDER BY nombre_convenio");
+$resultado3 = $conn->query("SELECT * FROM convenios ORDER BY nombre_convenio");
 $t3 = mysqli_num_rows($resultado3);
 # Obtenemos solo una fila, que será el CLIENTE a editar
 $cliente = $resultado->fetch_assoc();
@@ -51,7 +51,7 @@ if (!$cliente) {
                 <label for="descripcion">Area</label>
                 <select class="form-select"  value="<?php echo $cliente["nombre_area"] ?>" >
                     <?php
-                    $resultado2 = $mysqli->query("SELECT * FROM area");
+                    $resultado2 = $conn->query("SELECT * FROM area");
                     $t2 = mysqli_num_rows($resultado2);
                     if ($t2 >= 1) {
                         while ($row = $resultado2->fetch_object()) {

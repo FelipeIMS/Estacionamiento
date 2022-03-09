@@ -1,13 +1,7 @@
 <?php
 include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
-//Arrancamos sesión.
-session_start();
-//Comprobamos si esta iniciado sesión, caso contrario redirigimos al login.
-if (!isset($_SESSION['name']['rol'])) {
-    header("Location: ../index.php");
-}
-$resultado = $mysqli->query("SELECT CONCAT(cliente.nombre_cliente,' ',cliente.apellido_cliente) as nombres,vehiculo.id_vehiculo,vehiculo.patente,tipo_vehiculo.nombre_tpv,marca_vehiculo.nombre_marca,vehiculo.estado_v FROM vehiculo
+include '../settings.php';
+$resultado = $conn->query("SELECT CONCAT(cliente.nombre_cliente,' ',cliente.apellido_cliente) as nombres,vehiculo.id_vehiculo,vehiculo.patente,tipo_vehiculo.nombre_tpv,marca_vehiculo.nombre_marca,vehiculo.estado_v FROM vehiculo
 INNER JOIN marca_vehiculo ON marca_vehiculo.id_mv=vehiculo.marca_vehiculo
 INNER JOIN tipo_vehiculo ON tipo_vehiculo.id_tpv = vehiculo.tipo_vehiculo
 INNER JOIN cliente ON  cliente.id_cliente=vehiculo.cliente
@@ -68,13 +62,25 @@ $vehiculos = $resultado->fetch_all(MYSQLI_ASSOC);
                 <?php
                 foreach ($vehiculos as $vehiculo) { ?>
                     <tr>
+
                         <td>
 
+                            <?php if ($vehiculo["estado_v"] == "Activo") { ?>
+                                <a class="btn btn-danger" href="eliminar.php?id=<?php echo $vehiculo["id_vehiculo"] ?>"><i class="fa-solid fa-circle-xmark"></i></i></a>
+
+                            <?php } ?>
+                            <?php if ($vehiculo["estado_v"] == "Inactivo") { ?>
+                                <a class="btn btn-success" href="activar.php?id=<?php echo $vehiculo["id_vehiculo"] ?>"><i class="fa-solid fa-check"></i></a>
+
+                            <?php } ?>
 
 
                             <a class="btn btn-warning" href="editar.php?id=<?php echo $vehiculo["id_vehiculo"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
 
+
+
                         </td>
+
                         <td><?php echo $vehiculo["id_vehiculo"] ?></td>
                         <td><?php echo $vehiculo["patente"] ?></td>
                         <td><?php echo $vehiculo["nombre_tpv"] ?></td>

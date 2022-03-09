@@ -1,10 +1,10 @@
 
 <?php
-$mysqli = include_once "conexion.php";
+include '../settings.php'; 
 $id = $_POST["id"];
 $tipo = $_POST["tipo"];
 $marca = $_POST["marca"];
-$sentencia = $mysqli->prepare("UPDATE vehiculo SET
+$sentencia = $conn->prepare("UPDATE vehiculo SET
 tipo_vehiculo = ?,
 marca_vehiculo = ?
 WHERE id_vehiculo = ?");

@@ -1,13 +1,13 @@
 
 <?php
-$mysqli = include_once "conexion.php";
+include '../settings.php'; 
 include_once "encabezado.php";
 
 $id = $_POST["id"];
 $nombre = $_POST["convenio"];
 $descuento = $_POST["tiempo"];
 
-$sentencia = $mysqli->prepare("UPDATE convenios SET
+$sentencia = $conn->prepare("UPDATE convenios SET
 nombre_convenio = ?,
 tiempo= ?
 WHERE id_convenio = ?");

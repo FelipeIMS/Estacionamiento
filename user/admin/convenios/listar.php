@@ -1,7 +1,7 @@
 <?php
 include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
-$resultado = $mysqli->query("SELECT * FROM convenios");
+include '../settings.php'; 
+$resultado = $conn->query("SELECT * FROM convenios");
 $convenios = $resultado->fetch_all(MYSQLI_ASSOC);
 ?>
 
@@ -36,6 +36,10 @@ $convenios = $resultado->fetch_all(MYSQLI_ASSOC);
             <h1 class="text-center">Listado de Convenios</h1>
             <a class="btn btn-success my-2" href="formulario_registrar.php"><i class="fa-solid fa-plus"></i></a>
             <a class="btn btn-warning my-2" style="float:right" href="../index.php"><i class="fa-solid fa-arrow-left"></i></a>
+            <form action="reporte.php" method="post">
+                <button type="submit" class="btn btn-success" name="enviar"><i class="fa-solid fa-file-excel"></i></button>
+            </form>
+        <br>
             <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Buscar....">
 
 

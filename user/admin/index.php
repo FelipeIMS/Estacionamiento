@@ -1,15 +1,14 @@
-<?php include 'settings.php'; //include settings 
+<?php
+$mysqli = include_once "conexion.php";
 $query = "SELECT ficha.id_ficha as id, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 inner join convenios on cliente.convenio = convenios.id_convenio
 order by inicio DESC;";
-$result = mysqli_query($conn, $query);
-
-
+$result = mysqli_query($mysqli, $query);
 $query2 = "SELECT count(espacio_ocupado) from ficha where termino is null; ";
-$result2 = mysqli_query($conn, $query2);
+$result2 = mysqli_query($mysqli, $query2);
 $espacios2 = mysqli_fetch_array($result2);
 
 
@@ -79,6 +78,11 @@ $espacios2 = mysqli_fetch_array($result2);
                                 <span class="ms-1 d-none d-sm-inline">
                                     Cargos</span></a>
                         </li>
+                        <li>
+                            <a href="./area/listar.php" class="nav-link px-0 align-middle not-active">
+                                <span class="ms-1 d-none d-sm-inline">
+                                    Areas</span></a>
+                        </li>
                         
 
                      
@@ -87,7 +91,7 @@ $espacios2 = mysqli_fetch_array($result2);
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1"><?php echo $_SESSION['name'] ?></span>
+                       
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item" href="../../includes/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesion</a></li>

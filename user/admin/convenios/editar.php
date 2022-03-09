@@ -1,8 +1,8 @@
 <?php
 include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
+include '../settings.php'; 
 $id = $_GET["id"];
-$sentencia = $mysqli->prepare("SELECT * FROM convenios  WHERE id_convenio = ?");
+$sentencia = $conn->prepare("SELECT * FROM convenios  WHERE id_convenio = ?");
 $sentencia->bind_param("i", $id);
 $sentencia->execute();
 $resultado = $sentencia->get_result();
