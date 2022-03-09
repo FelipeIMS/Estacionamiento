@@ -39,6 +39,9 @@ $vehiculos = $resultado->fetch_all(MYSQLI_ASSOC);
     <div class="row">
         <div class="col-12">
             <h1 class="text-center">Listado de Vehiculos</h1>
+            <form action="excel_vehiculos.php" method="post">
+                <button type="submit" name ="vehiculos_excel" class="btn btn-primary"><i class="fa-solid fa-file-excel"></i></button>
+            </form>
             <a class="btn btn-success my-2" href="formulario_registrar.php"><i class="fa-solid fa-plus"></i></a>
             <a class="btn btn-warning my-2" style="float:right" href="../index.php"><i class="fa-solid fa-arrow-left"></i></a>
             <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Buscar....">

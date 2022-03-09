@@ -26,11 +26,11 @@
                     title: 'Error al ingresar ficha',
                     text: 'No puede ingresar ficha si no finaliza la anterior',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 1000
                   });</script>";
                 echo '<script type="text/JavaScript"> setTimeout(function(){
                    window.location="index.php";
-                }, 2000); </script>';
+                }, 1000); </script>';
             } else {
 
                 $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado,user_ficha, estado)  VALUES(now(),'$search',1,'{$_SESSION['id']}','No pagado')";
@@ -46,11 +46,11 @@
                         title: 'Registro ingresado',
                         text: 'Ficha ingresada correctamente',
                         showConfirmButton: false,
-                        timer: 2000
+                        timer: 1000
                       });</script>";
                     echo '<script type="text/JavaScript"> setTimeout(function(){
                        window.location="index.php";
-                    }, 2000); </script>';
+                    }, 1000); </script>';
 
 
                     $selectUltimo = "SELECT * from ficha order by id_ficha desc limit 1;";
@@ -139,11 +139,11 @@ $printer->close();
             title: 'Error',
             text: 'Ingrese datos nuevamente',
             showConfirmButton: false,
-            timer: 2000
+            timer: 1000
           });</script>";
         echo '<script type="text/JavaScript"> setTimeout(function(){
            window.location="index.php";
-        }, 2000); </script>';
+        }, 1000); </script>';
     }
 
 
