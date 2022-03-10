@@ -1,8 +1,8 @@
 <?php
 include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
+include '../settings.php'; 
 $id = $_GET["id"];
-$sentencia = $mysqli->prepare("SELECT * FROM tipo_vehiculo  WHERE id_tpv = ?");
+$sentencia = $conn->prepare("SELECT * FROM tipo_vehiculo  WHERE id_tpv = ?");
 $sentencia->bind_param("i", $id);
 $sentencia->execute();
 $resultado = $sentencia->get_result();

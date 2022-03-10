@@ -1,7 +1,7 @@
 <?php
 include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
-$resultado = $mysqli->query("SELECT * FROM marca_vehiculo");
+include '../settings.php'; 
+$resultado = $conn->query("SELECT * FROM marca_vehiculo");
 $marcas = $resultado->fetch_all(MYSQLI_ASSOC);
 ?>
 

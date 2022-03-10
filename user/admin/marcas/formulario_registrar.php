@@ -1,5 +1,5 @@
 <?php include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
+include '../settings.php'; 
 ?>
 <div class="container">
     <div class="row">

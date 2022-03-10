@@ -1,14 +1,14 @@
 <?php
 include_once "encabezado.php";
-include '../settings.php'; 
+include '../settings.php';
 $id = $_GET["id"];
-$sentencia = $conn->prepare("SELECT * FROM marca_vehiculo  WHERE id_mv = ?");
+$sentencia = $conn->prepare("SELECT * FROM cargo  WHERE id_cargo = ?");
 $sentencia->bind_param("i", $id);
 $sentencia->execute();
 $resultado = $sentencia->get_result();
 # Obtenemos solo una fila, que será el CLIENTE a editar
-$marca = $resultado->fetch_assoc();
-if (!$marca) {
+$cargo = $resultado->fetch_assoc();
+if (!$cargo) {
     exit("No hay resultados para ese ID");
 }
 ?>
@@ -23,12 +23,12 @@ if (!$marca) {
 
 <body>
     <div class="container">
-        <h1 class="text-center">Actualizar Marca</h1>
+        <h1 class="text-center">Actualizar Cargo</h1>
         <form action="actualizar.php" method="POST">
-            <input type="hidden" name="id" value="<?php echo $marca["id_mv"] ?>">
+            <input type="hidden" name="id" value="<?php echo $cargo["id_cargo"] ?>">
             <div class="form-group">
-                <label for="nombre">Nombre marca</label>
-                <input value="<?php echo $marca["nombre_marca"] ?>" placeholder="" class="form-control" type="text" name="marca" id="marca" >
+                <label for="nombre">Nombre Cargo</label>
+                <input value="<?php echo $cargo["nombre_cargo"] ?>" placeholder="" class="form-control" type="text" name="cargo" id="cargo" >
             </div>
             <div class="form-group py-3">
                 <button class="btn btn-success">Guardar</button>

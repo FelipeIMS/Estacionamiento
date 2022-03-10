@@ -7,7 +7,7 @@ if (isset($_POST['enviar'])) {
 
     header("Content-Type: application/vnd.ms-excel");
     $timestamp = time();
-    $filename = 'Maestro_Marcas' . date("d-m-Y", $timestamp) . '.xls';
+    $filename = 'Maestro_Cargo' . date("d-m-Y", $timestamp) . '.xls';
     header("Content-Disposition: attachment; filename=\"$filename\"");
 
 ?>
@@ -15,13 +15,13 @@ if (isset($_POST['enviar'])) {
     <table>
         <tr>
             <th>ID</th>
-            <th>Marca</th>
+            <th>Cargo</th>
             <th>Estado</th>
 
         </tr>
         <?php
         include '../settings.php';
-        $sql = "SELECT   * FROM marca_vehiculo";
+        $sql = "SELECT   * FROM cargo";
         $ejecutar = mysqli_query($conn, $sql);
         while ($fila = mysqli_fetch_array($ejecutar)) {
         ?>

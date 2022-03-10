@@ -1,8 +1,8 @@
 <?php
 include_once "encabezado.php";
-include '../settings.php'; 
-$resultado = $conn->query("SELECT * FROM tipo_vehiculo");
-$tipos = $resultado->fetch_all(MYSQLI_ASSOC);
+include '../settings.php';
+$resultado = $conn->query("SELECT * FROM cargo");
+$cargos = $resultado->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <div class="container">
@@ -33,7 +33,7 @@ $tipos = $resultado->fetch_all(MYSQLI_ASSOC);
     </style>
     <div class="row">
         <div class="col-12">
-            <h1 class="text-center">Listado de Tipo vehiculo</h1>
+            <h1 class="text-center">Listado de Cargos</h1>
             <a class="btn btn-success my-2" href="formulario_registrar.php"><i class="fa-solid fa-plus"></i></a>
             <a class="btn btn-warning my-2" style="float:right" href="../index.php"><i class="fa-solid fa-arrow-left"></i></a>
             <form action="reporte.php" method="post">
@@ -50,31 +50,33 @@ $tipos = $resultado->fetch_all(MYSQLI_ASSOC);
                 <tr>
                     <th>Acciones</th>
                     <th>ID</th>
-                    <th>Tipo</th>
+                    <th>Cargo</th>
+                    <th>Estado</th>
+
 
                 </tr>
             </thead>
             <tbody>
                 <?php
-                foreach ($tipos as $tipo) { ?>
+                foreach ($cargos as $cargo) { ?>
                     <tr>
                         <td>
 
-                            <?php if ($tipo["estado_t"] == "Activo") { ?>
-                                <a class="btn btn-danger" href="eliminar.php?id=<?php echo $tipo["id_tpv"] ?>"><i class="fa-solid fa-circle-xmark"></i></i></a>
+                            <?php if ($cargo["estado_c"] == "Activo") { ?>
+                                <a class="btn btn-danger" href="eliminar.php?id=<?php echo $cargo["id_cargo"] ?>"><i class="fa-solid fa-circle-xmark"></i></i></a>
 
                             <?php } ?>
-                            <?php if ($tipo["estado_t"] == "Inactivo") { ?>
-                                <a class="btn btn-success" href="activar.php?id=<?php echo $tipo["id_tpv"] ?>"><i class="fa-solid fa-check"></i></a>
+                            <?php if ($cargo["estado_c"] == "Inactivo") { ?>
+                                <a class="btn btn-success" href="activar.php?id=<?php echo $cargo["id_cargo"] ?>"><i class="fa-solid fa-check"></i></a>
 
                             <?php } ?>
 
-                            <a class="btn btn-warning" href="editar.php?id=<?php echo $tipo["id_tpv"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a class="btn btn-warning" href="editar.php?id=<?php echo $cargo["id_cargo"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
 
                         </td>
-                        <td><?php echo $tipo["id_tpv"] ?></td>
-                        <td><?php echo $tipo["nombre_tpv"] ?></td>
-                        <td><?php echo $tipo["estado_t"] ?></td>
+                        <td><?php echo $cargo["id_cargo"] ?></td>
+                        <td><?php echo $cargo["nombre_cargo"] ?></td>
+                        <td><?php echo $cargo["estado_c"] ?></td>
 
 
                     </tr>

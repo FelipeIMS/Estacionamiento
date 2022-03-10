@@ -2,12 +2,12 @@
 <?php
 include_once "encabezado.php";
 
-$mysqli = include_once "conexion.php";
+include '../settings.php'; 
 $marca = $_POST["marca"];
 $estado = $_POST["estado_m"];
 
 
-$buscarmarca= mysqli_query($mysqli,"SELECT  * FROM marca_vehiculo WHERE nombre_marca='$marca'");
+$buscarmarca= mysqli_query($conn,"SELECT  * FROM marca_vehiculo WHERE nombre_marca='$marca'");
 
 if(mysqli_num_rows($buscarmarca)>0){
     echo '<script>toastr.error("Marca ya existe  ")</script>';

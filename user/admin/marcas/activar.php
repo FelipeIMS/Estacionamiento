@@ -1,17 +1,17 @@
 
 <?php
 include_once "encabezado.php";
-include 'conexion.php';
+include '../settings.php'; 
 $id = $_GET["id"];
 $estado = 'Activo';
-$query = mysqli_query($mysqli, "SELECT * FROM marca_vehiculo
+$query = mysqli_query($conn, "SELECT * FROM marca_vehiculo
 WHERE id_mv='$id'");
 
 if (mysqli_num_rows($query) < 0) {
     echo '<script>toastr.error("Marca no existe")</script>';
     header("refresh: 1; url=listar.php");
 } else {
-    $sentencia = $mysqli->prepare("UPDATE marca_vehiculo SET
+    $sentencia = $conn->prepare("UPDATE marca_vehiculo SET
 estado_m = ?
 WHERE id_mv = ?");
     $sentencia->bind_param("si", $estado, $id);

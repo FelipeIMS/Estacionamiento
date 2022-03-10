@@ -1,12 +1,12 @@
 
 <?php
-$mysqli = include_once "conexion.php";
+include '../settings.php'; 
 include_once "encabezado.php";
 
 $id = $_POST["id"];
 $marca = $_POST["marca"];
 
-$sentencia = $mysqli->prepare("UPDATE marca_vehiculo SET
+$sentencia = $conn->prepare("UPDATE marca_vehiculo SET
 nombre_marca = ?
 WHERE id_mv = ?");
 $sentencia->bind_param("si", $marca,$id);

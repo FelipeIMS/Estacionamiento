@@ -74,7 +74,7 @@ $espacios2 = mysqli_fetch_array($result2);
                                     Tipo Vehiculo</span></a>
                         </li>
                         <li>
-                            <a href="./vehiculos/listar.php" class="nav-link px-0 align-middle not-active">
+                            <a href="./cargos/listar.php" class="nav-link px-0 align-middle not-active">
                                 <span class="ms-1 d-none d-sm-inline">
                                     Cargos</span></a>
                         </li>

@@ -20,9 +20,9 @@ if (isset($_POST['enviar'])) {
 
         </tr>
         <?php
-        $mysqli = include_once "conexion.php";
+        include '../settings.php'; 
         $sql = "SELECT   * FROM marca_vehiculo";
-        $ejecutar = mysqli_query($mysqli, $sql);
+        $ejecutar = mysqli_query($conn, $sql);
         while ($fila = mysqli_fetch_array($ejecutar)) {
         ?>
             <tr>
