@@ -2,13 +2,13 @@
 include_once "encabezado.php";
 include '../settings.php';
 $id = $_GET["id"];
-$sentencia = $conn->prepare("SELECT * FROM cargo  WHERE id_cargo = ?");
+$sentencia = $conn->prepare("SELECT * FROM users  WHERE id = ?");
 $sentencia->bind_param("i", $id);
 $sentencia->execute();
 $resultado = $sentencia->get_result();
 # Obtenemos solo una fila, que será el CLIENTE a editar
-$cargo = $resultado->fetch_assoc();
-if (!$cargo) {
+$user = $resultado->fetch_assoc();
+if (!$user) {
     exit("No hay resultados para ese ID");
 }
 ?>
@@ -23,12 +23,20 @@ if (!$cargo) {
 
 <body>
     <div class="container">
-        <h1 class="text-center">Actualizar Cargo</h1>
+        <h1 class="text-center">Actualizar Usuario</h1>
         <form action="actualizar.php" method="POST">
-            <input type="hidden" name="id" value="<?php echo $cargo["id_cargo"] ?>">
+            <input type="hidden" name="id" value="<?php echo $user["id"] ?>">
             <div class="form-group">
-                <label for="nombre">Nombre Cargo</label>
-                <input value="<?php echo $cargo["nombre_cargo"] ?>" placeholder="" class="form-control" type="text" name="cargo" id="cargo" >
+                <label for="nombre">Username</label>
+                <input value="<?php echo $user["name"] ?>" placeholder="" class="form-control" type="text" name="username" id="username">
+            </div>
+            <div class="form-group">
+                <label for="nombre">Login Email</label>
+                <input value="<?php echo $user["login"] ?>" placeholder="" class="form-control" type="text" name="login" id="login">
+            </div>
+            <div class="form-group">
+                <label for="nombre">Rol</label>
+                <input value="<?php echo $user["role"] ?>" placeholder="" class="form-control" type="text" name="role" id="role">
             </div>
             <div class="form-group py-3">
                 <button class="btn btn-success">Guardar</button>

@@ -39,12 +39,12 @@ $espacios2 = mysqli_fetch_array($result2);
                             </a>
                         </li>
                         <li>
-                            <a href="reporte.php" class="nav-link px-0 align-middle not-active">
+                            <a href="./usuarios/listar.php" class="nav-link px-0 align-middle not-active">
                                 <span class="ms-1 d-none d-sm-inline">
                                     Usuarios</span></a>
                         </li>
                         <li>
-                            <a href="reporte.php" class="nav-link px-0 align-middle not-active">
+                            <a href="./reportes/index.php" class="nav-link px-0 align-middle not-active">
                                 <span class="ms-1 d-none d-sm-inline">
                                     Reporte</span></a>
                         </li>

@@ -70,6 +70,7 @@ if (!$cliente) {
                     <option value="Inactivo">Inactivo</option>
                 </select>
             </div>
+
             <div class="form-group mb-3">
                 <label for="descripcion">Convenio</label>
 
