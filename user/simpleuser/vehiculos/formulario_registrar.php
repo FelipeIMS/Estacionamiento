@@ -5,7 +5,7 @@ $t = mysqli_num_rows($resultado);
 $resultado2 = $mysqli->query("SELECT * FROM marca_vehiculo ORDER BY nombre_marca");
 $t2 = mysqli_num_rows($resultado2);
 
-$resultado3 = $mysqli->query("SELECT * FROM cliente ORDER BY nombre_cliente");
+$resultado3 = $mysqli->query("SELECT *, concat(cliente.nombre_cliente,' ',cliente.apellido_cliente) n FROM cliente ORDER BY nombre_cliente");
 $t3 = mysqli_num_rows($resultado3);
 ?>
 <div class="container">
@@ -58,7 +58,7 @@ $t3 = mysqli_num_rows($resultado3);
                         if ($t3 >= 1) {
                             while ($row = $resultado3->fetch_object()) {
                         ?>
-                                <option value="<?php echo $row->id_cliente ?>"><?php echo $row->nombre_cliente ?></option>
+                                <option value="<?php echo $row->id_cliente ?>"><?php echo $row->n ?></option>
                         <?php
                             }
                         }

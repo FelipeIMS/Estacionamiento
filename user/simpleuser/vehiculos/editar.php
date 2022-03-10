@@ -2,7 +2,7 @@
 include_once "encabezado.php";
 $mysqli = include_once "conexion.php";
 $id = $_GET["id"];
-$sentencia = $mysqli->prepare("SELECT * FROM vehiculo
+$sentencia = $mysqli->prepare("SELECT *, concat(cliente.nombre_cliente,' ',cliente.apellido_cliente) n FROM vehiculo
 INNER JOIN marca_vehiculo ON marca_vehiculo.id_mv=vehiculo.marca_vehiculo
 INNER JOIN tipo_vehiculo ON tipo_vehiculo.id_tpv = vehiculo.tipo_vehiculo
 INNER JOIN cliente ON  cliente.id_cliente=vehiculo.cliente  WHERE id_vehiculo = ?");
@@ -87,7 +87,7 @@ if (!$vehiculo) {
 
                     if ($t3 >= 1) {
                         ?>
-                        <option value="0"><?php echo $vehiculo['nombre_cliente'] ?></option>
+                        <option value="0"><?php echo $vehiculo['n'] ?></option>
                     <?php
                         while ($row = $resultado3->fetch_object()) {
                     ?>

@@ -137,6 +137,8 @@ WHERE id_ficha = ?");
     $printer->text("\n");
     $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
     $printer->text("\n");
+    $printer->text("Descuento: $" . $convenio_v  . "\n");
+    $printer->text("\n");
     $printer->text("TOTAL: $" . $pago . "\n");
     $printer->feed(8);
 
@@ -160,6 +162,8 @@ $printer->text("\n");
 $printer->text("Termino: " . $cliente3['termino'] . "\n");
 $printer->text("\n");
 $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
+$printer->text("\n");
+$printer->text("Descuento: $" . $convenio_v  . "\n");
 $printer->text("\n");
 $printer->text("TOTAL: $" . $pago . "\n");
 $printer->feed(8);

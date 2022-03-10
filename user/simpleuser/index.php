@@ -130,7 +130,7 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                                 <a class="btn btn-info" href="imprimir.php?id=<?php echo $row["id"] ?>"><i class="fa-solid fa-print"></i></a>
 
                             </td>
-                            <td> <a class="btn btn-info" href="salida.php?id=<?php echo $row["id"] ?>"><i class="fa-solid fa-print"></i></a>
+                            <td> <a class="btn btn-info" href="salida.php?id=<?php echo $row["id"] ?>" <?php if ($row['termino'] == '') { ?> style="display: none;" <?php   } ?>><i class="fa-solid fa-print"></i></a>
                             </td>
                             <td><?php echo $row["nombre_cliente"]; ?></td>
                             <td><?php echo $row["patente"]; ?></td>
