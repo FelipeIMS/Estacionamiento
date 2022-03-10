@@ -139,11 +139,11 @@ $printer->close();
             title: 'Error',
             text: 'Ingrese datos nuevamente',
             showConfirmButton: false,
-            timer: 1000
+            timer: 500
           });</script>";
         echo '<script type="text/JavaScript"> setTimeout(function(){
            window.location="index.php";
-        }, 1000); </script>';
+        }, 500); </script>';
     }
 
 

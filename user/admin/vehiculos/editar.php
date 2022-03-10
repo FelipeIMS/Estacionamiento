@@ -2,7 +2,7 @@
 include_once "encabezado.php";
 include '../settings.php'; 
 $id = $_GET["id"];
-$sentencia = $conn->prepare("SELECT * FROM vehiculo
+$sentencia = $conn->prepare("SELECT *, concat(cliente.nombre_cliente,' ',cliente.apellido_cliente) n FROM vehiculo
 INNER JOIN marca_vehiculo ON marca_vehiculo.id_mv=vehiculo.marca_vehiculo
 INNER JOIN tipo_vehiculo ON tipo_vehiculo.id_tpv = vehiculo.tipo_vehiculo
 INNER JOIN cliente ON  cliente.id_cliente=vehiculo.cliente  WHERE id_vehiculo = ?");
@@ -44,7 +44,9 @@ if (!$vehiculo) {
             <div class="form-group mb-3">
                 <label for="descripcion">Tipo Vehiculo</label>
 
-                <select class="form-select" id="tipo" name="tipo" value="<?php echo $vehiculo["tipo_vehiculo"] ?>">
+                <select class="form-select" id="tipo" name="tipo" >
+                <option value="<?php echo $vehiculo['id_tpv'] ?>"><?php echo $vehiculo['nombre_tpv'] ?></option>
+
                     <?php
 
                     if ($t >= 1) {
@@ -60,7 +62,8 @@ if (!$vehiculo) {
             <div class="form-group mb-3">
                 <label for="descripcion">Marca</label>
 
-                <select class="form-select" id="marca" name="marca" value="<?php echo $vehiculo["marca"] ?>">
+                <select class="form-select" id="marca" name="marca" >
+                <option value="<?php echo $vehiculo['id_mv'] ?>"><?php echo $vehiculo['nombre_marca'] ?></option>
                     <?php
 
                     if ($t2 >= 1) {
@@ -77,6 +80,7 @@ if (!$vehiculo) {
                 <label for="descripcion">Cliente</label>
 
                 <select class="form-select" id="cliente" name="cliente" disabled>
+                <option value="<?php echo $vehiculo['id_cliente'] ?>"><?php echo $vehiculo['n'] ?></option>
                     <?php
 
                     if ($t3 >= 1) {

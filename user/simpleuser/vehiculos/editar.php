@@ -44,10 +44,13 @@ if (!$vehiculo) {
             <div class="form-group mb-3">
                 <label for="descripcion">Tipo Vehiculo</label>
 
-                <select class="form-select" id="tipo" name="tipo" value="<?php echo $vehiculo["tipo_vehiculo"] ?>">
+                <select class="form-select" id="tipo" name="tipo">
                     <?php
-
                     if ($t >= 1) {
+                        ?>
+                        <option value="<?php echo $vehiculo['id_tpv'] ?>"><?php echo $vehiculo['nombre_tpv'] ?></option>
+                        <?php
+
                         while ($row = $resultado1->fetch_object()) {
                     ?>
                             <option value="<?php echo $row->id_tpv ?>"><?php echo $row->nombre_tpv ?></option>
@@ -60,10 +63,13 @@ if (!$vehiculo) {
             <div class="form-group mb-3">
                 <label for="descripcion">Marca</label>
 
-                <select class="form-select" id="marca" name="marca" value="<?php echo $vehiculo["marca"] ?>">
+                <select class="form-select" id="marca" name="marca">
                     <?php
 
                     if ($t2 >= 1) {
+                        ?>
+                        <option value="<?php echo $vehiculo['id_mv'] ?>"><?php echo $vehiculo['nombre_marca'] ?></option>
+                        <?php
                         while ($row = $resultado2->fetch_object()) {
                     ?>
                             <option value="<?php echo $row->id_mv ?>"><?php echo $row->nombre_marca ?></option>

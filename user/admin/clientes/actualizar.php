@@ -16,9 +16,9 @@ nombre_cliente = ?,
 apellido_cliente = ?,
 area=?,
 convenio=?,
-cargo= =
+cargo= ?
 WHERE id_cliente = ?");
-$sentencia->bind_param("ssiisi", $nombre, $apellidos, $area, $convenio, $cargo, $id);
+$sentencia->bind_param("ssiiii", $nombre, $apellidos, $area, $convenio, $cargo, $id);
 $sentencia->execute();
 echo '<script>toastr.success("Registro Actualizado ")</script>';
 header("refresh: 1; url=listar.php");
