@@ -1,5 +1,5 @@
 <?php include_once "encabezado.php";
-include '../settings.php'; 
+include '../settings.php';
 $resultado = $conn->query("SELECT * FROM tipo_vehiculo ORDER BY nombre_tpv");
 $t = mysqli_num_rows($resultado);
 $resultado2 = $conn->query("SELECT * FROM marca_vehiculo ORDER BY nombre_marca");
@@ -14,7 +14,7 @@ $t3 = mysqli_num_rows($resultado3);
             <form action="registrar.php" method="POST">
                 <div class="form-group mb-3">
                     <label for="nombre">Patente</label>
-                    <input placeholder="" class="form-control" type="text" name="patente" id="patente"   minlength="9" maxlength="8" size="10" required>
+                    <input placeholder="" class="form-control" type="text" name="patente" id="patente" minlength="9" maxlength="8" size="10" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="descripcion">Tipo Vehiculo</label>
@@ -48,6 +48,8 @@ $t3 = mysqli_num_rows($resultado3);
                         ?>
                     </select>
                 </div>
+
+                <div >
                 <div class="form-group mb-3">
                     <label for="descripcion">Cliente</label>
 
@@ -75,7 +77,6 @@ $t3 = mysqli_num_rows($resultado3);
         </div>
     </div>
 </div>
-
 
 
 
