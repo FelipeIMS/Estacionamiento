@@ -70,6 +70,9 @@ $printer->text("\n");
 $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
 $printer->text("\n");
 
+$printer->text("Descuento: $" . $cliente3['convenio_v']  . "\n");
+$printer->text("\n");
+
 $printer->text("TOTAL: $" . $cliente3['total'] . "\n");
 $printer->text("\n");
 
