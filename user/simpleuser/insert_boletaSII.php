@@ -15,21 +15,41 @@
 
     $id_ficha = $_POST['id_ficha'];
     $nro_boleta = $_POST['nro_boleta'];
-
+    
     if(isset($_POST['guardar'])){
-        $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ? where id_ficha = ?;");
-        $numero_boleta->bind_param("ii", $nro_boleta, $id_ficha);
-        $numero_boleta->execute();
-        echo "<script>  Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Ingreso realizado correctamente',
-            showConfirmButton: false,
-            timer: 1000
-          });</script>";
-            echo '<script type="text/JavaScript"> setTimeout(function(){
-           window.location="index.php";
-        }, 1000); </script>';
+        
+        $select_boleta =  $conn->query("SELECT  * FROM ficha WHERE boleta_sii = '".$nro_boleta."'");
+
+        if(mysqli_num_rows($select_boleta)>0){
+            echo "<script>  Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Error',
+                text: 'Numero de boleta ya existe',
+                showConfirmButton: false,
+                timer: 1000
+              });</script>";
+                echo '<script type="text/JavaScript"> setTimeout(function(){
+               window.location="index.php";
+            }, 1000); </script>';
+            header("refresh: 1; url=listar.php");
+        }else{
+
+            $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ? where id_ficha = ?;");
+            $numero_boleta->bind_param("ii", $nro_boleta, $id_ficha);
+            $numero_boleta->execute();
+            echo "<script>  Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Ingreso realizado correctamente',
+                showConfirmButton: false,
+                timer: 1000
+              });</script>";
+                echo '<script type="text/JavaScript"> setTimeout(function(){
+               window.location="index.php";
+            }, 1000); </script>';
+        }
+
     }
 
     

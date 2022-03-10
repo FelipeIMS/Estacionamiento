@@ -15,11 +15,15 @@
 
     if (!empty($_POST['patente'])) {
         $search = mysqli_real_escape_string($conn, $_POST["patente"]);
+        $nombre = mysqli_query($conn, "SELECT cliente.nombre_cliente from vehiculo
+        inner join cliente on cliente.id_cliente = vehiculo.cliente
+        where vehiculo.patente ='$search';");
+        $noarray = mysqli_fetch_array($nombre);
         $registro2 = mysqli_query($conn, "SELECT  * FROM ficha f
         INNER JOIN  vehiculo v ON  v.patente = f.patente
         INNER JOIN  cliente c ON  c.id_cliente = v.cliente
-        WHERE f.termino is null and v.patente='$search';"); 
-        if (mysqli_num_rows($registro2) > 0) {
+        WHERE (f.termino is null and v.patente='$search') or (f.termino is null and c.nombre_cliente = '$noarray[0]');"); 
+        if (mysqli_num_rows($registro2) > 0 || $noarray[0] != $noarray[0]) {
                 echo "<script>  Swal.fire({
                     position: 'center',
                     icon: 'warning',

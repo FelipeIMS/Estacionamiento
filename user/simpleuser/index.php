@@ -48,23 +48,15 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Inicio</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="reporte.php" class="nav-link px-0 align-middle not-active">
-                                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Generar
-                                    reporte</span></a>
+                        <li class="nav-item">
+                            <a href="./clientes/listar.php" class="nav-link align-middle px-0">
+                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Clientes</span>
+                            </a>
                         </li>
-
-                        <li>
-                            <div class="dropdown mt-3">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
-                                    Configuracion
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="./clientes/listar.php">Clientes</a></li>
-                                    <li><a class="dropdown-item" href="./vehiculos/listar.php">Vehiculos</a></li>
-
-                                </ul>
-                            </div>
+                        <li class="nav-item">
+                            <a href="./vehiculos/listar.php" class="nav-link align-middle px-0">
+                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Vehiculos</span>
+                            </a>
                         </li>
                     </ul>
                     <div class="dropdown pb-4">
@@ -84,6 +76,7 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Nuevo ingreso</button>
+                    
                     <?php
                     if ($_SESSION["permiso_voucher"]==1) {
                         echo ' <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -101,7 +94,7 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                             <th width="0%">Pagar</th>
                             <th width="0%">Entrada</th>
                             <th width="0%">Salida</th>
-                            <th>Nombre</th>
+                            <th>Nro Boleta</th>
                             <th>Patente</th>
                             <th>Ingreso</th>
                             <th>Salida</th>
@@ -132,7 +125,7 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                             </td>
                             <td> <a class="btn btn-info" href="salida.php?id=<?php echo $row["id"] ?>" <?php if ($row['termino'] == '') { ?> style="display: none;" <?php   } ?>><i class="fa-solid fa-print"></i></a>
                             </td>
-                            <td><?php echo $row["nombre_cliente"]; ?></td>
+                            <td><?php echo $row["id"]; ?></td>
                             <td><?php echo $row["patente"]; ?></td>
                             <td><?php echo $row["inicio"]; ?></td>
                             <td><?php echo $row["termino"]; ?></td>
@@ -150,6 +143,9 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                     </tr>
                     </tbody>
                 </table>
+                <form action="exportar.php" method="POST">
+                        <button type="submit" name = "enviar" class="btn btn-success"><i class="fa-solid fa-money-bill"></i> Cierre</button>
+                </form>
             </div>
         </div>
     </div>

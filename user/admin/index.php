@@ -131,7 +131,7 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                             <th width="0%">Pagar</th>
                             <th width="0%">Entrada</th>
                             <th width="0%">Salida</th>
-                            <th>Nombre</th>
+                            <th>Nro Boleta</th>
                             <th>Patente</th>
                             <th>Ingreso</th>
                             <th>Salida</th>
@@ -162,7 +162,7 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                             </td>
                             <td> <a class="btn btn-info" href="salida.php?id=<?php echo $row["id"] ?>"><i class="fa-solid fa-print"></i></a>
                             </td>
-                            <td><?php echo $row["nombre_cliente"]; ?></td>
+                            <td><?php echo $row["id"]; ?></td>
                             <td><?php echo $row["patente"]; ?></td>
                             <td><?php echo $row["inicio"]; ?></td>
                             <td><?php echo $row["termino"]; ?></td>

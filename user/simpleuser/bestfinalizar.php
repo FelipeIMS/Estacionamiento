@@ -139,7 +139,10 @@
             <div class="form-group mt-3 mb-3">
                 <label for="nombre">Boleta SII</label>
                 <input  type="number" class="" id="sii" name="sii" placeholder="Ingrese Nro boleta" class="form-control"  required>
+                
             </div>
+                <!-- <label class="mt-3" for="boleta_sii">Null</label>
+                <input class="mt-3 text-center" id="boleta_sii" type="checkbox"> -->
         </div>
         <div class="card-footer text-muted">
             <div class="form-group text-center">
@@ -192,6 +195,26 @@ function comprueba() {
         $("#convenio_t").val(0);
         $("#convenio_v").val(0);
         $("#total").val(total);
+    }
+}
+</script>
+<script>
+    function on2() {
+    console.log("on");
+}
+
+function off2() {
+    console.log("off");
+}
+
+var checkbox2 = document.getElementById('boleta_sii');
+checkbox.addEventListener("change", comprueba2, false);
+
+function comprueba2() {
+    if (checkbox2.checked) {
+        on2();
+    } else {
+        off2();
     }
 }
 </script>

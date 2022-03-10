@@ -30,7 +30,7 @@ $tVehiculo = mysqli_num_rows($resultadoVehiculo);
                 </div>
             </div>
         </form>
-    </div>
+    <!-- </div>
     <div class="container w-50">
         <form action="exportar_total.php" method="POST">
             <div class="card text-center mt-5">
@@ -129,7 +129,7 @@ $tVehiculo = mysqli_num_rows($resultadoVehiculo);
                 </div>
             </div>
         </form>
-    </div>
+    </div> -->
 
 
 
