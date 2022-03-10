@@ -4,7 +4,9 @@ $mysqli = include_once "conexion.php";
 $id = $_GET["id"];
 $sentencia = $mysqli->prepare("SELECT * FROM cliente
 INNER JOIN area on area.id_area = cliente.area
-INNER JOIN convenios on convenios.id_convenio=cliente.convenio WHERE id_cliente = ?");
+INNER JOIN convenios on convenios.id_convenio=cliente.convenio
+INNER JOIN cargo on cargo.id_cargo = cliente.cargo
+ WHERE id_cliente = ?");
 $sentencia->bind_param("i", $id);
 $sentencia->execute();
 $resultado = $sentencia->get_result();
@@ -14,6 +16,9 @@ $t2 = mysqli_num_rows($resultado2);
 
 $resultado3 = $mysqli->query("SELECT * FROM convenios ORDER BY nombre_convenio");
 $t3 = mysqli_num_rows($resultado3);
+
+$resultado4 = $mysqli->query("SELECT * FROM cargo ORDER BY nombre_cargo");
+$t4 = mysqli_num_rows($resultado4);
 # Obtenemos solo una fila, que será el CLIENTE a editar
 $cliente = $resultado->fetch_assoc();
 if (!$cliente) {
@@ -33,7 +38,7 @@ if (!$cliente) {
     <div class="container">
         <h1 class="text-center">Actualizar Cliente</h1>
         <form action="actualizar.php" method="POST">
-            <input type="hidden" name="id" value="<?php echo $cliente["id_cliente"] ?>">
+            <input type="hidden" name="id" value="<?php echo $id ?>">
             <div class="form-group">
                 <label for="nombre">RUT</label>
                 <input value="<?php echo $cliente["rut"] ?>" placeholder="" class="form-control" type="text" name="rut" id="rut" disabled>
@@ -50,17 +55,39 @@ if (!$cliente) {
             <div class="form-group mb-3">
                 <label for="descripcion">Area</label>
 
-                <select class="form-select" id="area" name="area" value="<?php echo $cliente["area"] ?>">
+                <select class="form-select" id="area" name="area" value="<?php echo $cliente['nombre_area'] ?>">
+                    <option value="<?php echo $cliente['id_area'] ?>"><?php echo $cliente['nombre_area'] ?></option>
                     <?php
+                    
 
-                    if ($t2 >= 1) {
+                    if ($t2 > 0) {
 
                         ?>
-                            <option value="0"><?php echo $cliente['nombre_area'] ?></option>
                         <?php
                         while ($row = $resultado2->fetch_object()) {
                     ?>
                             <option value="<?php echo $row->id_area ?>"><?php echo $row->nombre_area ?></option>
+                    <?php
+                        }
+                    }
+                    ?>
+                </select>
+                
+            </div>
+            <div class="form-group mb-3">
+                <label for="descripcion">Cargo</label>
+
+                <select class="form-select" id="cargo" name="cargo">
+                    <?php
+
+                    if ($t4 >= 1) {
+
+                        ?>
+                            <option value="<?php echo $cliente['id_cargo'] ?>"><?php echo $cliente['nombre_cargo'] ?></option>
+                        <?php
+                        while ($row = $resultado4->fetch_object()) {
+                    ?>
+                            <option value="<?php echo $row->id_cargo ?>"><?php echo $row->nombre_cargo ?></option>
                     <?php
                         }
                     }
@@ -77,7 +104,8 @@ if (!$cliente) {
             <div class="form-group mb-3">
                 <label for="descripcion">Convenio</label>
 
-                <select class="form-select" id="convenio" name="convenio" value="<?php echo $cliente["convenio"] ?>">
+                <select class="form-select" id="convenio" name="convenio">
+                    <option value="<?php echo $cliente['id_convenio'] ?>"><?php echo $cliente['nombre_convenio'] ?></option>
                     <?php
 
                     if ($t3 >= 1) {

@@ -4,6 +4,7 @@ include '../settings.php';
 $id = $_GET["id"];
 $sentencia = $conn->prepare("SELECT * FROM cliente
 INNER JOIN area on area.id_area = cliente.area
+INNER JOIN cargo on cargo.id_cargo = cliente.cargo
 INNER JOIN convenios on convenios.id_convenio=cliente.convenio WHERE id_cliente = ?");
 $sentencia->bind_param("i", $id);
 $sentencia->execute();
@@ -57,6 +58,23 @@ if (!$cliente) {
                         while ($row = $resultado2->fetch_object()) {
                     ?>     
                             <option value="<?php echo $row->id_area ?>"><?php echo $row->nombre_area ?></option>
+                    <?php
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="form-group">
+            <div class="form-group mb-3">
+                <label for="descripcion">Cargo</label>
+                <select class="form-select"  value="<?php echo $cliente["nombre_cargo"] ?>" >
+                    <?php
+                    $resultado3 = $conn->query("SELECT * FROM cargo");
+                    $t3 = mysqli_num_rows($resultado3);
+                    if ($t3 >= 1) {
+                        while ($row = $resultado3->fetch_object()) {
+                    ?>     
+                            <option value="<?php echo $row->id_cargo ?>"><?php echo $row->nombre_cargo ?></option>
                     <?php
                         }
                     }

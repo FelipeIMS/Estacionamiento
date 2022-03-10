@@ -10,15 +10,20 @@ $area = $_POST["area"];
 $convenio = $_POST["convenio"];
 $cargo = $_POST["cargo"];
 
+echo $id;
+echo $nombre;
+echo $apellidos;
+echo $area;
+echo $convenio;
+echo $cargo;
 
-$sentencia = $mysqli->prepare("UPDATE cliente SET
-nombre_cliente = ?,
-apellido_cliente = ?,
-area=?,
-convenio=?,
-cargo= =
-WHERE id_cliente = ?");
-$sentencia->bind_param("ssiisi", $nombre, $apellidos, $area,$convenio,$cargo,$id);
-$sentencia->execute();
+
+$sentencia = mysqli_query($mysqli, "UPDATE cliente SET
+nombre_cliente = '".$nombre."',
+apellido_cliente = '".$apellidos."',
+area= '".$area."',
+convenio= '".$convenio."',
+cargo= '".$cargo."'
+WHERE id_cliente = '".$id."'");
 echo '<script>toastr.success("Registro Actualizado ")</script>';
 header("refresh: 1; url=listar.php");
