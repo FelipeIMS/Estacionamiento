@@ -1,5 +1,3 @@
-
-
 <?php
 
 include 'settings.php';
@@ -43,11 +41,15 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
      desde el panel de control
  */
 
-$nombre_impresora = "ZJ-58";
+$nombre_impresora = "boletas";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
+
+
+
+    $printer->setJustification(Printer::JUSTIFY_CENTER);
 
 /*
      Imprimimos un mensaje. Podemos usar
@@ -55,27 +57,23 @@ $printer = new Printer($connector);
      veces a $printer->text()
  */
 $printer->text(" Clinica Lircay" . "\n");
-$printer->text("Ticket  Salida" . "\n");
+$printer->text("\n");
 $printer->setJustification(Printer::JUSTIFY_LEFT);
-
+$printer->text("\n");
+$printer->text("Ticket:  Salida" . "\n");
+$printer->text("\n");
 $printer->text("Boleta N°: " . $id . "\n");
 $printer->text("\n");
-
 $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
 $printer->text("\n");
-
 $printer->text("Termino: " . $cliente3['termino'] . "\n");
 $printer->text("\n");
-
 $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
 $printer->text("\n");
-
 $printer->text("Descuento: $" . $cliente3['convenio_v']  . "\n");
 $printer->text("\n");
-
 $printer->text("TOTAL: $" . $cliente3['total'] . "\n");
 $printer->text("\n");
-
 $printer->text("\n");
 
 
@@ -104,5 +102,7 @@ $printer->pulse();
      la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
  */
 $printer->close();
+
+
 header("refresh: 0; url=index.php");
 ?>
