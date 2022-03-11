@@ -19,7 +19,7 @@ header("Content-Disposition: attachment; filename=\"$filename\"");
 
 <table>
     <tr>
-        <th>Nombre</th>
+        <th>Nombre (Usuario)</th>
         <th>Patente</th>
         <th>Inicio</th>
         <th>Fin</th>

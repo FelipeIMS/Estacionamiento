@@ -20,7 +20,7 @@ inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 inner join convenios on cliente.convenio = convenios.id_convenio
 inner join cargo on cargo.id_cargo = cliente.cargo
-where ficha.boleta_sii = 0;");
+where ficha.boleta_sii is null;");
 $tfsii = mysqli_num_rows($ficha_sin_sii);
 
 
