@@ -44,9 +44,9 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
             <h1 class="text-center">Listado de Clientes</h1>
         </div>
         <div id="wrapper" class="col-12">
-            <form action="excel_clientes.php" method="post">
+            <!-- <form action="excel_clientes.php" method="post">
                 <button type="submit" name ="clientes_excel" class="btn btn-primary"><i class="fa-solid fa-file-excel"></i></button>
-            </form>
+            </form> -->
             <a class="btn btn-success my-2" href="formulario_registrar.php"><i class="fa-solid fa-plus"></i></a>
             <a class="btn btn-warning my-2" style="float:right" href="../index.php"><i class="fa-solid fa-arrow-left"></i></a>
             <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Buscar....">
@@ -112,3 +112,16 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
         trs.forEach(setTrStyleDisplay)
     }
 </script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/622b88a5a34c2456412aa178/1ftt0ri9s';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->

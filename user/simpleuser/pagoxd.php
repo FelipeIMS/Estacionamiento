@@ -194,7 +194,7 @@ $printer->feed(8);
                window.location="index.php";
             }, 1000); </script>';
             $printer->close();
-            header("refresh: 1; url=listar.php");
+            header("refresh: 1; url=index.php");
 
         }else{
 
