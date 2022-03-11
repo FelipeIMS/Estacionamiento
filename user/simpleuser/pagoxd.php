@@ -3,7 +3,7 @@
  use Mike42\Escpos\Printer;
  use Mike42\Escpos\EscposImage;
  use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
- $nombre_impresora = "ZJ-58";
+ $nombre_impresora = "boletas";
 
 
     $connector = new WindowsPrintConnector($nombre_impresora);

@@ -43,7 +43,7 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
      desde el panel de control
  */
 
-$nombre_impresora = "ZJ-58";
+$nombre_impresora = "boletas";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
