@@ -6,6 +6,7 @@
       $tipo = $_POST["tipo"];
       $marca = $_POST["marca"];
       $cliente = $_POST["cliente"];
+      $obs=$_POST['obs'];
 
 
       if (!empty($_POST)) {
@@ -28,10 +29,10 @@
             } else {
                   $estado = 'Activo';
                   $sentencia = $mysqli->prepare("INSERT INTO vehiculo
-    (patente,tipo_vehiculo,marca_vehiculo,cliente,estado_v)
+    (patente,tipo_vehiculo,marca_vehiculo,cliente,estado_v,observacion)
     VALUES
-    (?,?,?,?,?)");
-                  $sentencia->bind_param("siiis", $patente, $tipo, $marca, $cliente, $estado);
+    (?,?,?,?,?,?)");
+                  $sentencia->bind_param("siiiss", $patente, $tipo, $marca, $cliente, $estado,$obs);
                   $sentencia->execute();
                   echo "<script>    
             sweetAlert({
