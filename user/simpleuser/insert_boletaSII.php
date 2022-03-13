@@ -32,7 +32,6 @@
                 echo '<script type="text/JavaScript"> setTimeout(function(){
                window.location="index.php";
             }, 1000); </script>';
-            header("refresh: 1; url=listar.php");
         }else{
 
             $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ? where id_ficha = ?;");
