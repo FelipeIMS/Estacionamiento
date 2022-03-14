@@ -93,7 +93,8 @@ $printer = new Printer($connector);
      veces a $printer->text()
  */
 $printer->setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("Clinica Lircay" . "\n");
+$printer->text("Inmobiliaria Lircay" . "\n");
+$printer->text("2 Poniente 1380, Talca" . "\n");
 $printer->setJustification(Printer::JUSTIFY_LEFT);
 $printer->text( "\n");
 $printer->text("Ticket  Entrada" . "\n");
@@ -102,7 +103,7 @@ $printer->text("Boleta N°: " . $row['id_ficha'] . "\n");
 $printer->text( "\n");
 $printer->text("Inicio: " . $row['inicio']  . "\n");
 $printer->text( "\n");
-$printer->text("Cajero: " . $_SESSION['name']  . "\n");
+$printer->text("Operador: " . $_SESSION['name']  . "\n");
 
 
 

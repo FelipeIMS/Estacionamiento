@@ -56,7 +56,8 @@ $printer->setJustification(Printer::JUSTIFY_CENTER);
      el salto de línea o llamar muchas
      veces a $printer->text()
  */
-$printer->text("Clinica Lircay" . "\n");
+$printer->text("Inmobiliaria Lircay" . "\n");
+$printer->text("2 Poniente 1380, Talca" . "\n");
 $printer->setJustification(Printer::JUSTIFY_LEFT);
 $printer->text("\n");
 $printer->text("Ticket:  Entrada" . "\n");
@@ -65,7 +66,7 @@ $printer->text("Boleta N°: " . $id . "\n");
 $printer->text("\n");
  $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
 $printer->text("\n");
- $printer->text("Cajero: " . $cliente3['name']  . "\n");
+ $printer->text("Operador: " . $cliente3['name']  . "\n");
 $printer->text("\n");
  $printer->text( "\n");
 

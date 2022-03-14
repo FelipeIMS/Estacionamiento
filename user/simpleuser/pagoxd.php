@@ -99,8 +99,8 @@
     $contador=0;
 while($contador < 2){
         $printer->setJustification(Printer::JUSTIFY_CENTER);
-    $printer->text("Clinica Lircay" . "\n");
-    $printer->text("\n");
+        $printer->text("Inmobiliaria Lircay" . "\n");
+        $printer->text("2 Poniente 1380, Talca" . "\n");
     $printer->setJustification(Printer::JUSTIFY_LEFT);
     $printer->text("Ticket  Salida" . "\n");
     $printer->text("\n");
@@ -116,7 +116,7 @@ while($contador < 2){
     $printer->text("\n");
     $printer->text("TOTAL: $" . $pago . "\n");
     $printer->text("\n");
-    $printer->text("Cajero: " . $_SESSION['name'] . "\n");
+    $printer->text("Operador: " . $_SESSION['name'] . "\n");
     $printer->feed(6);
     $printer->cut();
 
@@ -244,7 +244,8 @@ while($contador < 2){
 $contador=0;
 while($contador < 2){
     $printer->setJustification(Printer::JUSTIFY_CENTER);
-    $printer->text("Clinica Lircay" . "\n");
+    $printer->text("Inmobiliaria Lircay" . "\n");
+    $printer->text("2 Poniente 1380, Talca" . "\n");
     $printer->text("\n");
     $printer->setJustification(Printer::JUSTIFY_LEFT);
     $printer->text("Ticket  Salida" . "\n");
@@ -261,7 +262,7 @@ while($contador < 2){
     $printer->text("\n");
     $printer->text("TOTAL: $" . $pago . "\n");
     $printer->text("\n");
-    $printer->text("Cajero: " . $_SESSION['name'] . "\n");
+    $printer->text("Operador: " . $_SESSION['name'] . "\n");
     $printer->feed(6);
     /*
      Cortamos el papel. Si nuestra impresora
