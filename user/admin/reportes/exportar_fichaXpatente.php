@@ -4,14 +4,14 @@
 </head>
 
 <?php
-include("conexion.php");
+include '../settings.php';
 
 
 $date1 = $_POST['date5'];
 $date2 = $_POST['date6'];
 $patente = $_POST['patente'];
 
-$existe = mysqli_query($mysqli, "SELECT vehiculo.patente, inicio, termino, diferencia, convenios.nombre_convenio,total from ficha
+$existe = mysqli_query($conn, "SELECT vehiculo.patente, inicio, termino, diferencia, convenios.nombre_convenio,total from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area

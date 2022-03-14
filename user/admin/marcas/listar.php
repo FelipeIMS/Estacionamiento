@@ -35,7 +35,7 @@ $marcas = $resultado->fetch_all(MYSQLI_ASSOC);
         <div class="col-12">
             <h1 class="text-center">Listado de Marcas</h1>
             <a class="btn btn-success my-2" href="formulario_registrar.php"><i class="fa-solid fa-plus"></i></a>
-            <a class="btn btn-warning my-2" style="float:right" href="../index.php"><i class="fa-solid fa-arrow-left"></i></a>
+            <a class="btn btn-warning my-2" style="float:right" href="../index/index.php"><i class="fa-solid fa-arrow-left"></i></a>
             <form action="reporte.php" method="post">
                 <button type="submit" class="btn btn-success" name="enviar"><i class="fa-solid fa-file-excel"></i></button>
             </form>

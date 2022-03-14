@@ -74,14 +74,14 @@ date_default_timezone_set("America/Santiago");
             <button class="btn btn-success" type="submit">Generar</button>
 
         </form>
-        <a class="btn btn-warning my-2" style="float:right" href="../index.php"><i class="fa-solid fa-arrow-left"></i></a>
+        <a class="btn btn-warning my-2" style="float:right" href="../index/index.php"><i class="fa-solid fa-arrow-left"></i></a>
         <canvas id="chart1"></canvas>
 
     </div>
     <div class="container">
         <h1 class="text-center">Movimientos por usuario</h1>
         <form method="post" class="text-center">
-            <a class="btn btn-warning my-2" style="float:right" href="../index.php"><i class="fa-solid fa-arrow-left"></i></a>
+            <a class="btn btn-warning my-2" style="float:right" href="../index/index.php"><i class="fa-solid fa-arrow-left"></i></a>
 
             <div class="row">
                 <div class="col-sm-3">
