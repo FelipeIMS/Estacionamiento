@@ -58,6 +58,11 @@
         WHERE id_ficha = '".$_GET["id"]."'";
         $resultadoTD = mysqli_query($conn, $traerTiempoDesc);
         $TD = mysqli_fetch_array($resultadoTD);
+
+        $valorXminuto = mysqli_query($conn, "SELECT precio from precio where estado_precio = 'Activo';");
+
+        $VXP = mysqli_fetch_array($valorXminuto);
+        
         
 
         if($cliente['convenion'] == 'Sin convenio'){
