@@ -66,17 +66,17 @@
         
 
         if($cliente['convenion'] == 'Sin convenio'){
-            $total = $diferencia[0]*20;
+            $total = $diferencia[0]*$VXP[0];
             $query6 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
             $result6 = mysqli_query($conn, $query6); 
         }else if($cliente['convenion'] == 'Gratis'){
-            $total = $TD[1]*20;
+            $total = $TD[1]*$VXP[0];
             $query6 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
             $result6 = mysqli_query($conn, $query6); 
 
         }else{
             $cambio = $TD[1]/100;
-            $total_sindesc=$diferencia[0]*20;
+            $total_sindesc=$diferencia[0]*$VXP[0];
             $desc = $total_sindesc*$cambio;
             $total_condesc = $total_sindesc - $desc;
             $query7 = "UPDATE ficha SET total = $total_condesc, convenio_v = $desc where id_ficha='".$_GET["id"]."'";
@@ -130,11 +130,18 @@
                         <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente['diferencia'] ?>"
                             placeholder="entrada" class="form-control" type="text" name="diferencia" id="diferencia">
                         <input value="<?php echo $cliente['convenion'] ?>" placeholder="convenio si/no"
-                            class="form-control" type="text" name="convenio_sn" id="convenio_sn" hidden>
+                            class="form-control" type="text" name="convenio_sn" id="convenio_sn" >
                         <input value="<?php echo $cliente['convenio_t'] ?> 0" placeholder="convenio_t"
-                            class="form-control" type="text" name="convenio_t" id="convenio_t" hidden>
+                            class="form-control" type="text" name="convenio_t" id="convenio_t" >
                         <input value="<?php echo $cliente['convenio_v'] ?> 0" placeholder="convenio_v"
-                            class="form-control" type="text" name="convenio_v" id="convenio_v" hidden>
+                            class="form-control" type="text" name="convenio_v" id="convenio_v" >
+                            <?php $valorXminuto = mysqli_query($conn, "SELECT precio from precio where estado_precio = 'Activo';");
+
+$VXP = mysqli_fetch_array($valorXminuto);
+echo '<input value="'.$VXP[0].'" placeholder="Precio"
+class="form-control" type="text" name="precio" id="precio" >';
+?>
+                        
                     </div>
                     <label class="mt-3" for="convenio" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
                         style="display: none;" <?php   } ?>>Hospitalizado</label>
@@ -185,9 +192,15 @@ function comprueba() {
         on();
         var cantidad = 60;
         var diferencia = $("#diferencia").val();
+        console.log(diferencia);
         var total = $("#total").val();
+        var precio = $("#precio").val();
+        console.log(precio);
         var dift = diferencia - cantidad;
-        total = dift * 20;
+        console.log(dift);
+
+        total = dift * precio;
+        console.log(total);
         if (total < 0) {
             total = 0;
         }
@@ -205,26 +218,6 @@ function comprueba() {
         $("#convenio_t").val(0);
         $("#convenio_v").val(0);
         $("#total").val(total);
-    }
-}
-</script>
-<script>
-    function on2() {
-    console.log("on");
-}
-
-function off2() {
-    console.log("off");
-}
-
-var checkbox2 = document.getElementById('boleta_sii');
-checkbox.addEventListener("change", comprueba2, false);
-
-function comprueba2() {
-    if (checkbox2.checked) {
-        on2();
-    } else {
-        off2();
     }
 }
 </script>
