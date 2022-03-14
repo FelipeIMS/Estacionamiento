@@ -258,6 +258,8 @@ while($contador < 2){
     $printer->text("Descuento: $" . $convenio_v  . "\n");
     $printer->text("\n");
     $printer->text("TOTAL: $" . $pago . "\n");
+    $printer->text("\n");
+    $printer->text("Cajero: " . $_SESSION['name'] . "\n");
     $printer->feed(6);
     /*
      Cortamos el papel. Si nuestra impresora

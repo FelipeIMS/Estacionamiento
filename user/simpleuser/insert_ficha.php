@@ -79,6 +79,8 @@
      desde el panel de control
  */
 
+
+
 $nombre_impresora = "boletas";
 
 
@@ -90,14 +92,18 @@ $printer = new Printer($connector);
      el salto de línea o llamar muchas
      veces a $printer->text()
  */
+$printer->setJustification(Printer::JUSTIFY_CENTER);
 $printer->text("Clinica Lircay" . "\n");
+$printer->setJustification(Printer::JUSTIFY_LEFT);
 $printer->text( "\n");
 $printer->text("Ticket  Entrada" . "\n");
 $printer->text( "\n");
-$printer->setJustification(Printer::JUSTIFY_LEFT);
 $printer->text("Boleta N°: " . $row['id_ficha'] . "\n");
 $printer->text( "\n");
 $printer->text("Inicio: " . $row['inicio']  . "\n");
+$printer->text( "\n");
+$printer->text("Cajero: " . $_SESSION['name']  . "\n");
+
 
 
 

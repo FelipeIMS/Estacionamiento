@@ -106,6 +106,11 @@
                 <form action="pagoxd.php" method="POST">
                     <input type="hidden" name="id" value="<?php echo $cliente["id_ficha"] ?>">
                     <div class="form-group">
+                        <label for="nombre">Nro Boleta: </label>
+                        <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente["id_ficha"] ?>"
+                            placeholder="entrada" class="form-control" type="text" name="entrada" id="entrada">
+                    </div>
+                    <div class="form-group">
                         <label for="nombre">ENTRADA: </label>
                         <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente["inicio"] ?>"
                             placeholder="entrada" class="form-control" type="text" name="entrada" id="entrada">

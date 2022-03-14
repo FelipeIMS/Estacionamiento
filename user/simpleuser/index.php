@@ -253,7 +253,7 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
 
                             </div>
                             <div class="form-floating mt-4">
-                                <textarea disabled readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">° Seleccina patente e ingresa el numero de la boleta SII.</textarea>
+                                <textarea disabled readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">° Seleccina Nro de boleta e ingresa el numero de la boleta SII.</textarea>
                                 <label for="floatingTextarea2">Instrucciones</label>
                             </div>
 

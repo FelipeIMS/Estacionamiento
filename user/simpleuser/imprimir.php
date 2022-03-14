@@ -5,12 +5,13 @@
 include 'settings.php';
 $id = $_GET["id"];
 
-$sentencia3 = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, convenios.tiempo, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v from ficha
+$sentencia3 = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, convenios.tiempo, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v, users.name from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 inner join convenios on cliente.convenio = convenios.id_convenio
-WHERE id_ficha = ?");
+inner join users on users.id = ficha.user_ficha
+WHERE id_ficha = ?;");
 $sentencia3->bind_param("i", $id);
 $sentencia3->execute();
 $resultado3 = $sentencia3->get_result();
@@ -63,6 +64,8 @@ $printer->text("\n");
 $printer->text("Boleta N°: " . $id . "\n");
 $printer->text("\n");
  $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+$printer->text("\n");
+ $printer->text("Cajero: " . $cliente3['name']  . "\n");
 $printer->text("\n");
  $printer->text( "\n");
 
