@@ -3,6 +3,7 @@ include_once "encabezado.php";
 include '../settings.php'; 
 $resultado = $conn->query("SELECT * FROM marca_vehiculo");
 $marcas = $resultado->fetch_all(MYSQLI_ASSOC);
+
 ?>
 
 <div class="container">

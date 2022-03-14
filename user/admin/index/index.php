@@ -88,6 +88,11 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                                 <span class="ms-1 d-none d-sm-inline">
                                     Areas</span></a>
                         </li>
+                        <li>
+                            <a href="../precio/formulario_precio.php" class="nav-link px-0 align-middle not-active">
+                                <span class="ms-1 d-none d-sm-inline">
+                                    Cambiar precio</span></a>
+                        </li>
 
                         <li>
                             <div class="dropdown">
