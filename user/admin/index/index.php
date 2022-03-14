@@ -117,7 +117,7 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
 
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="../../includes/logout.php">
+                            <li><a class="dropdown-item" href="../../../includes/logout.php">
                                     <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesion</a></li>
                         </ul>
                     </div>
