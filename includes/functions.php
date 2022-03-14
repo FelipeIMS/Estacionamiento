@@ -51,7 +51,7 @@ class Login {
   public function UserType() {
     //if user role is 1, redirect to admin page
     if ($_SESSION["role"] == 1) {
-      header("Location:../user/admin/");
+      header("Location:../user/admin/index/");
     }
     //if user role is 0, redirect to user page
     if ($_SESSION["role"] == 0) {

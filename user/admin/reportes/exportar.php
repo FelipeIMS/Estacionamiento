@@ -4,21 +4,19 @@
 </head>
 
 <?php
-include("conexion.php");
+include '../settings.php';
 
 
-$date1 = $_POST['date3'];
-$date2 = $_POST['date4'];
-$nombre = $_POST['cliente'];
+$date1 = $_POST['date1'];
+$date2 = $_POST['date2'];
 
-$existe = mysqli_query($mysqli, "SELECT cliente.nombre_cliente, cliente.apellido_cliente,  vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio, cargo.nombre_cargo from ficha
+$existe = mysqli_query($conn, "SELECT cliente.nombre_cliente, cliente.apellido_cliente, area.nombre_area, cargo.nombre_cargo,vehiculo.patente,  inicio, termino, diferencia,convenios.nombre_convenio,convenio_v , total from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 inner join convenios on cliente.convenio = convenios.id_convenio
-inner join cargo on cargo.id_cargo = cliente.cargo
-where inicio and termino between '$date1' and '$date2' + INTERVAL 1 DAY
-and id_cliente = '$nombre'");
+inner join cargo on cargo.id_cargo= cliente.cargo
+where inicio and termino between '$date1' and '$date2' + INTERVAL 1 DAY;");
 
 
 
@@ -33,15 +31,16 @@ if(isset($_POST['enviar'])){
         ?>
         <table>
         <tr>
-            <th>Patente</th>
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Area</th>
             <th>Cargo</th>
+            <th>Patente</th>
             <th>Inicio</th>
             <th>Termino</th>
-            <th>Tiempo Estacionado</th>
+            <th>Tiempo estacionado</th>
             <th>Convenio</th>
+            <th>Desc. Convenio</th>
             <th>Total</th>
         </tr>
         <?php
@@ -49,16 +48,17 @@ if(isset($_POST['enviar'])){
         while ($fila = mysqli_fetch_array($existe)) {
             ?>
                 <tr>
-                    <td><?php echo $fila[2] ?></td>
                     <td><?php echo $fila[0] ?></td>
                     <td><?php echo $fila[1] ?></td>
+                    <td><?php echo $fila[2] ?></td>
                     <td><?php echo $fila[3] ?></td>
-                    <td><?php echo $fila[9] ?></td>
                     <td><?php echo $fila[4] ?></td>
                     <td><?php echo $fila[5] ?></td>
-                    <td><?php echo $fila[6] ?> Minutos</td>
+                    <td><?php echo $fila[6] ?></td>
+                    <td><?php echo $fila[7] ?> Minutos</td>
                     <td><?php echo $fila[8] ?></td>
-                    <td>$ <?php echo $fila[7] ?></td>
+                    <td>$ <?php echo $fila[9] ?></td>
+                    <td>$ <?php echo $fila[10] ?></td>
                 </tr>
 
                 <?php }

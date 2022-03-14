@@ -47,7 +47,7 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
             <form action="reporte.php" method="post">
                 <button type="submit" class="btn btn-success" name="enviar"><i class="fa-solid fa-file-excel"></i></button>
             </form>
-            <a class="btn btn-warning my-2" style="float:right" href="../index.php"><i class="fa-solid fa-arrow-left"></i></a>
+            <a class="btn btn-warning my-2" style="float:right" href="../index/index.php"><i class="fa-solid fa-arrow-left"></i></a>
             <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Buscar....">
 
             <form action="reporte.php" method="POST">
