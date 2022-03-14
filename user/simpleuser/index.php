@@ -248,9 +248,10 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                             <div class="form-group">
                                 <label>Nro Boleta SII</label>
                                 <input class="form-control" id="nro_boleta" type="number" name="nro_boleta" required />
-
                             </div>
-
+                            <div class="form-group mb-3">
+                                <label for="obs" class="form-label">Observacion</label>
+                                <textarea class="form-control" name="obs" id="obs" rows="6" style="resize: none;"></textarea>
                             </div>
                             <div class="form-floating mt-4">
                                 <textarea disabled readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">° Seleccina Nro de boleta e ingresa el numero de la boleta SII.</textarea>

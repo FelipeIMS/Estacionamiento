@@ -15,6 +15,7 @@
 
     $id_ficha = $_POST['id_ficha'];
     $nro_boleta = $_POST['nro_boleta'];
+    $obs = $_POST['obs'];
     
     if(isset($_POST['guardar'])){
         
@@ -34,8 +35,8 @@
             }, 1000); </script>';
         }else{
 
-            $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ? where id_ficha = ?;");
-            $numero_boleta->bind_param("ii", $nro_boleta, $id_ficha);
+            $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ?, observacion = ? where id_ficha = ?;");
+            $numero_boleta->bind_param("isi", $nro_boleta,$obs, $id_ficha);
             $numero_boleta->execute();
             echo "<script>  Swal.fire({
                 position: 'center',

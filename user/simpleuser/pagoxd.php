@@ -115,7 +115,9 @@ while($contador < 2){
     $printer->text("Descuento: $" . $convenio_v  . "\n");
     $printer->text("\n");
     $printer->text("TOTAL: $" . $pago . "\n");
-    $printer->feed(8);
+    $printer->text("\n");
+    $printer->text("Cajero: " . $_SESSION['name'] . "\n");
+    $printer->feed(6);
     $printer->cut();
 
     /*

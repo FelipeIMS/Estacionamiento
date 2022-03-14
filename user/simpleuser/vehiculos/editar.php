@@ -2,7 +2,7 @@
 include_once "encabezado.php";
 $mysqli = include_once "conexion.php";
 $id = $_GET["id"];
-$sentencia = $mysqli->prepare("SELECT *, concat(cliente.nombre_cliente,' ',cliente.apellido_cliente) n FROM vehiculo
+$sentencia = $mysqli->prepare("SELECT *, concat(cliente.nombre_cliente,' ',cliente.apellido_cliente) n, vehiculo.observacion as obs FROM vehiculo
 INNER JOIN marca_vehiculo ON marca_vehiculo.id_mv=vehiculo.marca_vehiculo
 INNER JOIN tipo_vehiculo ON tipo_vehiculo.id_tpv = vehiculo.tipo_vehiculo
 INNER JOIN cliente ON  cliente.id_cliente=vehiculo.cliente  WHERE id_vehiculo = ?");
@@ -98,6 +98,10 @@ if (!$vehiculo) {
                     ?>
                 </select>
             </div>
+            <div class="form-group mb-3">
+                      <label for="obs" class="form-label">Observacion</label>
+                      <textarea class="form-control" name="obs" id="obs" rows="6" style="resize: none;"><?php echo $vehiculo['obs']?></textarea>
+                </div>
             <div class="form-group py-3">
                 <button class="btn btn-success">Guardar</button>
                 <a class="btn btn-warning" href="listar.php">Volver</a>
