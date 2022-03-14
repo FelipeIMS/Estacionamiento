@@ -226,14 +226,14 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
 
                         <form method="POST" action="insert_boletaSII.php" class="">
                             <div class="form-group">
-                            <label for="descripcion">Ficha: </label>
+                            <label for="descripcion">Nro de boleta: </label>
                             <select  id="id_ficha" name="id_ficha" required>
                                 <?php
 
                                 if ($tfsii >= 1) {
 
                                     ?>
-                                        <option value="0">Escoja ficha</option>
+                                        <option value="0">Escoja Nro de Boleta</option>
                                     <?php
                                     while ($row = $ficha_sin_sii->fetch_object()) {
                                 ?>
