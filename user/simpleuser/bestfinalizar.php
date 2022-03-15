@@ -130,16 +130,16 @@
                         <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente['diferencia'] ?>"
                             placeholder="entrada" class="form-control" type="text" name="diferencia" id="diferencia">
                         <input value="<?php echo $cliente['convenion'] ?>" placeholder="convenio si/no"
-                            class="form-control" type="text" name="convenio_sn" id="convenio_sn" >
+                            class="form-control" type="text" name="convenio_sn" id="convenio_sn" hidden>
                         <input value="<?php echo $cliente['convenio_t'] ?> 0" placeholder="convenio_t"
-                            class="form-control" type="text" name="convenio_t" id="convenio_t" >
+                            class="form-control" type="text" name="convenio_t" id="convenio_t" hidden>
                         <input value="<?php echo $cliente['convenio_v'] ?> 0" placeholder="convenio_v"
-                            class="form-control" type="text" name="convenio_v" id="convenio_v" >
+                            class="form-control" type="text" name="convenio_v" id="convenio_v" hidden>
                             <?php $valorXminuto = mysqli_query($conn, "SELECT precio from precio where estado_precio = 'Activo';");
 
 $VXP = mysqli_fetch_array($valorXminuto);
 echo '<input value="'.$VXP[0].'" placeholder="Precio"
-class="form-control" type="text" name="precio" id="precio" >';
+class="form-control" type="text" name="precio" id="precio" hidden>';
 ?>
                         
                     </div>
@@ -192,28 +192,25 @@ function comprueba() {
         on();
         var cantidad = 60;
         var diferencia = $("#diferencia").val();
-        console.log(diferencia);
         var total = $("#total").val();
         var precio = $("#precio").val();
-        console.log(precio);
         var dift = diferencia - cantidad;
-        console.log(dift);
 
         total = dift * precio;
-        console.log(total);
         if (total < 0) {
             total = 0;
         }
 
         $("#convenio_sn").val("Hospitalizado");
-        $("#convenio_t").val(60);
-        $("#convenio_v").val(1200);
+        $("#convenio_t").val(cantidad);
+        $("#convenio_v").val(precio*cantidad);
         $("#total").val(total);
     } else {
         off();
         var total = $("#total").val();
+        var precio = $("#precio").val();
         var diferencia = $("#diferencia").val();
-        total = diferencia * 20;
+        total = diferencia * precio;
         $("#convenio_sn").val("<?php echo $cliente['convenion'] ?>");
         $("#convenio_t").val(0);
         $("#convenio_v").val(0);
