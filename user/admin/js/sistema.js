@@ -4,7 +4,6 @@ const datatable = new DataTable(tabla,{
         placeholder: "Buscar...",
         perPage: "{select} Ingresos por paginas",
         noRows: "No hay mas ingresos",
-        info: "Mostrando {start} a {end} de {rows} ingresos",
-        Default: 8
+        info: "Mostrando {start} a {end} de {rows} ingresos"
     }
 });

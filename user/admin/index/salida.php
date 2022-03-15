@@ -1,16 +1,15 @@
-
-
 <?php
 
-include 'settings.php';
+include '../settings.php';
 $id = $_GET["id"];
 
-$sentencia3 = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, convenios.tiempo, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v from ficha
+$sentencia3 = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, convenios.tiempo, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v, users.name from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 inner join convenios on cliente.convenio = convenios.id_convenio
-WHERE id_ficha = ?");
+inner join users on users.id = ficha.user_ficha_out
+WHERE id_ficha = ?;");
 $sentencia3->bind_param("i", $id);
 $sentencia3->execute();
 $resultado3 = $sentencia3->get_result();
@@ -43,33 +42,49 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
      desde el panel de control
  */
 
-$nombre_impresora = "ZJ-58";
+$nombre_impresora = "boletas";
 
 
 $connector = new WindowsPrintConnector($nombre_impresora);
 $printer = new Printer($connector);
+
+
+
+    $printer->setJustification(Printer::JUSTIFY_CENTER);
 
 /*
      Imprimimos un mensaje. Podemos usar
      el salto de línea o llamar muchas
      veces a $printer->text()
  */
-$printer->text("Clinica Lircay" . "\n");
-$printer->text("Ticket  Entrada" . "\n");
+$printer->text("Inmobiliaria Lircay" . "\n");
+$printer->text("2 Poniente 1380, Talca" . "\n");
 $printer->setJustification(Printer::JUSTIFY_LEFT);
-
+$printer->text("\n");
+$printer->text("Ticket:  Salida" . "\n");
+$printer->text("\n");
 $printer->text("Boleta N°: " . $id . "\n");
- $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
- $printer->text( "\n");
+$printer->text("\n");
+$printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+$printer->text("\n");
+$printer->text("Termino: " . $cliente3['termino'] . "\n");
+$printer->text("\n");
+$printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
+$printer->text("\n");
+$printer->text("Descuento: $" . $cliente3['convenio_v']  . "\n");
+$printer->text("\n");
+$printer->text("TOTAL: $" . $cliente3['total'] . "\n");
+$printer->text("\n");
+$printer->text("Operador: " . $cliente3['name'] . "\n");
+$printer->text("\n");
+$printer->text("\n");
 
 
 /*
      Hacemos que el papel salga. Es como 
      dejar muchos saltos de línea sin escribir nada
  */
-$printer->feed();
-
-
+$printer->feed(6);
 
 /*
      Cortamos el papel. Si nuestra impresora
@@ -90,5 +105,7 @@ $printer->pulse();
      la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
  */
 $printer->close();
+
+
 header("refresh: 0; url=index.php");
 ?>

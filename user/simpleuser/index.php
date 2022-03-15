@@ -39,10 +39,12 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
         <div class="row flex-nowrap">
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-black mt-0">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                    <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <a href="#"
+                        class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         <span class="fs-5 d-none d-sm-inline">Menu</span>
                     </a>
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        id="menu">
                         <li class="nav-item">
                             <a href="index.php" class="nav-link align-middle px-0">
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Inicio</span>
@@ -60,23 +62,30 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                         </li>
                     </ul>
                     <div class="dropdown pb-4">
-                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png"
+                                alt="hugenerd" width="30" height="30" class="rounded-circle">
                             <span class="d-none d-sm-inline mx-1"><?php echo $_SESSION['name'] ?></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="../../includes/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesion</a></li>
+                            <li><a class="dropdown-item" href="../../includes/logout.php"><i
+                                        class="fa-solid fa-right-from-bracket"></i> Cerrar sesion</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col py-3">
                 <div class="form-group mt-5">
-                    <input disabled class="form-control w-50 text-center position-relative top-50 start-50 translate-middle" id="contador" type="text" name="contador" value="Espacios ocupados: <?php echo $espacios2[0]; ?> de 62" />
+                    <input disabled
+                        class="form-control w-50 text-center position-relative top-50 start-50 translate-middle"
+                        id="contador" type="text" name="contador"
+                        value="Espacios ocupados: <?php echo $espacios2[0]; ?> de 62" />
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Nuevo ingreso</button>
-                    
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Nuevo ingreso</button>
+
                     <?php
                     if ($_SESSION["permiso_voucher"]==1) {
                         echo ' <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -111,19 +120,26 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                             ?>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-danger view_data" data-bs-backdrop="static" data-bs-keyboard="false" id="<?php echo $row["id"]; ?>"><i class="fa-brands fa-readme"></i></button>
+                                <button type="button" class="btn btn-danger view_data" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" id="<?php echo $row["id"]; ?>"><i
+                                        class="fa-brands fa-readme"></i></button>
 
                             </td>
 
                             <td>
-                                <a class="btn btn-warning" href="bestfinalizar.php?id=<?php echo $row["id"] ?>" <?php if ($row['estado'] == 'Pagado') { ?> style="display: none;" <?php   } ?>><i class="fa-solid fa-cash-register"></i></a>
+                                <a class="btn btn-warning" href="bestfinalizar.php?id=<?php echo $row["id"] ?>"
+                                    <?php if ($row['estado'] == 'Pagado') { ?> style="display: none;" <?php   } ?>><i
+                                        class="fa-solid fa-cash-register"></i></a>
 
                             </td>
                             <td>
-                                <a class="btn btn-info" href="imprimir.php?id=<?php echo $row["id"] ?>"><i class="fa-solid fa-print"></i></a>
+                                <a class="btn btn-info" href="imprimir.php?id=<?php echo $row["id"] ?>"><i
+                                        class="fa-solid fa-print"></i></a>
 
                             </td>
-                            <td> <a class="btn btn-info" href="salida.php?id=<?php echo $row["id"] ?>" <?php if ($row['termino'] == '') { ?> style="display: none;" <?php   } ?>><i class="fa-solid fa-print"></i></a>
+                            <td> <a class="btn btn-info" href="salida.php?id=<?php echo $row["id"] ?>"
+                                    <?php if ($row['termino'] == '') { ?> style="display: none;" <?php   } ?>><i
+                                        class="fa-solid fa-print"></i></a>
                             </td>
                             <td><?php echo $row["id"]; ?></td>
                             <td><?php echo $row["patente"]; ?></td>
@@ -136,15 +152,16 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
 
 
                         </tr>
-                    <?php
+                        <?php
                             }
                     ?>
 
-                    </tr>
+                        </tr>
                     </tbody>
                 </table>
                 <form action="exportar.php" method="POST">
-                        <button type="submit" name = "enviar" class="btn btn-success"><i class="fa-solid fa-money-bill"></i> Cierre</button>
+                    <button type="submit" name="enviar" class="btn btn-success"><i class="fa-solid fa-money-bill"></i>
+                        Cierre</button>
                 </form>
             </div>
         </div>
@@ -160,7 +177,8 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
 
 
 
-    <div class="modal fade" id="dataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" id="dataModal">
+    <div class="modal fade" id="dataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true" id="dataModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -172,7 +190,8 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                 </div>
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-default cancelar" id="<?php echo $row["id"]; ?>" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-default cancelar" id="<?php echo $row["id"]; ?>"
+                        data-bs-dismiss="modal">Cerrar</button>
 
 
                 </div>
@@ -198,7 +217,9 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
 
                             </div>
                             <div class="form-floating mt-4">
-                                <textarea disabled readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">° Busque por nombre o patente y luego haga click en agregar.</textarea>
+                                <textarea disabled readonly class="form-control" placeholder="Leave a comment here"
+                                    id="floatingTextarea2"
+                                    style="height: 100px">° Busque por nombre o patente y luego haga click en agregar.</textarea>
                                 <label for="floatingTextarea2">Instrucciones</label>
                             </div>
 
@@ -226,56 +247,60 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
 
                         <form method="POST" action="insert_boletaSII.php" class="">
                             <div class="form-group">
-                            <label for="descripcion">Nro de boleta: </label>
-                            <select  id="id_ficha" name="id_ficha" required>
-                                <?php
+                                <label for="descripcion">Nro de boleta: </label>
+                                <select id="id_ficha" name="id_ficha" required>
+                                    <?php
 
                                 if ($tfsii >= 1) {
 
                                     ?>
-                                        <option value="0">Escoja Nro de Boleta</option>
+                                    <option value="0">Escoja Nro de Boleta</option>
                                     <?php
                                     while ($row = $ficha_sin_sii->fetch_object()) {
                                 ?>
-                                        <option value="<?php echo $row->id_ficha ?>"><?php echo $row->id_ficha ?></option>
-                                <?php
+                                    <option value="<?php echo $row->id_ficha ?>"><?php echo $row->id_ficha ?></option>
+                                    <?php
                                     }
                                 }
                                 ?>
-                            </select>
-                            <br>
-                            <br>
-                            <div class="form-group">
-                                <label>Nro Boleta SII</label>
-                                <input class="form-control" id="nro_boleta" type="number" name="nro_boleta" required />
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="obs" class="form-label">Observacion</label>
-                                <textarea class="form-control" name="obs" id="obs" rows="6" style="resize: none;"></textarea>
-                            </div>
-                            <div class="form-floating mt-4">
-                                <textarea disabled readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">° Seleccina Nro de boleta e ingresa el numero de la boleta SII.</textarea>
-                                <label for="floatingTextarea2">Instrucciones</label>
+                                </select>
+                                <br>
+                                <br>
+                                <div class="form-group">
+                                    <label>Nro Boleta SII</label>
+                                    <input class="form-control" id="nro_boleta" type="number" name="nro_boleta"
+                                        required />
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="obs" class="form-label">Observacion</label>
+                                    <textarea class="form-control" name="obs" id="obs" rows="6"
+                                        style="resize: none;"></textarea>
+                                </div>
+                                <div class="form-floating mt-4">
+                                    <textarea disabled readonly class="form-control" placeholder="Leave a comment here"
+                                        id="floatingTextarea2"
+                                        style="height: 100px">° Seleccina Nro de boleta e ingresa el numero de la boleta SII.</textarea>
+                                    <label for="floatingTextarea2">Instrucciones</label>
+                                </div>
+
                             </div>
 
                     </div>
-
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" name="guardar" id="guardar" value="Guardar" class="btn btn-success" />
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-                    </form>
+                    <div class="modal-footer">
+                        <input type="submit" name="guardar" id="guardar" value="Guardar" class="btn btn-success" />
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
 
 
 
-    <?php include('footer.php'); ?>
-    <script>
+        <?php include('footer.php'); ?>
+        <script>
         $(document).ready(function() {
             $("#search").autocomplete({
                 source: 'search.php',
@@ -283,10 +308,10 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                 minLength: 2,
             });
         });
-    </script>
-    <script src="./js/datatable.js"></script>
-    <script src="./js/sistema.js"></script>
-    <script>
+        </script>
+        <script src="./js/datatable.js"></script>
+        <script src="./js/sistema.js"></script>
+        <script>
         $(document).ready(function() {
             $(document).on("click", ".view_data", function() {
                 //$('#dataModal').modal();
@@ -305,21 +330,23 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                 });
             });
         });
-    </script>
+        </script>
 
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/622b88a5a34c2456412aa178/1ftt0ri9s';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
+        <!--Start of Tawk.to Script-->
+        <script type="text/javascript">
+        var Tawk_API = Tawk_API || {},
+            Tawk_LoadStart = new Date();
+        (function() {
+            var s1 = document.createElement("script"),
+                s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/622b88a5a34c2456412aa178/1ftt0ri9s';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+        </script>
+        <!--End of Tawk.to Script-->
 </body>
 
 </html>

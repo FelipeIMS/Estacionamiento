@@ -3,9 +3,9 @@
 include_once "encabezado.php";
 
 include '../settings.php'; 
-$tipo = $_POST["tipo"];
-$estado = $_POST["estado_t"];
 
+$tipo = mysqli_real_escape_string($conn, $_POST['tipo']);
+$estado = mysqli_real_escape_string($conn, $_POST['estado_t']);
 
 $buscartipo= mysqli_query($conn,"SELECT  * FROM tipo_vehiculo WHERE nombre_tpv='$tipo'");
 

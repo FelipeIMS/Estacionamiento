@@ -112,6 +112,27 @@ $tVehiculo = mysqli_num_rows($resultadoVehiculo);
             </div>
         </form>
     </div>
+    <div class="container w-50">
+        <form action="historial_precios.php" method="POST">
+            <div class="card text-center mt-5">
+                <div class="card-header">Reporte: Historial de precios</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Desde: </label>
+                            <input type="date" name="date7" id="date7" required>
+                            <label>Hasta: </label>
+                            <input type="date" name="date8" id="date8" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <button type="submit" class="btn btn-success" name="enviar">Generar</button>
+                    <a href="../index/index.php" class="btn btn-info">Volver</a>
+                </div>
+            </div>
+        </form>
+    </div>
 
 
 
@@ -136,6 +157,12 @@ $tVehiculo = mysqli_num_rows($resultadoVehiculo);
         document.getElementById("date5").setAttribute('max', today);
         var today = new Date().toISOString().split('T')[0];
         document.getElementById("date6").setAttribute('max', today);
+    </script>
+    <script>
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById("date7").setAttribute('max', today);
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById("date8").setAttribute('max', today);
     </script>
 
 </body>

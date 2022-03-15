@@ -8,7 +8,7 @@ include '../settings.php';
             <form action="registrar.php" method="POST">
                 <div class="form-group mb-3">
                     <label for="nombre">Tipo</label>
-                    <input placeholder="" class="form-control" type="text" name="tipo  " id="tipo" required>
+                    <input placeholder="" class="form-control" type="text" name="tipo" id="tipo" required>
                 </div>
                 <div class="form-group">
                     <label for="Default select example">Estado</label>
