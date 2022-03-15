@@ -30,6 +30,8 @@ require __DIR__ . '/autoload.php'; //Nota: si renombraste la carpeta a algo dife
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
+use Mike42\Escpos\CapabilityProfile;
 
 /*
      Este ejemplo imprime un hola mundo en una impresora de tickets
@@ -49,11 +51,9 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
      desde el panel de control
  */
 
-$nombre_impresora = "boletas";
-
-
-$connector = new WindowsPrintConnector($nombre_impresora);
-$printer = new Printer($connector);
+$profile = CapabilityProfile::load("simple");
+$connector = new WindowsPrintConnector("smb://pc-ti/boletas");
+$printer = new Printer($connector, $profile);
 
 
 

@@ -3,11 +3,12 @@
  use Mike42\Escpos\Printer;
  use Mike42\Escpos\EscposImage;
  use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
- $nombre_impresora = "boletas";
-
-
-    $connector = new WindowsPrintConnector($nombre_impresora);
-    $printer = new Printer($connector);
+ use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
+ use Mike42\Escpos\CapabilityProfile;
+ 
+ $profile = CapabilityProfile::load("simple");
+ $connector = new WindowsPrintConnector("smb://pc-ti/boletas");
+ $printer = new Printer($connector, $profile);
 
 
 ?>
