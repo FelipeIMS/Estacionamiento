@@ -3,6 +3,8 @@
                 use Mike42\Escpos\Printer;
                 use Mike42\Escpos\EscposImage;
                 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+                use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
+                use Mike42\Escpos\CapabilityProfile;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -61,31 +63,29 @@
                 }
 
 
-/*
-     Este ejemplo imprime un hola mundo en una impresora de tickets
-     en Windows.
-     La impresora debe estar instalada como genérica y debe estar
-     compartida
- */
-
-/*
-     Conectamos con la impresora
- */
-
-
-/*
-     Aquí, en lugar de "POS-58" (que es el nombre de mi impresora)
-     escribe el nombre de la tuya. Recuerda que debes compartirla
-     desde el panel de control
- */
-
-
-
-$nombre_impresora = "boletas";
-
-
-$connector = new WindowsPrintConnector($nombre_impresora);
-$printer = new Printer($connector);
+               
+                
+                /*
+                     Este ejemplo imprime un hola mundo en una impresora de tickets
+                     en Windows.
+                     La impresora debe estar instalada como genérica y debe estar
+                     compartida
+                 */
+                
+                /*
+                     Conectamos con la impresora
+                 */
+                
+                
+                /*
+                     Aquí, en lugar de "POS-58" (que es el nombre de mi impresora)
+                     escribe el nombre de la tuya. Recuerda que debes compartirla
+                     desde el panel de control
+                 */
+                
+                $profile = CapabilityProfile::load("simple");
+                $connector = new WindowsPrintConnector("smb://pc-ti/boletas");
+                $printer = new Printer($connector, $profile);
 
 /*
      Imprimimos un mensaje. Podemos usar
