@@ -46,8 +46,9 @@ use Mike42\Escpos\CapabilityProfile;
 
                 }
 
-$profile = CapabilityProfile::load("simple");
-$connector = new WindowsPrintConnector("smb://pc-ti/boletas");
+                $nombre_host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+                $profile = CapabilityProfile::load("simple");
+                $connector = new WindowsPrintConnector("smb://$nombre_host/boletas");
 $printer = new Printer($connector, $profile);
 
 /*
