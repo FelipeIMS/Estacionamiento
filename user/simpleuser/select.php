@@ -4,12 +4,14 @@ include('settings.php');
 if(isset($_POST["employee_id"]))
 {
     $output = '';
-    $query1 = "SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado,ficha.convenio_v, convenios.tiempo, ficha.convenio_sn, ficha.convenio_t from ficha
+    $query1 = "SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado,ficha.convenio_v, convenios.tiempo, ficha.convenio_sn, ficha.convenio_t, ficha.total_sindesc from ficha
     inner join vehiculo on vehiculo.patente = ficha.patente
     inner join cliente on cliente.id_cliente = vehiculo.cliente
     inner join area on area.id_area = cliente.area
     inner join convenios on cliente.convenio = convenios.id_convenio
     WHERE id_ficha ='".$_POST["employee_id"]."'";
+
+    
     
     $result1 = mysqli_query($conn, $query1);
 
@@ -17,6 +19,12 @@ if(isset($_POST["employee_id"]))
         <div class="table-responsive">  
             <table class="table table-bordered">';
         while($row = mysqli_fetch_array($result1)){
+            if($row['total_sindesc'] == 0){
+                $total= $row['total'];
+
+            }else{
+                $total= $row['total_sindesc'];
+            }
 
                 $output .= '
                 <div class="input-group mb-3">
@@ -44,6 +52,11 @@ if(isset($_POST["employee_id"]))
                         <span class="input-group-text" id="inputGroup-sizing-sm">Convenio: </span>
                         <input type="text" class="form-control" id="diferencia" aria-label="Sizing example input"value="'.$row['convenio_sn'].'" disabled readonly">
                     </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Neto: </span>
+                        <input type="text" class="form-control" id="diferencia" aria-label="Sizing example input"value="$ '.$total.'" disabled readonly">
+                    </div>
+
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-sm">Desc: </span>
                         <input type="text" class="form-control" id="diferencia" aria-label="Sizing example input"value="$ '.$row['convenio_v'].'" disabled readonly">

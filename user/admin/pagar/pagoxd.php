@@ -31,6 +31,7 @@
     $convenio_t = $_POST["convenio_t"];
     $convenio_v = $_POST["convenio_v"];
     $sii = $_POST["sii"];
+    $totalsinDesc = $_POST["total2"];
 
     if($sii == 0){
         $sii = null;
@@ -84,49 +85,107 @@
         $estado_pago = $conn->prepare("UPDATE ficha  SET convenio_sn= ?, convenio_t= ?, convenio_v= ?, fecha_pago = now()  WHERE id_ficha= ?;");
         $estado_pago->bind_param("siii", $convenio_sn, $convenio_t, $convenio_v,$id);
         $estado_pago->execute();
+
+        if($totalsinDesc == 0){
+            $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
+        $desc->bind_param("ii", $totalsinDesc, $id);
+        $desc->execute();
+
+            echo '<script>toastr.success("Pago realizado correctamente")</script>';
+            header("refresh: 1; url=../index/index.php");
+         
+        $contador=0;
+    while($contador < 2){
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->text("Inmobiliaria Lircay" . "\n");
+            $printer->text("2 Poniente 1380, Talca" . "\n");
+        $printer->setJustification(Printer::JUSTIFY_LEFT);
+        $printer->text("Ticket  Salida" . "\n");
+        $printer->text("\n");
+        $printer->text("Boleta N°: " . $id . "\n");
+        $printer->text("\n");
+        $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+        $printer->text("\n");
+        $printer->text("Termino: " . $cliente3['termino'] . "\n");
+        $printer->text("\n");
+        $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
+        $printer->text("\n");
+        $printer->text("Descuento: $" . $convenio_v  . "\n");
+        $printer->text("\n");
+        $printer->text("TOTAL: $" . $pago . "\n");
+        $printer->text("\n");
+        $printer->text("Operador: " . $_SESSION['name'] . "\n");
+        $printer->feed(6);
+        $printer->cut();
     
-        echo '<script>toastr.success("Pago realizado correctamente")</script>';
-        header("refresh: 1; url=../index/index.php");
-     
-    $contador=0;
-while($contador < 2){
-        $printer->setJustification(Printer::JUSTIFY_CENTER);
-        $printer->text("Inmobiliaria Lircay" . "\n");
-        $printer->text("2 Poniente 1380, Talca" . "\n");
-    $printer->setJustification(Printer::JUSTIFY_LEFT);
-    $printer->text("Ticket  Salida" . "\n");
-    $printer->text("\n");
-    $printer->text("Boleta N°: " . $id . "\n");
-    $printer->text("\n");
-    $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
-    $printer->text("\n");
-    $printer->text("Termino: " . $cliente3['termino'] . "\n");
-    $printer->text("\n");
-    $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
-    $printer->text("\n");
-    $printer->text("Descuento: $" . $convenio_v  . "\n");
-    $printer->text("\n");
-    $printer->text("TOTAL: $" . $pago . "\n");
-    $printer->text("\n");
-    $printer->text("Operador: " . $_SESSION['name'] . "\n");
-    $printer->feed(6);
-    $printer->cut();
+        /*
+         Por medio de la impresora mandamos un pulso.
+         Esto es útil cuando la tenemos conectada
+         por ejemplo a un cajón
+     */
+        $printer->pulse();
+    
+        /*
+         Para imprimir realmente, tenemos que "cerrar"
+         la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
+     */
+        $printer->close();
+        $contador++;
+    
+        }
+        }else{
+            $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
+        $desc->bind_param("ii", $totalsinDesc, $id);
+        $desc->execute();
+            echo '<script>toastr.success("Pago realizado correctamente")</script>';
+            header("refresh: 1; url=../index/index.php");
+         
+        $contador=0;
+    while($contador < 2){
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->text("Inmobiliaria Lircay" . "\n");
+            $printer->text("2 Poniente 1380, Talca" . "\n");
+        $printer->setJustification(Printer::JUSTIFY_LEFT);
+        
+        $printer->text("Ticket  Salida" . "\n");
+        $printer->text("\n");
+        $printer->text("Boleta N°: " . $id . "\n");
+        $printer->text("\n");
+        $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+        $printer->text("\n");
+        $printer->text("Termino: " . $cliente3['termino'] . "\n");
+        $printer->text("\n");
+        $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
+        $printer->text("\n");
+        $printer->text("Neto: $" . $totalsinDesc  . "\n");
+        $printer->text("\n");
+        $printer->text("Descuento: $" . $convenio_v  . "\n");
+        $printer->text("\n");
+        $printer->text("TOTAL: $" . $pago . "\n");
+        $printer->text("\n");
+        $printer->text("Operador: " . $_SESSION['name'] . "\n");
+        $printer->feed(6);
+        $printer->cut();
+        
+    
+        /*
+         Por medio de la impresora mandamos un pulso.
+         Esto es útil cuando la tenemos conectada
+         por ejemplo a un cajón
+     */
+        $printer->pulse();
+    
+        /*
+         Para imprimir realmente, tenemos que "cerrar"
+         la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
+     */
+        $printer->close();
+        $contador++;
+    
+        }
 
-    /*
-     Por medio de la impresora mandamos un pulso.
-     Esto es útil cuando la tenemos conectada
-     por ejemplo a un cajón
- */
-    $printer->pulse();
-
-    /*
-     Para imprimir realmente, tenemos que "cerrar"
-     la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
- */
-    $printer->close();
-    $contador++;
-
-    }
+        }
+    
 
         
 
@@ -146,7 +205,7 @@ while($contador < 2){
 
             #cambiar valores a null
 
-            $restaurar = $conn->prepare("UPDATE ficha  SET termino= null, user_ficha_out = null, total= null, diferencia = null, convenio_v= null WHERE id_ficha= ?");
+            $restaurar = $conn->prepare("UPDATE ficha  SET termino= null, user_ficha_out = null, total= null, diferencia = null, convenio_v= null, total_sindesc = null WHERE id_ficha= ?");
             $restaurar->bind_param("i", $id);
             $restaurar->execute();
             echo '<script>toastr.error("Error, numero de boleta ya existe")</script>';
@@ -209,6 +268,102 @@ while($contador < 2){
         
             echo '<script>toastr.success("Pago realizado correctamente")</script>';
             header("refresh: 1; url=../index/index.php");
+            if($totalsinDesc == 0){
+                $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
+        $desc->bind_param("ii", $totalsinDesc, $id);
+        $desc->execute();
+             
+            $contador=0;
+        while($contador < 2){
+                $printer->setJustification(Printer::JUSTIFY_CENTER);
+                $printer->text("Inmobiliaria Lircay" . "\n");
+                $printer->text("2 Poniente 1380, Talca" . "\n");
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer->text("Ticket  Salida" . "\n");
+            $printer->text("\n");
+            $printer->text("Boleta N°: " . $id . "\n");
+            $printer->text("\n");
+            $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+            $printer->text("\n");
+            $printer->text("Termino: " . $cliente3['termino'] . "\n");
+            $printer->text("\n");
+            $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
+            $printer->text("\n");
+            $printer->text("Descuento: $" . $convenio_v  . "\n");
+            $printer->text("\n");
+            $printer->text("TOTAL: $" . $pago . "\n");
+            $printer->text("\n");
+            $printer->text("Operador: " . $_SESSION['name'] . "\n");
+            $printer->feed(6);
+            $printer->cut();
+        
+            /*
+             Por medio de la impresora mandamos un pulso.
+             Esto es útil cuando la tenemos conectada
+             por ejemplo a un cajón
+         */
+            $printer->pulse();
+        
+            /*
+             Para imprimir realmente, tenemos que "cerrar"
+             la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
+         */
+            $printer->close();
+            $contador++;
+        
+            }
+            }else{
+                echo '<script>toastr.success("Pago realizado correctamente")</script>';
+                header("refresh: 1; url=../index/index.php");
+                $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
+        $desc->bind_param("ii", $totalsinDesc, $id);
+        $desc->execute();
+             
+            $contador=0;
+        while($contador < 2){
+                $printer->setJustification(Printer::JUSTIFY_CENTER);
+                $printer->text("Inmobiliaria Lircay" . "\n");
+                $printer->text("2 Poniente 1380, Talca" . "\n");
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            
+            $printer->text("Ticket  Salida" . "\n");
+            $printer->text("\n");
+            $printer->text("Boleta N°: " . $id . "\n");
+            $printer->text("\n");
+            $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+            $printer->text("\n");
+            $printer->text("Termino: " . $cliente3['termino'] . "\n");
+            $printer->text("\n");
+            $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
+            $printer->text("\n");
+            $printer->text("Neto: $" . $totalsinDesc  . "\n");
+            $printer->text("\n");
+            $printer->text("Descuento: $" . $convenio_v  . "\n");
+            $printer->text("\n");
+            $printer->text("TOTAL: $" . $pago . "\n");
+            $printer->text("\n");
+            $printer->text("Operador: " . $_SESSION['name'] . "\n");
+            $printer->feed(6);
+            $printer->cut();
+            
+        
+            /*
+             Por medio de la impresora mandamos un pulso.
+             Esto es útil cuando la tenemos conectada
+             por ejemplo a un cajón
+         */
+            $printer->pulse();
+        
+            /*
+             Para imprimir realmente, tenemos que "cerrar"
+             la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
+         */
+            $printer->close();
+            $contador++;
+        
+            }
+    
+            }
 
         /*
      Imprimimos un mensaje. Podemos usar
@@ -216,51 +371,7 @@ while($contador < 2){
      veces a $printer->text()
      
  */
-$contador=0;
-while($contador < 2){
-    $printer->setJustification(Printer::JUSTIFY_CENTER);
-    $printer->text("Inmobiliaria Lircay" . "\n");
-    $printer->text("2 Poniente 1380, Talca" . "\n");
-    $printer->text("\n");
-    $printer->setJustification(Printer::JUSTIFY_LEFT);
-    $printer->text("Ticket  Salida" . "\n");
-    $printer->text("\n");
-    $printer->text("Boleta N°: " . $id . "\n");
-    $printer->text("\n");
-    $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
-    $printer->text("\n");
-    $printer->text("Termino: " . $cliente3['termino'] . "\n");
-    $printer->text("\n");
-    $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
-    $printer->text("\n");
-    $printer->text("Descuento: $" . $convenio_v  . "\n");
-    $printer->text("\n");
-    $printer->text("TOTAL: $" . $pago . "\n");
-    $printer->text("\n");
-    $printer->text("Operador: " . $_SESSION['name'] . "\n");
-    $printer->feed(6);
-    /*
-     Cortamos el papel. Si nuestra impresora
-     no tiene soporte para ello, no generará
-     ningún error
- */
-    $printer->cut();
 
-    /*
-     Por medio de la impresora mandamos un pulso.
-     Esto es útil cuando la tenemos conectada
-     por ejemplo a un cajón
- */
-    $printer->pulse();
-
-    /*
-     Para imprimir realmente, tenemos que "cerrar"
-     la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
- */
-    $printer->close();
-    $contador++;
-
-    }
         }
     
     }

@@ -136,11 +136,14 @@
                         <input value="<?php echo $cliente['convenio_v'] ?> 0" placeholder="convenio_v"
                             class="form-control" type="text" name="convenio_v" id="convenio_v" hidden>
                             <?php $valorXminuto = mysqli_query($conn, "SELECT precio from precio where estado_precio = 'Activo';");
-
-$VXP = mysqli_fetch_array($valorXminuto);
-echo '<input value="'.$VXP[0].'" placeholder="Precio"
-class="form-control" type="text" name="precio" id="precio" hidden>';
-?>
+                                $VXP = mysqli_fetch_array($valorXminuto);
+                                echo '<input value="'.$VXP[0].'" placeholder="Precio"
+                                class="form-control" type="text" name="precio" id="precio" hidden>';
+                                ?>
+                            <?php 
+                                echo '<input value="0" placeholder="total"
+                                class="form-control" type="text" name="total2" id="total2" hidden> ';
+                                ?>
                         
                     </div>
                     <label class="mt-3" for="convenio" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
@@ -194,7 +197,10 @@ function comprueba() {
         var diferencia = $("#diferencia").val();
         var total = $("#total").val();
         var precio = $("#precio").val();
+        var total2 = $("#total2").val();
         var dift = diferencia - cantidad;
+
+        total2 = precio * diferencia;
 
         total = dift * precio;
         if (total < 0) {
@@ -205,6 +211,7 @@ function comprueba() {
         $("#convenio_t").val(cantidad);
         $("#convenio_v").val(precio*cantidad);
         $("#total").val(total);
+        $("#total2").val(total2);
     } else {
         off();
         var total = $("#total").val();
@@ -214,6 +221,7 @@ function comprueba() {
         $("#convenio_sn").val("<?php echo $cliente['convenion'] ?>");
         $("#convenio_t").val(0);
         $("#convenio_v").val(0);
+        $("#total2").val(0);
         $("#total").val(total);
     }
 }

@@ -3,7 +3,7 @@
 include '../settings.php';
 $id = $_GET["id"];
 
-$sentencia3 = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, convenios.tiempo, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v, users.name from ficha
+$sentencia3 = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, convenios.tiempo, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v, users.name, ficha.total_sindesc from ficha
 inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
@@ -18,6 +18,12 @@ $resultado3 = $sentencia3->get_result();
 $cliente3 = $resultado3->fetch_assoc();
 if (!$cliente3) {
     exit("No hay resultados para ese ID");
+}
+if($cliente3['total_sindesc'] == 0){
+    $total= $cliente3['total'];
+
+}else{
+    $total= $cliente3['total_sindesc'];
 }
 require __DIR__ . '/autoload.php'; //Nota: si renombraste la carpeta a algo diferente de "ticket" cambia el nombre en esta línea
 use Mike42\Escpos\Printer;
@@ -70,6 +76,8 @@ $printer->text("\n");
 $printer->text("Termino: " . $cliente3['termino'] . "\n");
 $printer->text("\n");
 $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
+$printer->text("\n");
+$printer->text("Neto: $" . $total  . "\n");
 $printer->text("\n");
 $printer->text("Descuento: $" . $cliente3['convenio_v']  . "\n");
 $printer->text("\n");
