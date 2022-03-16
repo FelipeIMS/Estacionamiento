@@ -22,7 +22,13 @@ where ficha.boleta_sii is null and ficha.estado = 'Pagado';");
 $tfsii = mysqli_num_rows($ficha_sin_sii);
 
 
+$sql3 = "select * from espacios";
+$query3 = $conn->query($sql3); // Ejecutar la consulta SQL
+$data3 = array(); // Array donde vamos a guardar los datos
+while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la consulta SQL
+    $data3[] = $r; // Guardar los resultados en la variable $data
 
+}
 
 
 ?>
@@ -124,11 +130,13 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                 </div>
             </div>
             <div class="col py-3">
-                <div class="form-group mt-5">
+                <div class="form-group mt-2">
                     <input disabled class="form-control w-50 text-center position-relative top-50 start-50 translate-middle" id="contador" type="text" name="contador" value="Espacios ocupados: <?php echo $espacios2[0]; ?> de 62" />
-                    <div class="container">
-                        <canvas id="chart3"></canvas>
+                    <div class="container" style="width: 200px;">
+                        <canvas id="chart3" ></canvas>
+
                     </div>
+
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Nuevo ingreso</button>
@@ -363,7 +371,53 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
             });
         </script>
 
-
+<script>
+        var ctx = document.getElementById("chart3");
+        var data = {
+            labels: ['Ocupados','Disponibles'],
+            datasets: [{
+                label: 'Espacios Estacionamiento:',
+                data: [
+                    <?php foreach ($data3 as $d) : ?>
+                        <?php echo $d->espacios; ?>,
+                        <?php echo $d->total_espacios; ?>,
+                    <?php endforeach; ?>
+                ],
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+                borderWidth: 1
+            }]
+        };
+        var options = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+        var chart2 = new Chart(ctx, {
+            type: 'pie',
+            /* valores: line, bar*/
+            data: data,
+            options: options
+        });
+    </script>
 </body>
 
 </html>
