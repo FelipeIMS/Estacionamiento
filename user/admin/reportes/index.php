@@ -47,22 +47,49 @@ date_default_timezone_set("America/Santiago");
     WHERE ficha.inicio and ficha.termino between '$datenew' and '$datenew2' AND
     ficha.user_ficha_out='$user'
     GROUP BY Mes";
-    
+
+
+
     $query2 = $conn->query($sql2); // Ejecutar la consulta SQL
     $data2 = array(); // Array donde vamos a guardar los datos
     while ($r = $query2->fetch_object()) { // Recorrer los resultados de Ejecutar la consulta SQL
         $data2[] = $r; // Guardar los resultados en la variable $data
-  
+
     }
+
+    $sql3 = "SELECT DAY(inicio) DIA,COUNT(inicio) REGISTROS FROM ficha
+    WHERE WEEK(inicio)= WEEK(CURDATE()) AND
+    inicio BETWEEN date_add(NOW(), INTERVAL -6 DAY) AND NOW()
+    GROUP BY DIA,DAYNAME(inicio)
+    ORDER BY inicio";
+    $query3 = $conn->query($sql3); // Ejecutar la consulta SQL
+    $data3 = array(); // Array donde vamos a guardar los datos
+    while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la consulta SQL
+        $data3[] = $r; // Guardar los resultados en la variable $data
+
+    }
+
+    $sql4 = "SELECT DAY(termino) DIA,COUNT(termino) REGISTROS FROM ficha
+    WHERE WEEK(termino)= WEEK(CURDATE()) AND
+    termino BETWEEN date_add(NOW(), INTERVAL -6 DAY) AND NOW()
+    GROUP BY DIA,DAYNAME(termino)
+    ORDER BY termino";
+    $query4 = $conn->query($sql4);
+    $data4 = array(); // Array donde vamos a guardar los datos
+    while ($r = $query4->fetch_object()) { // Recorrer los resultados de Ejecutar la consulta SQL
+        $data4[] = $r; // Guardar los resultados en la variable $data
+
+    }
+
     ?>
 
 
-<style>
-      .d-flex { 
-        margin-top: 1.9em;
-      }
-    
+    <style>
+        .d-flex {
+            margin-top: 1.9em;
+        }
     </style>
+
     <div class="container">
         <h1 class="text-center">Ingresos Por Mes</h1>
         <form method="post" class="text-center">
@@ -117,7 +144,7 @@ date_default_timezone_set("America/Santiago");
                         <button class="btn btn-sm btn-outline-secondary btn-bottom-left" type="submit">
                             <i class="fas fa-search"></i> Buscar
                         </button>
-              
+
                     </div>
                 </div>
             </div>
@@ -127,8 +154,120 @@ date_default_timezone_set("America/Santiago");
         <canvas id="chart2"></canvas>
 
     </div>
+    <div class="container text-center">
+    <h1 class="text-center">Ingresos y Salidas</h1>
+    <label>Desde: </label>
+    <input type="datetime-local" id="date1" name="date1" value=<?php echo date('Y-m-d\TH:i:s'); ?> required>
+    <label>Hasta: </label>
+    <input type="datetime-local" id="date2" name="date2" value=<?php echo date('Y-m-d\TH:i:s'); ?> required>
+    <button class="btn btn-success" type="submit">Generar</button>
+    </div>
+  
+    <div class="container">
+        <h1 class="text-center">Ingresos</h1>
+        <canvas id="chart3"></canvas>
+    </div>
+    <div class="container">
+        <h1 class="text-center">Salidas</h1>
+        <canvas id="chart4"></canvas>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script>
+        var ctx = document.getElementById("chart1");
+        var data = {
+            labels: [
+                <?php foreach ($data as $d) : ?> "<?php echo $d->Mes ?>",
+                <?php endforeach; ?>
+            ],
+            datasets: [{
+                label: 'Ingresos por Dia',
+                data: [
+                    <?php foreach ($data as $d) : ?>
+                        <?php echo $d->total_mes; ?>,
+                    <?php endforeach; ?>
+                ],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgb(75, 192, 192)',
+                borderWidth: 1
+            }]
+        };
+        var options = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+        var chart3 = new Chart(ctx, {
+            type: 'line',
+            /* valores: line, bar*/
+            data: data,
+            options: options
+        });
+    </script>
+    <script>
+        document.getElementById("date1").addEventListener("input", () => console.log(document.getElementById("date1").value));
+        document.getElementById("date2").addEventListener("input", () => console.log(document.getElementById("date2").value));
+    </script>
+    <script>
+        $('.postName').select2({
+            placeholder: 'Select an item',
+            ajax: {
+                url: 'select.php',
+                dataType: 'json',
+                delay: 250,
+                data: function(data) {
+                    return {
+                        searchTerm: data.term // search term
+                    };
+                },
+                processResults: function(response) {
+                    return {
+                        results: response
+                    };
+                },
+                cache: true
+            }
+        });
+    </script>
+    <script>
+        var ctx = document.getElementById("chart3");
+        var data = {
+            labels: [
+                <?php foreach ($data3 as $d) : ?> "<?php echo $d->DIA ?>",
+                <?php endforeach; ?>
+            ],
+            datasets: [{
+                label: 'Ingresos ultimos 7 dias:',
+                data: [
+                    <?php foreach ($data3 as $d) : ?>
+                        <?php echo $d->REGISTROS; ?>,
+                    <?php endforeach; ?>
+                ],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgb(75, 192, 192)',
+                borderWidth: 1
+            }]
+        };
+        var options = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+        var chart2 = new Chart(ctx, {
+            type: 'line',
+            /* valores: line, bar*/
+            data: data,
+            options: options
+        });
+    </script>
     <script>
         var ctx = document.getElementById("chart1");
         var data = {
@@ -165,42 +304,17 @@ date_default_timezone_set("America/Santiago");
         });
     </script>
     <script>
-        document.getElementById("date1").addEventListener("input", () => console.log(document.getElementById("date1").value));
-        document.getElementById("date2").addEventListener("input", () => console.log(document.getElementById("date2").value));
-    </script>
-    <script>
-        $('.postName').select2({
-            placeholder: 'Select an item',
-            ajax: {
-                url: 'select.php',
-                dataType: 'json',
-                delay: 250,
-                data: function(data) {
-                    return {
-                        searchTerm: data.term // search term
-                    };
-                },
-                processResults: function(response) {
-                    return {
-                        results: response
-                    };
-                },
-                cache: true
-            }
-        });
-    </script>
-     <script>
-        var ctx = document.getElementById("chart2");
+        var ctx = document.getElementById("chart4");
         var data = {
             labels: [
-                <?php foreach ($data2 as $d) : ?> "<?php echo $d->Mes ?>",
+                <?php foreach ($data4 as $d) : ?> "<?php echo $d->DIA ?>",
                 <?php endforeach; ?>
             ],
             datasets: [{
-                label: 'Ingresos por dia de:  <?php echo $d->user_venta ?>',
+                label: 'Salidas en los ultimos 7 dias',
                 data: [
-                    <?php foreach ($data2 as $d) : ?>
-                        <?php echo $d->total_dia; ?>,
+                    <?php foreach ($data4 as $d) : ?>
+                        <?php echo $d->REGISTROS; ?>,
                     <?php endforeach; ?>
                 ],
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -217,14 +331,13 @@ date_default_timezone_set("America/Santiago");
                 }]
             }
         };
-        var chart2 = new Chart(ctx, {
+        var chart4 = new Chart(ctx, {
             type: 'line',
             /* valores: line, bar*/
             data: data,
             options: options
         });
     </script>
-
 </body>
 
 </html>
