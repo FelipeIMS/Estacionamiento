@@ -33,7 +33,8 @@
                    window.location="index.php";
                 }, 1000); </script>';
             } else {
-
+                $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
+                $resultadoEspacios = mysqli_query($conn, $espacios);
                 $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado,user_ficha, estado)  VALUES(now(),'$search',1,'{$_SESSION['id']}','No pagado')";
                 $sql2="UPDATE cliente c
                 JOIN vehiculo v  ON c.id_cliente = v.cliente

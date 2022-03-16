@@ -8,7 +8,7 @@ order by inicio DESC;";
 $result = mysqli_query($conn, $query);
 
 
-$query2 = "SELECT count(espacio_ocupado) from ficha where termino is null; ";
+$query2 = "SELECT espacios from espacios where id = 1;";
 $result2 = mysqli_query($conn, $query2);
 $espacios2 = mysqli_fetch_array($result2);
 
@@ -80,7 +80,7 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                     <input disabled
                         class="form-control w-50 text-center position-relative top-50 start-50 translate-middle"
                         id="contador" type="text" name="contador"
-                        value="Espacios ocupados: <?php echo $espacios2[0]; ?> de 62" />
+                        value="Espacios disponibles: <?php echo $espacios2[0]; ?> de 62" />
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"

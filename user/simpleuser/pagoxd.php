@@ -55,6 +55,8 @@ $printer = new Printer($connector, $profile);
 
     if($sii == 0){
         $sii = null;
+        $espacios = "UPDATE espacios set espacios = espacios + 1  where id = 1;";
+                $resultadoEspacios = mysqli_query($conn, $espacios);
         
         $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ? where id_ficha = ?;");
         $numero_boleta->bind_param("ii", $sii, $id);
@@ -258,6 +260,8 @@ $printer = new Printer($connector, $profile);
             $printer->close();
 
         }else{
+            $espacios = "UPDATE espacios set espacios = espacios + 1  where id = 1;";
+                $resultadoEspacios = mysqli_query($conn, $espacios);
 
             $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ? where id_ficha = ?;");
             $numero_boleta->bind_param("ii", $sii, $id);

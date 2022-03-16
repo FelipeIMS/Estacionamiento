@@ -37,6 +37,8 @@ $connector = new WindowsPrintConnector("smb://$nombre_host/boletas");
 
     if($sii == 0){
         $sii = null;
+        $espacios = "UPDATE espacios set espacios = espacios + 1  where id = 1;";
+                $resultadoEspacios = mysqli_query($conn, $espacios);
         
         $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ? where id_ficha = ?;");
         $numero_boleta->bind_param("ii", $sii, $id);
@@ -216,6 +218,8 @@ $connector = new WindowsPrintConnector("smb://$nombre_host/boletas");
             header("refresh: 1; url=../index/index.php");
 
         }else{
+            $espacios = "UPDATE espacios set espacios = espacios + 1  where id = 1;";
+                $resultadoEspacios = mysqli_query($conn, $espacios);
 
             $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ? where id_ficha = ?;");
             $numero_boleta->bind_param("ii", $sii, $id);

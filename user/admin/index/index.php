@@ -7,7 +7,7 @@ inner join area on area.id_area = cliente.area
 inner join convenios on cliente.convenio = convenios.id_convenio
 order by inicio DESC;";
 $result = mysqli_query($conn, $query);
-$query2 = "SELECT count(espacio_ocupado) from ficha where termino is null; ";
+$query2 = "SELECT espacios from espacios where id = 1;";
 $result2 = mysqli_query($conn, $query2);
 $espacios2 = mysqli_fetch_array($result2);
 $ficha_sin_sii = $conn->query("SELECT ficha.id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,  vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, 
