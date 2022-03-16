@@ -26,6 +26,8 @@ use Mike42\Escpos\CapabilityProfile;
             echo '<script>toastr.error("Error al ingresar, finalize la boleta anterior")</script>';
             header("refresh: 1; url=index.php");
             } else {
+                $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
+                $resultadoEspacios = mysqli_query($conn, $espacios);
 
                 $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado,user_ficha, estado)  VALUES(now(),'$search',1,'{$_SESSION['id']}','No pagado')";
                 $sql2="UPDATE cliente c
