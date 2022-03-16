@@ -158,7 +158,7 @@
             </div>
             <div class="form-group mt-3 mb-3">
                 <label for="nombre">Boleta SII</label>
-                <input  type="number" class="" id="sii" name="sii" placeholder="Ingrese Nro boleta" class="form-control"  required>
+                <input  type="number" class="" id="sii" name="sii" placeholder="Ingrese Nro boleta" class="form-control" required>
                 
             </div>
                 <!-- <label class="mt-3" for="boleta_sii">Null</label>

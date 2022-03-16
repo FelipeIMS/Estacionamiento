@@ -37,8 +37,7 @@ $connector = new WindowsPrintConnector("smb://$nombre_host/boletas");
 
     if($sii == 0){
         $sii = null;
-        $espacios = "UPDATE espacios set espacios = espacios + 1  where id = 1;";
-                $resultadoEspacios = mysqli_query($conn, $espacios);
+        
         
         $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ? where id_ficha = ?;");
         $numero_boleta->bind_param("ii", $sii, $id);
@@ -89,6 +88,8 @@ $connector = new WindowsPrintConnector("smb://$nombre_host/boletas");
         $estado_pago = $conn->prepare("UPDATE ficha  SET convenio_sn= ?, convenio_t= ?, convenio_v= ?, fecha_pago = now()  WHERE id_ficha= ?;");
         $estado_pago->bind_param("siii", $convenio_sn, $convenio_t, $convenio_v,$id);
         $estado_pago->execute();
+        $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
+                $resultadoEspacios = mysqli_query($conn, $espacios);
 
         if($totalsinDesc == 0){
             $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
@@ -218,8 +219,7 @@ $connector = new WindowsPrintConnector("smb://$nombre_host/boletas");
             header("refresh: 1; url=../index/index.php");
 
         }else{
-            $espacios = "UPDATE espacios set espacios = espacios + 1  where id = 1;";
-                $resultadoEspacios = mysqli_query($conn, $espacios);
+            
 
             $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ? where id_ficha = ?;");
             $numero_boleta->bind_param("ii", $sii, $id);
@@ -271,6 +271,8 @@ $connector = new WindowsPrintConnector("smb://$nombre_host/boletas");
             $estado_pago = $conn->prepare("UPDATE ficha  SET convenio_sn= ?, convenio_t= ?, convenio_v= ?, fecha_pago = now(), boleta_sii = ?  WHERE id_ficha= ?;");
             $estado_pago->bind_param("siiii", $convenio_sn, $convenio_t, $convenio_v, $sii,$id);
             $estado_pago->execute();
+            $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
+                $resultadoEspacios = mysqli_query($conn, $espacios);
         
             echo '<script>toastr.success("Pago realizado correctamente")</script>';
             header("refresh: 1; url=../index/index.php");
@@ -278,6 +280,7 @@ $connector = new WindowsPrintConnector("smb://$nombre_host/boletas");
                 $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
         $desc->bind_param("ii", $totalsinDesc, $id);
         $desc->execute();
+        
              
             $contador=0;
         while($contador < 2){

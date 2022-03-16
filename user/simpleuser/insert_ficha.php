@@ -1,10 +1,13 @@
 <?php include 'settings.php'; //include settings 
-                require __DIR__ . '/autoload.php'; //Nota: si renombraste la carpeta a algo diferente de "ticket" cambia el nombre en esta línea
-                use Mike42\Escpos\Printer;
-                use Mike42\Escpos\EscposImage;
-                use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
-                use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
-                use Mike42\Escpos\CapabilityProfile;
+require 'autoload.php';
+
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
+use Mike42\Escpos\CapabilityProfile;
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -19,21 +22,17 @@
         $search = mysqli_real_escape_string($conn, $_POST["patente"]);
         $registro2 = mysqli_query($conn, "SELECT id_cliente, cliente.nombre_cliente, cliente.apellido_cliente from cliente
         inner join vehiculo on vehiculo.cliente = cliente.id_cliente
-        where cliente.estado = 'Inactivo' and vehiculo.patente = '$search';");  
+        where cliente.estado = 'Inactivo' and vehiculo.patente = '$search';");
+        $selectPatente = mysqli_query($conn, "SELECT patente from vehiculo where patente = '$search';");
+        $patente = $selectPatente->fetch_all(MYSQLI_ASSOC);
         if (mysqli_num_rows($registro2) > 0) {
-                echo "<script>  Swal.fire({
-                    position: 'center',
-                    icon: 'warning',
-                    title: 'Error al ingresar ficha',
-                    text: 'No puede ingresar ficha si no finaliza la anterior',
-                    showConfirmButton: false,
-                    timer: 1000
-                  });</script>";
-                echo '<script type="text/JavaScript"> setTimeout(function(){
-                   window.location="index.php";
-                }, 1000); </script>';
-            } else {
-                $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
+            echo '<script>toastr.error("Error al ingresar, finalize la boleta anterior")</script>';
+            header("refresh: 1; url=index.php");
+            }else if($patente  == null) {
+            echo '<script>toastr.error("Error al ingresar, patente ingresada no existe")</script>';
+            header("refresh: 1; url=index.php");
+            }else{
+                $espacios = "UPDATE espacios set espacios = espacios + 1  where id = 1;";
                 $resultadoEspacios = mysqli_query($conn, $espacios);
                 $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado,user_ficha, estado)  VALUES(now(),'$search',1,'{$_SESSION['id']}','No pagado')";
                 $sql2="UPDATE cliente c
@@ -41,118 +40,92 @@
                 SET c.estado= 'Inactivo'
                 WHERE v.patente='$search';";
                 mysqli_query($conn,$sql2);
-                if (mysqli_query($conn, $sql)) {
-                    echo "<script>  Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Registro ingresado',
-                        text: 'Ficha ingresada correctamente',
-                        showConfirmButton: false,
-                        timer: 1000
-                      });</script>";
-                    echo '<script type="text/JavaScript"> setTimeout(function(){
-                       window.location="index.php";
-                    }, 1000); </script>';
+                mysqli_query($conn, $sql);
+                $selectUltimo = "SELECT * from ficha order by id_ficha desc limit 1;";
+                $resultado = mysqli_query($conn, $selectUltimo);
+                $row = mysqli_fetch_array($resultado);
 
 
-                    $selectUltimo = "SELECT * from ficha order by id_ficha desc limit 1;";
-
-                    $resultado = mysqli_query($conn, $selectUltimo);
-
-                    $row = mysqli_fetch_array($resultado);
-
-                }
-
-
-               
-                
-                /*
-                     Este ejemplo imprime un hola mundo en una impresora de tickets
-                     en Windows.
-                     La impresora debe estar instalada como genérica y debe estar
-                     compartida
-                 */
-                
-                /*
-                     Conectamos con la impresora
-                 */
-                
-                
-                /*
-                     Aquí, en lugar de "POS-58" (que es el nombre de mi impresora)
-                     escribe el nombre de la tuya. Recuerda que debes compartirla
-                     desde el panel de control
-                 */
-                
                 $nombre_host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
                 $profile = CapabilityProfile::load("simple");
                 $connector = new WindowsPrintConnector("smb://$nombre_host/boletas");
                 $printer = new Printer($connector, $profile);
-
-/*
-     Imprimimos un mensaje. Podemos usar
-     el salto de línea o llamar muchas
-     veces a $printer->text()
- */
-$printer->setJustification(Printer::JUSTIFY_CENTER);
-$printer->text("Inmobiliaria Lircay" . "\n");
-$printer->text("2 Poniente 1380, Talca" . "\n");
-$printer->setJustification(Printer::JUSTIFY_LEFT);
-$printer->text( "\n");
-$printer->text("Ticket  Entrada" . "\n");
-$printer->text( "\n");
-$printer->text("Boleta N°: " . $row['id_ficha'] . "\n");
-$printer->text( "\n");
-$printer->text("Inicio: " . $row['inicio']  . "\n");
-$printer->text( "\n");
-$printer->text("Operador: " . $_SESSION['name']  . "\n");
+                $printer->setJustification(Printer::JUSTIFY_CENTER);
+                $printer->text("Inmobiliaria Lircay" . "\n");
+                $printer->text("2 Poniente 1380, Talca" . "\n");
+                $printer->setJustification(Printer::JUSTIFY_LEFT);
+                $printer->text( "\n");
+                $printer->text("Ticket  Entrada" . "\n");
+                $printer->text( "\n");
+                $printer->text("Boleta N°: " . $row['id_ficha'] . "\n");
+                $printer->text( "\n");
+                $printer->text("Inicio: " . $row['inicio']  . "\n");
+                $printer->text( "\n");
+                $printer->text("Operador: " . $_SESSION['name']  . "\n");
 
 
 
 
-/*
-     Hacemos que el papel salga. Es como 
-     dejar muchos saltos de línea sin escribir nada
- */
-$printer->feed(8);
+                /*
+                    Hacemos que el papel salga. Es como 
+                    dejar muchos saltos de línea sin escribir nada
+                */
+                $printer->feed(8);
 
 
 
-/*
-     Cortamos el papel. Si nuestra impresora
-     no tiene soporte para ello, no generará
-     ningún error
- */
-$printer->cut();
+                /*
+                    Cortamos el papel. Si nuestra impresora
+                    no tiene soporte para ello, no generará
+                    ningún error
+                */
+                $printer->cut();
 
-/*
-     Por medio de la impresora mandamos un pulso.
-     Esto es útil cuando la tenemos conectada
-     por ejemplo a un cajón
- */
-$printer->pulse();
+                /*
+                    Por medio de la impresora mandamos un pulso.
+                    Esto es útil cuando la tenemos conectada
+                    por ejemplo a un cajón
+                */
+                $printer->pulse();
 
-/*
-     Para imprimir realmente, tenemos que "cerrar"
-     la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
- */
-$printer->close();
-            
+                /*
+                    Para imprimir realmente, tenemos que "cerrar"
+                    la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
+                */
+                $printer->close();
+                echo "<script>  Swal.fire({
+                    position: 'center',
+                    icon: 'succes',
+                    title: 'Hecho',
+                    text: 'Boleta ingresada correctamente',
+                    showConfirmButton: false,
+                    timer: 1000
+                  });</script>";
+                    echo '<script type="text/JavaScript"> setTimeout(function(){
+                   window.location="index.php";
+                }, 1000); </script>';
             }
-        
+
+
+
     }else{
         echo "<script>  Swal.fire({
             position: 'center',
-            icon: 'warning',
+            icon: 'error',
             title: 'Error',
-            text: 'Ingrese datos nuevamente',
+            text: 'Rellene todos los campos',
             showConfirmButton: false,
-            timer: 500
+            timer: 1000
           });</script>";
-        echo '<script type="text/JavaScript"> setTimeout(function(){
+            echo '<script type="text/JavaScript"> setTimeout(function(){
            window.location="index.php";
-        }, 500); </script>';
+        }, 1000); </script>';
     }
+                
+
+               
+        
+    
 
 
 
