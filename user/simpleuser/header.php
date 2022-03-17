@@ -11,6 +11,7 @@
     <!-- <script src="./js/datatable.js"></script> -->
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
     <script src="./js/sweatAlert.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 

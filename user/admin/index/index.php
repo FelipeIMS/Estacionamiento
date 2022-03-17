@@ -130,21 +130,19 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                 </div>
             </div>
             <div class="col py-3">
-<<<<<<< HEAD
-                <div class="form-group mt-5">
-                    <input disabled
-                        class="form-control w-50 text-center position-relative top-50 start-50 translate-middle"
-                        id="contador" type="text" name="contador"
-                        value="Espacios ocupados: <?php echo $espacios2[0]; ?> de <?php echo $espacios2[1]; ?>" />
-=======
-                <div class="form-group mt-2">
-                    <input disabled class="form-control w-50 text-center position-relative top-50 start-50 translate-middle" id="contador" type="text" name="contador" value="Espacios ocupados: <?php echo $espacios2[0]; ?> de 62" />
-                    <div class="container" style="width: 200px;">
-                        <canvas id="chart3"></canvas>
+                <div class="form-group mb-5 ">
+                    <div class="container-fluid " >
+                        <div class="row">
+                            <div class="col-8" >
+                                <input disabled class="form-control w-50 text-center position-relative top-50 start-50 translate-middle" id="contador" type="text" name="contador" value="Espacios ocupados: <?php echo $espacios2[0]; ?> de  <?php echo $espacios2[1]; ?>" />
+                            </div>
+                            <div class="col-4 position-absolute top-0 end-0" style="width: 150px;" >
+                                <canvas id="chart3"></canvas>
+                            </div>
+                        </div>
 
                     </div>
 
->>>>>>> 041e535ef582cdecfb420406068376c91a2bf64b
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-circle-plus"></i> Nuevo ingreso</button>
@@ -377,6 +375,14 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                     });
                 });
             });
+        </script>
+        <script>
+        var myModal = document.getElementById('exampleModal')
+        var myInput = document.getElementById('search')
+
+        myModal.addEventListener('shown.bs.modal', function() {
+            myInput.focus()
+        })
         </script>
 
         <script>

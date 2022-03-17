@@ -135,43 +135,53 @@
                             class="form-control" type="text" name="convenio_t" id="convenio_t" hidden>
                         <input value="<?php echo $cliente['convenio_v'] ?> 0" placeholder="convenio_v"
                             class="form-control" type="text" name="convenio_v" id="convenio_v" hidden>
-                            <?php $valorXminuto = mysqli_query($conn, "SELECT precio from precio where estado_precio = 'Activo';");
+                        <?php $valorXminuto = mysqli_query($conn, "SELECT precio from precio where estado_precio = 'Activo';");
                                 $VXP = mysqli_fetch_array($valorXminuto);
                                 echo '<input value="'.$VXP[0].'" placeholder="Precio"
                                 class="form-control" type="text" name="precio" id="precio" hidden>';
                                 ?>
-                            <?php 
+                        <?php 
                                 echo '<input value="0" placeholder="total"
                                 class="form-control" type="text" name="total2" id="total2" hidden> ';
                                 ?>
-                        
+
                     </div>
-                    <label class="mt-3" for="convenio" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
-                        style="display: none;" <?php   } ?>>Hospitalizado</label>
-                    <input class="mt-3 text-center" id="checkbox" type="checkbox" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
-                        style="display: none;" <?php   } ?>>
-            </div>
-            <div class="form-group mt-3 mb-3">
-                <label for="nombre">Total</label>
-                <input class="text-center" id="total" name="total" value="<?php echo $cliente["total"] ?>"
-                    placeholder="" class="form-control" type="text" readonly>
-            </div>
-            <div class="form-group mt-3 mb-3">
-                <label for="nombre">Boleta SII</label>
-                <input  type="number" class="" id="sii" name="sii" placeholder="Ingrese Nro boleta" class="form-control" required>
-                
-            </div>
-                <!-- <label class="mt-3" for="boleta_sii">Null</label>
+                    <div class="check-hosp">
+                        <label class="mt-3" for="convenio" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
+                            style="display: none;" <?php   } ?>>Hospitalizado</label>
+                        <input class="mt-3 text-center" id="checkbox" type="checkbox"
+                            <?php if ($cliente['convenion'] != 'Sin convenio'){ ?> style="display: none;" <?php   } ?>>
+
+                    </div>
+                    <div class="check-gratis">
+
+                        <label class="mt-3" for="gratis" <?php if ($cliente['convenion'] != 'Sin convenio'){ ?>
+                            style="display: none;" <?php   } ?>>Gratis</label>
+                        <input class="mt-3 text-center" id="gratis" type="checkbox" onclick="myFunction()"
+                            <?php if ($cliente['convenion'] != 'Sin convenio'){ ?> style="display: none;" <?php   } ?>>
+                    </div>
+                    <div class="form-group mt-3 mb-3">
+                        <label for="nombre">Total</label>
+                        <input class="text-center" id="total" name="total" value="<?php echo $cliente["total"] ?>"
+                            placeholder="" class="form-control" type="text" readonly>
+                    </div>
+                    <div class="form-group mt-3 mb-3">
+                        <label for="nombre">Boleta SII</label>
+                        <input type="number" class="" id="sii" name="sii" placeholder="Ingrese Nro boleta"
+                            class="form-control" required>
+
+                    </div>
+                    <!-- <label class="mt-3" for="boleta_sii">Null</label>
                 <input class="mt-3 text-center" id="boleta_sii" type="checkbox"> -->
-        </div>
-        <div class="card-footer text-muted">
-            <div class="form-group text-center">
-                <button class="btn btn-success">Pagar</button>
-                <a class="btn btn-danger" href="cancelar.php?id=<?php echo $cliente["id_ficha"] ?>">Cancelar</a>
             </div>
+            <div class="card-footer text-muted">
+                <div class="form-group text-center">
+                    <button class="btn btn-success">Pagar</button>
+                    <a class="btn btn-danger" href="cancelar.php?id=<?php echo $cliente["id_ficha"] ?>">Cancelar</a>
+                </div>
+            </div>
+            </form>
         </div>
-        </form>
-    </div>
     </div>
 
 </body>
@@ -209,7 +219,7 @@ function comprueba() {
 
         $("#convenio_sn").val("Hospitalizado");
         $("#convenio_t").val(cantidad);
-        $("#convenio_v").val(precio*cantidad);
+        $("#convenio_v").val(precio * cantidad);
         $("#total").val(total);
         $("#total2").val(total2);
     } else {
@@ -226,4 +236,61 @@ function comprueba() {
     }
 }
 </script>
+<script>
+function myFunction() {
+    var checkBox = document.getElementById("gratis");
+    if (checkBox.checked == true) {
+        var diferencia = $("#diferencia").val();
+        var total = $("#total").val();
+        var precio = $("#precio").val();
+        var total2 = $("#total2").val();
+
+        $("#convenio_sn").val("Gratis");
+        $("#convenio_t").val(0);
+        $("#convenio_v").val(0);
+        $("#total").val(0);
+        $("#total2").val(0);
+    } else {
+        var total = $("#total").val();
+        var precio = $("#precio").val();
+        var diferencia = $("#diferencia").val();
+        total = diferencia * precio;
+        $("#convenio_sn").val("<?php echo $cliente['convenion'] ?>");
+        $("#convenio_t").val(0);
+        $("#convenio_v").val(0);
+        $("#total2").val(0);
+        $("#total").val(total);
+    }
+}
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    //Register click events to all checkboxes inside question element
+    $(document).on('click', '.check-hosp input:checkbox', function() {
+
+        if (this.checked) {
+            $('.check-gratis').hide();
+        } else {
+            off();
+            $('.check-gratis').show();
+        }
+    });
+
+});
+$(document).ready(function() {
+    //Register click events to all checkboxes inside question element
+    $(document).on('click', '.check-gratis input:checkbox', function() {
+
+
+        if (this.checked) {
+            $('.check-hosp').hide();
+        } else {
+            $('.check-hosp').show();
+
+        }
+    });
+
+});
+</script>
+
 </html>

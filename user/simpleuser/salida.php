@@ -81,7 +81,7 @@ $printer->text("Termino: " . $cliente3['termino'] . "\n");
 $printer->text("\n");
 $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
 $printer->text("\n");
-$printer->text("Neto: " . $total  . "\n");
+$printer->text("Neto: $" . $total  . "\n");
 $printer->text("\n");
 $printer->text("Descuento: $" . $cliente3['convenio_v']  . "\n");
 $printer->text("\n");

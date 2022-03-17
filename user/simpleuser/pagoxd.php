@@ -312,6 +312,8 @@ $printer = new Printer($connector, $profile);
             $estado_pago = $conn->prepare("UPDATE ficha  SET convenio_sn= ?, convenio_t= ?, convenio_v= ?, fecha_pago = now(), boleta_sii = ?  WHERE id_ficha= ?;");
             $estado_pago->bind_param("siiii", $convenio_sn, $convenio_t, $convenio_v, $sii,$id);
             $estado_pago->execute();
+            $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
+                $resultadoEspacios = mysqli_query($conn, $espacios);
             if($totalsinDesc == 0){
                 $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
         $desc->bind_param("ii", $totalsinDesc, $id);
@@ -327,10 +329,6 @@ $printer = new Printer($connector, $profile);
                     echo '<script type="text/JavaScript"> setTimeout(function(){
                    window.location="index.php";
                 }, 1000); </script>';
-
-                $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
-                $resultadoEspacios = mysqli_query($conn, $espacios);
-             
             $contador=0;
         while($contador < 2){
                 $printer->setJustification(Printer::JUSTIFY_CENTER);

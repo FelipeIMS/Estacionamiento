@@ -25,12 +25,31 @@ use Mike42\Escpos\CapabilityProfile;
         where cliente.estado = 'Inactivo' and vehiculo.patente = '$search';");
         $selectPatente = mysqli_query($conn, "SELECT patente from vehiculo where patente = '$search';");
         $patente = $selectPatente->fetch_all(MYSQLI_ASSOC);
-        if (mysqli_num_rows($registro2) > 0) {
-            echo '<script>toastr.error("Error al ingresar, finalize la boleta anterior")</script>';
-            header("refresh: 1; url=index.php");
+        if (mysqli_num_rows($registro2) > 0) {echo "<script>  Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Error',
+            text: 'Finalize el ingreso anterior',
+            showConfirmButton: false,
+            timer: 1000
+          });</script>";
+            echo '<script type="text/JavaScript"> setTimeout(function(){
+           window.location="index.php";
+        }, 1000); </script>';
+            
             }else if($patente  == null) {
-            echo '<script>toastr.error("Error al ingresar, patente ingresada no existe")</script>';
-            header("refresh: 1; url=index.php");
+                echo "<script>  Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Patente ingresada no existe',
+                    showConfirmButton: false,
+                    timer: 1000
+                  });</script>";
+                    echo '<script type="text/JavaScript"> setTimeout(function(){
+                   window.location="index.php";
+                }, 1000); </script>';
+            
             }else{
                 $espacios = "UPDATE espacios set espacios = espacios + 1  where id = 1;";
                 $resultadoEspacios = mysqli_query($conn, $espacios);
@@ -95,9 +114,9 @@ use Mike42\Escpos\CapabilityProfile;
                 $printer->close();
                 echo "<script>  Swal.fire({
                     position: 'center',
-                    icon: 'succes',
+                    icon: 'success',
                     title: 'Hecho',
-                    text: 'Boleta ingresada correctamente',
+                    text: 'Nuevo ingreso agregado',
                     showConfirmButton: false,
                     timer: 1000
                   });</script>";

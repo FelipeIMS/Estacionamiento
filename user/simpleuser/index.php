@@ -22,6 +22,13 @@ inner join convenios on cliente.convenio = convenios.id_convenio
 inner join cargo on cargo.id_cargo = cliente.cargo
 where ficha.boleta_sii is null and ficha.estado = 'Pagado';");
 $tfsii = mysqli_num_rows($ficha_sin_sii);
+$sql3 = "select * from espacios";
+$query3 = $conn->query($sql3); // Ejecutar la consulta SQL
+$data3 = array(); // Array donde vamos a guardar los datos
+while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la consulta SQL
+    $data3[] = $r; // Guardar los resultados en la variable $data
+
+}
 
 
 
@@ -60,6 +67,11 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Vehiculos</span>
                             </a>
                         </li>
+                        <!-- <li class="nav-item">
+                            <a href="./ingreso_manual.php" class="nav-link align-middle px-0">
+                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Ingreso manual</span>
+                            </a>
+                        </li> -->
                     </ul>
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
@@ -76,11 +88,22 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                 </div>
             </div>
             <div class="col py-3">
-                <div class="form-group mt-5">
-                    <input disabled
-                        class="form-control w-50 text-center position-relative top-50 start-50 translate-middle"
-                        id="contador" type="text" name="contador"
-                        value="Espacios ocupados: <?php echo $espacios2[0]; ?> de <?php echo $espacios2[1]; ?>" />
+                <div class="form-group mb-5">
+                    <div class="container-fluid ">
+                        <div class="row">
+                            <div class="col-8">
+                                <input disabled
+                                    class="form-control w-50 text-center position-relative top-50 start-50 translate-middle"
+                                    id="contador" type="text" name="contador"
+                                    value="Espacios ocupados: <?php echo $espacios2[0]; ?> de  <?php echo $espacios2[1]; ?>" />
+                            </div>
+                            <div class="col-4 position-absolute top-0 end-0" style="width: 150px;">
+                                <canvas id="chart3"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -128,8 +151,11 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
 
                             <td>
                                 <a class="btn btn-warning" href="bestfinalizar.php?id=<?php echo $row["id"] ?>"
-                                    <?php if ($row['estado'] == 'Pagado') { ?> style="display: none;" <?php   } ?>><i
+                                    <?php if ($row['estado'] == 'Pagado'  ) { ?> style="display: none;" <?php   } ?>><i
                                         class="fa-solid fa-cash-register"></i></a>
+                                <!-- <a class="btn btn-success" href="bestfinalizar.php?id=<?php echo $row["id"] ?>"
+                                    <?php if ($row['estado'] == 'Pagado' && $row['termino'] ) { ?> style="display: none;" <?php   } ?>><i
+                                        class="fa-solid fa-cash-register"></i></a> -->
 
                             </td>
                             <td>
@@ -213,7 +239,7 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                         <form method="POST" action="insert_ficha.php" class="">
                             <div class="form-group">
                                 <label>Busqueda de Clientes</label>
-                                <input class="form-control" id="search" type="text" name="patente" autofocus=TRUE />
+                                <input class="form-control" id="search" type="text" name="patente" />
 
                             </div>
                             <div class="form-floating mt-4">
@@ -330,6 +356,61 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                 });
             });
         });
+        </script>
+        <script>
+        var ctx = document.getElementById("chart3");
+        var data = {
+            labels: ['Ocupados', 'Disponibles'],
+            datasets: [{
+                label: 'Espacios Estacionamiento:',
+                data: [
+                    <?php foreach ($data3 as $d) : ?>
+                    <?php echo $d->espacios; ?>,
+                    <?php echo $d->total_espacios; ?>,
+                    <?php endforeach; ?>
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+        var options = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+        var chart2 = new Chart(ctx, {
+            type: 'pie',
+            /* valores: line, bar*/
+            data: data,
+            options: options
+        });
+        </script>
+        <script>
+        var myModal = document.getElementById('exampleModal')
+        var myInput = document.getElementById('search')
+
+        myModal.addEventListener('shown.bs.modal', function() {
+            myInput.focus()
+        })
         </script>
 
         <!--Start of Tawk.to Script-->
