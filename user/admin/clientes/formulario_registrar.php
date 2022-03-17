@@ -81,6 +81,10 @@ $t3 = mysqli_num_rows($resultado3);
                         ?>
                     </select>
                 </div>
+                <div class="form-group mb-3">
+                      <label for="obs" class="form-label">Observacion</label>
+                      <textarea class="form-control" name="obs" id="obs" rows="6" style="resize: none;"></textarea>
+                </div>
 
                 <div class="form-group">
                     <button class="btn btn-success">Guardar</button>

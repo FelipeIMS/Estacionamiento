@@ -6,6 +6,7 @@
       $tipo = $_POST["tipo"];
       $marca = $_POST["marca"];
       $cliente = $_POST["cliente"];
+      $obs = $_POST["obs"];
       if (!empty($_POST)) {
 
             $resultado = $conn->query("SELECT * FROM vehiculo  WHERE patente ='$patente'");
@@ -15,10 +16,10 @@
             } else {
                   $estado= 'Activo';
                   $sentencia = $conn->prepare("INSERT INTO vehiculo
-          (patente, tipo_vehiculo,marca_vehiculo,cliente,estado_v)
+          (patente, tipo_vehiculo,marca_vehiculo,cliente,estado_v, observacion)
           VALUES
           (?, ?,?,?,?)");
-                  $sentencia->bind_param("siiss", $patente, $tipo, $marca, $cliente, $estado);
+                  $sentencia->bind_param("siisss", $patente, $tipo, $marca, $cliente, $estado,$obs);
                   $sentencia->execute();
                   echo '<script>toastr.success("Vehiculo Registrado")</script>';
                   header("refresh: 1; url=listar.php");

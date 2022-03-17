@@ -15,7 +15,7 @@ $t3 = mysqli_num_rows($resultado3);
             <form action="registrar.php" method="POST">
                 <div class="form-group mb-3">
                     <label for="nombre">Patente</label>
-                    <input placeholder="" class="form-control" type="text" name="patente" id="patente"   minlength="8" maxlength="8" size="10" required>
+                    <input placeholder="INGRESE PATENTE CON EL FORMATO: PP-PP-PP" class="form-control" type="text" name="patente" id="patente"   minlength="8" maxlength="8" size="10" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="descripcion">Tipo Vehiculo</label>

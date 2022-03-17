@@ -183,6 +183,14 @@
             </form>
         </div>
     </div>
+    <div class="container">
+        <div class="form-floating mt-4">
+            <textarea disabled readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                style="height: 100px">°Digita 0 para una boleta que tenga total 0.
+°Digita 1 para ingresar manualmente la boleta SII mas tarde. </textarea>
+            <label for="floatingTextarea2">Instrucciones</label>
+        </div>
+    </div>
 
 </body>
 <?php include('./footer.php'); ?>
