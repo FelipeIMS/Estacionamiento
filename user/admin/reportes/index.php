@@ -29,9 +29,9 @@ date_default_timezone_set("America/Santiago");
     $user = isset($_POST['postName']) ? $_POST['postName'] : "";
 
     $conn->query("SET lc_time_names = 'es_ES'");
-    $sql = "SELECT DAY(inicio) Mes, SUM(total) total_mes
+    $sql = "SELECT DAY(fecha_pago) Mes, SUM(total) total_mes
     FROM ficha
-    WHERE inicio and termino between '$date1' and '$date2'
+    WHERE fecha_pago and fecha_pago between '$date1' and '$date2'
     GROUP BY Mes
      ORDER BY Mes";
     $query = $conn->query($sql); // Ejecutar la consulta SQL
@@ -40,14 +40,22 @@ date_default_timezone_set("America/Santiago");
         $data[] = $r; // Guardar los resultados en la variable $data
     }
 
+    $sql2 = "SELECT DAY(fecha_pago) DIA,SUM(total) total_dia,users.name as user_venta FROM ficha
+    INNER JOIN users ON users.id = ficha.user_ficha_out
+    WHERE WEEK(fecha_pago)= WEEK(CURDATE()) AND
+    fecha_pago BETWEEN '$datenew' and '$datenew2'
+    AND
+    ficha.user_ficha_out='$user'
+    GROUP BY DIA,DAYNAME(fecha_pago)
+    ORDER BY fecha_pago";
 
-    $sql2 = "SELECT DAY(inicio) Mes, SUM(total) total_dia,users.name as user_venta
+ /*    $sql2 = "SELECT DAY(inicio) Mes, SUM(total) total_dia,users.name as user_venta
     FROM ficha
     INNER JOIN users ON users.id = ficha.user_ficha_out
     WHERE ficha.inicio and ficha.termino between '$datenew' and '$datenew2' AND
     ficha.user_ficha_out='$user'
     GROUP BY Mes";
-
+ */
 
 
     $query2 = $conn->query($sql2); // Ejecutar la consulta SQL
@@ -155,14 +163,14 @@ date_default_timezone_set("America/Santiago");
 
     </div>
     <div class="container text-center">
-    <h1 class="text-center">Ingresos y Salidas</h1>
-    <label>Desde: </label>
-    <input type="datetime-local" id="date1" name="date1" value=<?php echo date('Y-m-d\TH:i:s'); ?> required>
-    <label>Hasta: </label>
-    <input type="datetime-local" id="date2" name="date2" value=<?php echo date('Y-m-d\TH:i:s'); ?> required>
-    <button class="btn btn-success" type="submit">Generar</button>
+        <h1 class="text-center">Ingresos y Salidas</h1>
+        <label>Desde: </label>
+        <input type="datetime-local" id="date1" name="date1" value=<?php echo date('Y-m-d\TH:i:s'); ?> required>
+        <label>Hasta: </label>
+        <input type="datetime-local" id="date2" name="date2" value=<?php echo date('Y-m-d\TH:i:s'); ?> required>
+        <button class="btn btn-success" type="submit">Generar</button>
     </div>
-  
+
     <div class="container">
         <h1 class="text-center">Ingresos</h1>
         <canvas id="chart3"></canvas>
@@ -261,7 +269,7 @@ date_default_timezone_set("America/Santiago");
                 }]
             }
         };
-        var chart2 = new Chart(ctx, {
+        var chart3 = new Chart(ctx, {
             type: 'line',
             /* valores: line, bar*/
             data: data,
@@ -269,17 +277,17 @@ date_default_timezone_set("America/Santiago");
         });
     </script>
     <script>
-        var ctx = document.getElementById("chart1");
+        var ctx = document.getElementById("chart2");
         var data = {
             labels: [
-                <?php foreach ($data as $d) : ?> "<?php echo $d->Mes ?>",
+                <?php foreach ($data2 as $d) : ?> "<?php echo $d->DIA ?>",
                 <?php endforeach; ?>
             ],
             datasets: [{
-                label: 'Ingresos por Dia',
+                label: ' <?php echo $d->user_venta; ?>',
                 data: [
-                    <?php foreach ($data as $d) : ?>
-                        <?php echo $d->total_mes; ?>,
+                    <?php foreach ($data2 as $d) : ?>
+                        <?php echo $d->total_dia; ?>,
                     <?php endforeach; ?>
                 ],
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -296,7 +304,7 @@ date_default_timezone_set("America/Santiago");
                 }]
             }
         };
-        var chart1 = new Chart(ctx, {
+        var chart2 = new Chart(ctx, {
             type: 'bar',
             /* valores: line, bar*/
             data: data,
