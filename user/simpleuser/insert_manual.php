@@ -21,18 +21,16 @@
 
             $cargarFinalizar = "UPDATE ficha set termino = '$termino', observacion = '$obs' where id_ficha = '$id_ficha'";
             mysqli_query($conn, $cargarFinalizar);
-            $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
-            $resultadoEspacios = mysqli_query($conn, $espacios);
             echo "<script>  Swal.fire({
                 position: 'center',
                 icon: 'success',
                 title: 'Finalizado correctamente, no olvide de pagar.',
                 showConfirmButton: false,
-                timer: 1000
+                timer: 2000
               });</script>";
                 echo '<script type="text/JavaScript"> setTimeout(function(){
                window.location="index.php";
-            }, 1000); </script>';
+            }, 2000); </script>';
         }
 
 

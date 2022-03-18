@@ -100,6 +100,69 @@
             exit("No hay resultados para ese ID");
         }
 
+    }else{
+        $user_out = $conn->prepare("UPDATE ficha  SET user_ficha_out= '{$_SESSION['id']}' WHERE id_ficha= ?");
+        $user_out->bind_param("i", $id);
+        $user_out->execute();
+
+        #calculo de diferencia entre horas e inserta la diferencia en BD
+
+        $sql5 = "SELECT timestampdiff(MINUTE,inicio,termino) as diferencia from ficha where id_ficha='".$_GET["id"]."';";
+        $result5 = mysqli_query($conn, $sql5);
+        $diferencia = mysqli_fetch_array($result5);
+        $query6 = "UPDATE ficha SET diferencia = $diferencia[0] where id_ficha='".$_GET["id"]."'";
+        $result6 = mysqli_query($conn, $query6); 
+
+        $traerTiempoDesc = "SELECT id_ficha,convenios.tiempo as tiempo_c from ficha
+        inner join vehiculo on vehiculo.patente = ficha.patente
+        inner join cliente on cliente.id_cliente = vehiculo.cliente
+        inner join area on area.id_area = cliente.area
+        inner join convenios on cliente.convenio = convenios.id_convenio
+        WHERE id_ficha = '".$_GET["id"]."'";
+        $resultadoTD = mysqli_query($conn, $traerTiempoDesc);
+        $TD = mysqli_fetch_array($resultadoTD);
+
+        $valorXminuto = mysqli_query($conn, "SELECT precio from precio where estado_precio = 'Activo';");
+
+        $VXP = mysqli_fetch_array($valorXminuto);
+        
+        
+
+        if($cliente['convenion'] == 'Sin convenio'){
+
+            $total = $diferencia[0]*$VXP[0];
+            $query6 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
+            $result6 = mysqli_query($conn, $query6); 
+        }else if($cliente['convenion'] == 'Gratis'){
+            $total = $TD[1]*$VXP[0];
+            $query6 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
+            $result6 = mysqli_query($conn, $query6); 
+
+        }else{
+            $cambio = $TD[1]/100;
+            $total_sindesc=$diferencia[0]*$VXP[0];
+            $desc = $total_sindesc*$cambio;
+            $total_condesc = $total_sindesc - $desc;
+            $query7 = "UPDATE ficha SET total = $total_condesc, convenio_v = $desc where id_ficha='".$_GET["id"]."'";
+            $result7 = mysqli_query($conn, $query7); 
+        }
+
+        #Se carga nuevamente
+
+        $sentencia = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v from ficha
+        inner join vehiculo on vehiculo.patente = ficha.patente
+        inner join cliente on cliente.id_cliente = vehiculo.cliente
+        inner join area on area.id_area = cliente.area
+        inner join convenios on cliente.convenio = convenios.id_convenio
+        WHERE id_ficha = ?");
+        $sentencia->bind_param("i", $id);
+        $sentencia->execute();
+        $resultado = $sentencia->get_result();
+        $cliente = $resultado->fetch_assoc();
+        if (!$cliente) {
+            exit("No hay resultados para ese ID");
+        }
+        
     }
 
     ?>

@@ -67,11 +67,11 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Vehiculos</span>
                             </a>
                         </li>
-                        <!-- <li class="nav-item">
+                        <li class="nav-item">
                             <a href="./ingreso_manual.php" class="nav-link align-middle px-0">
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Ingreso manual</span>
                             </a>
-                        </li> -->
+                        </li>
                     </ul>
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"

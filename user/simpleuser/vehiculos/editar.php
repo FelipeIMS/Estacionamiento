@@ -39,7 +39,7 @@ if (!$vehiculo) {
             <input type="hidden" name="id" value="<?php echo $vehiculo["id_vehiculo"] ?>">
             <div class="form-group">
                 <label for="nombre">Patente</label>
-                <input value="<?php echo $vehiculo["patente"] ?>" placeholder="" class="form-control" type="text" name="patente" id="patente" disabled >
+                <input value="<?php echo $vehiculo["patente"] ?>" placeholder="" class="form-control" type="text" name="patente" id="patente"  >
             </div>
             <div class="form-group mb-3">
                 <label for="descripcion">Tipo Vehiculo</label>
