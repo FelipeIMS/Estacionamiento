@@ -67,6 +67,8 @@ $printer->text("Boleta N°: " . $id . "\n");
 $printer->text("\n");
  $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
 $printer->text("\n");
+$printer->text("Patente: " . $row['patente']  . "\n");
+$printer->text( "\n");
  $printer->text("Operador: " . $cliente3['name']  . "\n");
 $printer->text("\n");
  $printer->text( "\n");

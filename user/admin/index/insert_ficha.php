@@ -62,6 +62,8 @@ use Mike42\Escpos\CapabilityProfile;
                 $printer->text( "\n");
                 $printer->text("Inicio: " . $row['inicio']  . "\n");
                 $printer->text( "\n");
+                $printer->text("Patente: " . $row['patente']  . "\n");
+                $printer->text( "\n");
                 $printer->text("Operador: " . $_SESSION['name']  . "\n");
 
 

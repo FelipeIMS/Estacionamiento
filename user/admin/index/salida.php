@@ -72,6 +72,8 @@ $printer->text("Ticket:  Salida" . "\n");
 $printer->text("\n");
 $printer->text("Boleta N°: " . $id . "\n");
 $printer->text("\n");
+$printer->text("Patente: " . $cliente3['patente']  . "\n");
+$printer->text( "\n");
 $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
 $printer->text("\n");
 $printer->text("Termino: " . $cliente3['termino'] . "\n");
