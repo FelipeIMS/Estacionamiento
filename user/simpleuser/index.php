@@ -126,13 +126,13 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                             <th width="0%">Pagar</th>
                             <th width="0%">Entrada</th>
                             <th width="0%">Salida</th>
-                            <th>Nro Boleta</th>
+                            <th width="8%">Nro Boleta</th>
                             <th>Patente</th>
-                            <th>Ingreso</th>
-                            <th>Salida</th>
+                            <th width=15%>Ingreso</th>
+                            <th width=15%>Salida</th>
                             <th>Descuento</th>
                             <th>Estado</th>
-                            <th width=15%">Total</th>
+                            <th width=10%">Total</th>
 
                         </tr>
                     </thead>
