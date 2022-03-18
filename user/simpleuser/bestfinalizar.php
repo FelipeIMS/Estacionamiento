@@ -66,6 +66,7 @@
         
 
         if($cliente['convenion'] == 'Sin convenio'){
+
             $total = $diferencia[0]*$VXP[0];
             $query6 = "UPDATE ficha SET total = $total where id_ficha='".$_GET["id"]."'";
             $result6 = mysqli_query($conn, $query6); 
@@ -128,7 +129,7 @@
                     <div class="form-group">
                         <label for="nombre">TIEMPO: </label>
                         <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente['diferencia'] ?>"
-                            placeholder="entrada" class="form-control" type="text" name="diferencia" id="diferencia">
+                            placeholder="entrada" class="form-control" type="text" name="diferencia" id="diferencia" >
                         <input value="<?php echo $cliente['convenion'] ?>" placeholder="convenio si/no"
                             class="form-control" type="text" name="convenio_sn" id="convenio_sn" hidden>
                         <input value="<?php echo $cliente['convenio_t'] ?> 0" placeholder="convenio_t"
@@ -195,6 +196,33 @@
 </body>
 <?php include('./footer.php'); ?>
 
+<script>
+$(document).ready(function() {
+    var diferencia = $("#diferencia").val();
+    var total = $("#total").val();
+
+    if(diferencia >= 0 && diferencia <=5){
+        total = 0;
+    }else if (diferencia >= 6 && diferencia <= 10){
+        total = 200;
+    }
+    $("#total").val(total);
+
+    $(document).change(function() {
+    var diferencia = $("#diferencia").val();
+    var total = $("#total").val();
+
+    if(diferencia >= 0 && diferencia <=5){
+        total = 0;
+    }else if (diferencia >= 6 && diferencia <= 10){
+        total = 200;
+    }
+    $("#total").val(total);
+
+    });
+
+});
+</script>
 
 <script>
 function on() {
@@ -273,6 +301,8 @@ function myFunction() {
     }
 }
 </script>
+
+
 <script type="text/javascript">
 $(document).ready(function() {
     //Register click events to all checkboxes inside question element

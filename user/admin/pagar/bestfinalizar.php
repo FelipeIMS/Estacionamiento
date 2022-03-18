@@ -195,7 +195,33 @@
 </body>
 <?php include('./footer.php'); ?>
 
+<script>
+$(document).ready(function() {
+    var diferencia = $("#diferencia").val();
+    var total = $("#total").val();
 
+    if(diferencia >= 0 && diferencia <=5){
+        total = 0;
+    }else if (diferencia >= 6 && diferencia <= 10){
+        total = 200;
+    }
+    $("#total").val(total);
+    
+    $(document).change(function() {
+    var diferencia = $("#diferencia").val();
+    var total = $("#total").val();
+
+    if(diferencia >= 0 && diferencia <=5){
+        total = 0;
+    }else if (diferencia >= 6 && diferencia <= 10){
+        total = 200;
+    }
+    $("#total").val(total);
+
+    });
+
+});
+</script>
 <script>
 function on() {
     console.log(" on");
@@ -271,6 +297,7 @@ function myFunction() {
     }
 }
 </script>
+
 <script type="text/javascript">
 $(document).ready(function() {
     //Register click events to all checkboxes inside question element
