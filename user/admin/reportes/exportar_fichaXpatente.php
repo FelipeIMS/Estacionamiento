@@ -17,7 +17,7 @@ inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 inner join convenios on cliente.convenio = convenios.id_convenio
 inner join cargo on cargo.id_cargo = cliente.cargo
-WHERE id_vehiculo = '$patente' AND inicio and termino between '$date1' and '$date2' + INTERVAL 1 DAY;");
+WHERE id_vehiculo = '$patente' AND inicio  between '$date1' and '$date2' + INTERVAL 1 DAY;");
 
 
 

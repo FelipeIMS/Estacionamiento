@@ -4,8 +4,7 @@ inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 inner join convenios on cliente.convenio = convenios.id_convenio
-where ficha.estado = 'No pagado'
-order by inicio desc;";
+order by estado asc;";
 $result = mysqli_query($conn, $query);
 
 
@@ -75,7 +74,7 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="listacompleta.php" class="nav-link align-middle px-0">
+                            <a href="./listacompleta.php" class="nav-link align-middle px-0">
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Todas las boletas</span>
                             </a>
                         </li>

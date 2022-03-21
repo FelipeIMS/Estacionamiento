@@ -26,11 +26,7 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
 </head>
 
 <body>
-    <style>
-    .container-fluid {
-        padding-left: 0 !important;
-    }
-    </style>
+    
 
     <div class="container-fluid">
         <div class="row flex-nowrap">
@@ -61,6 +57,11 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
                             <a href="ingreso_manual.php" class="nav-link align-middle px-0">
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Ingreso
                                     manual</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./listacompleta.php" class="nav-link align-middle px-0">
+                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Todas las boletas</span>
                             </a>
                         </li>
                     </ul>
