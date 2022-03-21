@@ -4,7 +4,7 @@ inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 inner join convenios on cliente.convenio = convenios.id_convenio
-order by inicio DESC;";
+order by estado asc;";
 $result = mysqli_query($conn, $query);
 
 
@@ -69,7 +69,8 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                         </li>
                         <li class="nav-item">
                             <a href="./ingreso_manual.php" class="nav-link align-middle px-0">
-                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Ingreso manual</span>
+                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Ingreso
+                                    manual</span>
                             </a>
                         </li>
                     </ul>
@@ -191,14 +192,6 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                 </form>
             </div>
         </div>
-    </div>
-
-
-
-
-
-
-
     </div>
 
 

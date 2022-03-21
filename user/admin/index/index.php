@@ -5,7 +5,7 @@ inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 inner join convenios on cliente.convenio = convenios.id_convenio
-order by inicio DESC;";
+order by estado asc;";
 $result = mysqli_query($conn, $query);
 $query2 = "SELECT espacios, total_espacios from espacios where id = 1;";
 $result2 = mysqli_query($conn, $query2);
