@@ -4,7 +4,7 @@ inner join vehiculo on vehiculo.patente = ficha.patente
 inner join cliente on cliente.id_cliente = vehiculo.cliente
 inner join area on area.id_area = cliente.area
 inner join convenios on cliente.convenio = convenios.id_convenio
-order by estado asc;";
+order by id desc;";
 $result = mysqli_query($conn, $query);
 
 

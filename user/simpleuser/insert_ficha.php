@@ -20,24 +20,27 @@ use Mike42\Escpos\CapabilityProfile;
 
     if (!empty($_POST['patente'])) {
         $search = mysqli_real_escape_string($conn, $_POST["patente"]);
-        $registro2 = mysqli_query($conn, "SELECT id_cliente, cliente.nombre_cliente, cliente.apellido_cliente from cliente
-        inner join vehiculo on vehiculo.cliente = cliente.id_cliente
-        where cliente.estado = 'Inactivo' and vehiculo.patente = '$search';");
+
+        #Se llego al acuerdo de que la regla que decia que un cliente no puede tener mas de un auto se cancela. 
+        // $registro2 = mysqli_query($conn, "SELECT id_cliente, cliente.nombre_cliente, cliente.apellido_cliente from cliente
+        // inner join vehiculo on vehiculo.cliente = cliente.id_cliente
+        // where cliente.estado = 'Inactivo' and vehiculo.patente = '$search';");
         $selectPatente = mysqli_query($conn, "SELECT patente from vehiculo where patente = '$search';");
         $patente = $selectPatente->fetch_all(MYSQLI_ASSOC);
-        if (mysqli_num_rows($registro2) > 0) {echo "<script>  Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'Error',
-            text: 'Finalize el ingreso anterior',
-            showConfirmButton: false,
-            timer: 1000
-          });</script>";
-            echo '<script type="text/JavaScript"> setTimeout(function(){
-           window.location="index.php";
-        }, 1000); </script>';
+        // if (mysqli_num_rows($registro2) > 0) {echo "<script>  Swal.fire({
+        //     position: 'center',
+        //     icon: 'error',
+        //     title: 'Error',
+        //     text: 'Finalize el ingreso anterior',
+        //     showConfirmButton: false,
+        //     timer: 1000
+        //   });</script>";
+        //     echo '<script type="text/JavaScript"> setTimeout(function(){
+        //    window.location="index.php";
+        // }, 1000); </script>';
             
-            }else if($patente  == null) {
+        //     }else
+             if($patente  == null) {
                 echo "<script>  Swal.fire({
                     position: 'center',
                     icon: 'error',
@@ -63,6 +66,17 @@ use Mike42\Escpos\CapabilityProfile;
                 $selectUltimo = "SELECT * from ficha order by id_ficha desc limit 1;";
                 $resultado = mysqli_query($conn, $selectUltimo);
                 $row = mysqli_fetch_array($resultado);
+                echo "<script>  Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Hecho',
+                    text: 'Nuevo ingreso agregado',
+                    showConfirmButton: false,
+                    timer: 1000
+                  });</script>";
+                    echo '<script type="text/JavaScript"> setTimeout(function(){
+                   window.location="index.php";
+                }, 1000); </script>';
 
 
                 $nombre_host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
@@ -114,17 +128,7 @@ use Mike42\Escpos\CapabilityProfile;
                     la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
                 */
                 $printer->close();
-                echo "<script>  Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Hecho',
-                    text: 'Nuevo ingreso agregado',
-                    showConfirmButton: false,
-                    timer: 1000
-                  });</script>";
-                    echo '<script type="text/JavaScript"> setTimeout(function(){
-                   window.location="index.php";
-                }, 1000); </script>';
+                
             }
 
 
