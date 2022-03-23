@@ -25,6 +25,7 @@ header("Content-Disposition: attachment; filename=\"$filename\"");
         <th>Fin</th>
         <th>Total</th>
         <th>Total final</th>
+        <th>Fecha de pago</th>
     </tr>
     <?php
     include("settings.php");
@@ -32,7 +33,7 @@ header("Content-Disposition: attachment; filename=\"$filename\"");
     $sql_exportar = "SELECT users.name, ficha.patente, ficha.inicio, ficha.termino, ficha.total, 
     (SELECT sum(ficha.total) from ficha
     inner join users on users.id = ficha.user_ficha_out
-    where users.id ='$id') as totalfinal from ficha
+    where users.id ='$id' and ficha.fecha_pago between curdate() and curdate() + interval 1 day) as totalfinal, fecha_pago from ficha
     inner join users on users.id = ficha.user_ficha_out
     where users.id = '$id' and ficha.fecha_pago  BETWEEN CURDATE() and CURDATE() + INTERVAL 1 DAY; ";
     $ejecutar = mysqli_query($conn, $sql_exportar);
@@ -45,6 +46,7 @@ header("Content-Disposition: attachment; filename=\"$filename\"");
             <td><?php echo $fila[3] ?></td>
             <td><?php echo $fila[4] ?></td>
             <td><?php echo $fila[5] ?></td>
+            <td><?php echo $fila[6] ?></td>
         </tr>
     
     <?php } } ?>

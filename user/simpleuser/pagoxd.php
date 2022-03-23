@@ -442,7 +442,7 @@ use Mike42\Escpos\CapabilityProfile;
                window.location="index.php";
             }, 1000); </script>';
            
-            $printer->close();
+            // $printer->close();
 
         }else{
             
