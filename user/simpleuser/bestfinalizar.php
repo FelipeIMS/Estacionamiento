@@ -316,6 +316,16 @@ function comprueba() {
             total = 0;
         }
 
+        // REGLA CANCELADA AL APLICAR DESCUENTO HOSP.
+        // if(dift >= 0 && dift <=5){
+        //     total = 0;
+        //     total2 = 0;
+
+        // }else if(dift >= 6 && dift <=10){
+        //     total = 200;
+        //     total2 = 200;
+        // }
+
         $("#convenio_sn").val("Hospitalizado");
         $("#convenio_t").val(cantidad);
         $("#convenio_v").val(precio * cantidad);
