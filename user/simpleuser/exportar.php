@@ -1,57 +1,75 @@
 <head>
-<meta charset="UTF-8">
-<script src="./js/sweatAlert.js"></script>
+    <meta charset="UTF-8">
+    <script src="./js/sweatAlert.js"></script>
 </head>
 
 <?php
+ include("settings.php");
+ $id = $_SESSION['id'];
+
+if (isset($_POST['enviar'])) {
 
 
-
-if(isset($_POST['enviar'])){
-    
-
-header("Content-Type: application/vnd.ms-excel");
-$timestamp = time();
-$filename = 'Reporte_' . date("d-m-Y",$timestamp) . '.xls';
-header("Content-Disposition: attachment; filename=\"$filename\"");
+    header("Content-Type: application/vnd.ms-excel");
+    $timestamp = time();
+    $filename = 'Reporte_' . date("d-m-Y", $timestamp) . '.xls';
+    header("Content-Disposition: attachment; filename=\"$filename\"");
 
 ?>
-
-<table>
-    <tr>
-        <th>Nombre (Usuario)</th>
-        <th>Patente</th>
-        <th>Inicio</th>
-        <th>Fin</th>
-        <th>Total</th>
-        <th>Total final</th>
-        <th>Fecha de pago</th>
-    </tr>
     <?php
-    include("settings.php");
-    $id = $_SESSION['id'];
-    $sql_exportar = "SELECT users.name, ficha.patente, ficha.inicio, ficha.termino, ficha.total, 
-    (SELECT sum(ficha.total) from ficha
-    inner join users on users.id = ficha.user_ficha_out
-    where users.id ='$id' and ficha.fecha_pago between curdate() and curdate() + interval 1 day) as totalfinal, fecha_pago from ficha
+
+    $prueba = "SELECT users.name, ficha.patente, ficha.inicio, ficha.termino, ficha.total, 
+(SELECT sum(ficha.total) from ficha
+inner join users on users.id = ficha.user_ficha_out
+where users.id ='$id' and ficha.fecha_pago between curdate() and curdate() + interval 1 day) as totalfinal, fecha_pago from ficha
+inner join users on users.id = ficha.user_ficha_out
+where users.id = '$id' and ficha.fecha_pago  BETWEEN CURDATE() and CURDATE() + INTERVAL 1 DAY
+LIMIT 1; ";
+
+    $prueba = mysqli_query($conn, $prueba);
+    $arr = mysqli_fetch_array($prueba);
+    
+
+
+ 
+
+    ?>
+    <table>
+       
+        <tr>
+            <th>Nombre (Usuario)</th>
+            <th>Patente</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Total</th>
+            <th>Fecha de pago</th>
+        </tr>
+        <?php
+       
+       
+        $sql_exportar = "SELECT users.name, ficha.patente, ficha.inicio, ficha.termino, ficha.total, fecha_pago from ficha
     inner join users on users.id = ficha.user_ficha_out
     where users.id = '$id' and ficha.fecha_pago  BETWEEN CURDATE() and CURDATE() + INTERVAL 1 DAY; ";
-    $ejecutar = mysqli_query($conn, $sql_exportar);
-    while ($fila = mysqli_fetch_array($ejecutar)) {
-    ?>
-        <tr>
-            <td><?php echo $fila[0] ?></td>
-            <td><?php echo $fila[1] ?></td>
-            <td><?php echo $fila[2] ?></td>
-            <td><?php echo $fila[3] ?></td>
-            <td><?php echo $fila[4] ?></td>
-            <td><?php echo $fila[5] ?></td>
-            <td><?php echo $fila[6] ?></td>
-        </tr>
-    
-    <?php } } ?>
 
-    
+        $ejecutar = mysqli_query($conn, $sql_exportar);
 
 
-</table>
+        while ($fila = mysqli_fetch_array($ejecutar)) {
+
+        ?>
+            <tr>
+                <td><?php echo $fila[0] ?></td>
+                <td><?php echo $fila[1] ?></td>
+                <td><?php echo $fila[2] ?></td>
+                <td><?php echo $fila[3] ?></td>
+                <td><?php echo $fila[4] ?></td>
+                <td><?php echo $fila[5] ?></td>
+            </tr>
+    <?php }
+    } ?>
+
+
+
+
+    </table>
+    <h2>Total del dia: <?php     echo $arr[5]; ?></h2>
