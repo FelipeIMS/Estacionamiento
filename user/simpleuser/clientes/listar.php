@@ -42,11 +42,16 @@ $clientes = $resultado->fetch_all(MYSQLI_ASSOC);
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="../ingreso_manual.php" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Ingreso
-                                manual</span>
-                        </a>
-                    </li>
+                                <?php
+                            if ($_SESSION["permiso_salida-manual"]==1) {
+                                echo ' <a href="../ingreso_manual.php" class="nav-link align-middle px-0">
+                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Ingreso
+                                    manual</span>
+                            </a>';
+                            }
+                            ?>
+                            
+                        </li>
                     <li class="nav-item">
                             <a href="../listacompleta.php" class="nav-link align-middle px-0">
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Todas las boletas</span>

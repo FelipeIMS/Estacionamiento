@@ -68,10 +68,15 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./ingreso_manual.php" class="nav-link align-middle px-0">
+                                <?php
+                            if ($_SESSION["permiso_salida-manual"]==1) {
+                                echo ' <a href="./ingreso_manual.php" class="nav-link align-middle px-0">
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Ingreso
                                     manual</span>
-                            </a>
+                            </a>';
+                            }
+                            ?>
+                            
                         </li>
                         <li class="nav-item">
                             <a href="./listacompleta.php" class="nav-link align-middle px-0">

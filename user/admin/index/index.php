@@ -95,6 +95,17 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                                     Areas</span></a>
                         </li>
                         <li>
+                                <?php
+                            if ($_SESSION["permiso_salida-manual"]==1) {
+                                echo ' <a href="./ingreso_manual.php" class="nav-link align-middle px-0">
+                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Ingreso
+                                    manual</span>
+                            </a>';
+                            }
+                            ?>
+                            
+                        </li>
+                        <li>
                             <a href="../precio/formulario_precio.php" class="nav-link px-0 align-middle not-active">
                                 <span class="ms-1 d-none d-sm-inline">
                                     Cambiar precio</span></a>
