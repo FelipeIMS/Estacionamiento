@@ -1,8 +1,7 @@
 
 <?php
 include_once "encabezado.php";
-
-$mysqli = include_once "conexion.php";
+include_once "settings.php";
 $id = $_POST["id"];
 $nombre = $_POST["nombre"];
 $apellidos = $_POST["apellidos"];
@@ -12,7 +11,7 @@ $cargo = $_POST["cargo"];
 $obs = $_POST["obs"];
 
 
-$sentencia = mysqli_query($mysqli, "UPDATE cliente SET
+$sentencia = mysqli_query($conn, "UPDATE cliente SET
 nombre_cliente = '".$nombre."',
 apellido_cliente = '".$apellidos."',
 area= '".$area."',

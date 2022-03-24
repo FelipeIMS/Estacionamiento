@@ -1,8 +1,8 @@
 <?php
 include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
+include_once "settings.php";
 $id = $_GET["id"];
-$sentencia = $mysqli->prepare("SELECT *, concat(cliente.nombre_cliente,' ',cliente.apellido_cliente) n, vehiculo.observacion as obs FROM vehiculo
+$sentencia = $conn->prepare("SELECT *, concat(cliente.nombre_cliente,' ',cliente.apellido_cliente) n, vehiculo.observacion as obs FROM vehiculo
 INNER JOIN marca_vehiculo ON marca_vehiculo.id_mv=vehiculo.marca_vehiculo
 INNER JOIN tipo_vehiculo ON tipo_vehiculo.id_tpv = vehiculo.tipo_vehiculo
 INNER JOIN cliente ON  cliente.id_cliente=vehiculo.cliente  WHERE id_vehiculo = ?");
@@ -10,12 +10,12 @@ $sentencia->bind_param("i", $id);
 $sentencia->execute();
 $resultado = $sentencia->get_result();
 
-$resultado1 = $mysqli->query("SELECT * FROM tipo_vehiculo ORDER BY nombre_tpv");
+$resultado1 = $conn->query("SELECT * FROM tipo_vehiculo ORDER BY nombre_tpv");
 $t = mysqli_num_rows($resultado1);
-$resultado2 = $mysqli->query("SELECT * FROM marca_vehiculo ORDER BY nombre_marca");
+$resultado2 = $conn->query("SELECT * FROM marca_vehiculo ORDER BY nombre_marca");
 $t2 = mysqli_num_rows($resultado2);
 
-$resultado3 = $mysqli->query("SELECT * FROM cliente ORDER BY nombre_cliente");
+$resultado3 = $conn->query("SELECT * FROM cliente ORDER BY nombre_cliente");
 $t3 = mysqli_num_rows($resultado3);
 # Obtenemos solo una fila, que será el CLIENTE a editar
 $vehiculo = $resultado->fetch_assoc();

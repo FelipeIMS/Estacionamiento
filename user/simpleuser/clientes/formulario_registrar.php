@@ -1,11 +1,11 @@
 <?php include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
-$resultado = $mysqli->query("SELECT * FROM area ORDER BY id_area ASC");
+include_once "settings.php";
+$resultado = $conn->query("SELECT * FROM area ORDER BY id_area ASC");
 $t = mysqli_num_rows($resultado);
 
-$resultado2 = $mysqli->query("SELECT * FROM convenios ORDER BY id_convenio ASC");
+$resultado2 = $conn->query("SELECT * FROM convenios ORDER BY id_convenio ASC");
 $t2 = mysqli_num_rows($resultado2);
-$resultado3 = $mysqli->query("SELECT * FROM cargo ORDER BY id_cargo ASC");
+$resultado3 = $conn->query("SELECT * FROM cargo ORDER BY id_cargo ASC");
 $t3 = mysqli_num_rows($resultado3);
 ?>
 <div class="container">

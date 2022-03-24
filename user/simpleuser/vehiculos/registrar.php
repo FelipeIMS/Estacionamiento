@@ -1,7 +1,7 @@
 
     <?php
       include_once "encabezado.php";
-      $mysqli = include_once "conexion.php";
+      include_once "settings.php";
       $patente = $_POST["patente"];
       $tipo = $_POST["tipo"];
       $marca = $_POST["marca"];
@@ -10,7 +10,7 @@
 
 
       if (!empty($_POST)) {
-            $resultado3 = $mysqli->query("SELECT * FROM vehiculo  WHERE patente ='$patente'");
+            $resultado3 = $conn->query("SELECT * FROM vehiculo  WHERE patente ='$patente'");
 
             if (mysqli_num_rows($resultado3) > 0) {
                   echo "<script>    
@@ -28,7 +28,7 @@
                   header("refresh: 2; url=listar.php");
             } else {
                   $estado = 'Activo';
-                  $sentencia = $mysqli->prepare("INSERT INTO vehiculo
+                  $sentencia = $conn->prepare("INSERT INTO vehiculo
     (patente,tipo_vehiculo,marca_vehiculo,cliente,estado_v,observacion)
     VALUES
     (?,?,?,?,?,?)");
