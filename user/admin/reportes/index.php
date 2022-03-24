@@ -481,7 +481,7 @@ $username2 = json_encode(array_column($username2, 'user_venta'), JSON_NUMERIC_CH
     </script> -->
     <script>
         $('.postName').select2({
-            placeholder: 'Select an item',
+            placeholder: 'Seleccionar un cliente',
             ajax: {
                 url: 'select.php',
                 dataType: 'json',
