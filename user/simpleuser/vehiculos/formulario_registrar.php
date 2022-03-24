@@ -1,11 +1,11 @@
 <?php include_once "encabezado.php";
-$mysqli = include_once "conexion.php";
-$resultado = $mysqli->query("SELECT * FROM tipo_vehiculo ORDER BY nombre_tpv");
+include_once "settings.php";
+$resultado = $conn->query("SELECT * FROM tipo_vehiculo ORDER BY nombre_tpv");
 $t = mysqli_num_rows($resultado);
-$resultado2 = $mysqli->query("SELECT * FROM marca_vehiculo ORDER BY nombre_marca");
+$resultado2 = $conn->query("SELECT * FROM marca_vehiculo ORDER BY nombre_marca");
 $t2 = mysqli_num_rows($resultado2);
 
-$resultado3 = $mysqli->query("SELECT *, concat(cliente.nombre_cliente,' ',cliente.apellido_cliente) n FROM cliente ORDER BY nombre_cliente");
+$resultado3 = $conn->query("SELECT *, concat(cliente.nombre_cliente,' ',cliente.apellido_cliente) n FROM cliente ORDER BY nombre_cliente");
 $t3 = mysqli_num_rows($resultado3);
 ?>
 <div class="container">
@@ -53,16 +53,16 @@ $t3 = mysqli_num_rows($resultado3);
                     <label for="descripcion">Cliente</label>
 
                     <select class="form-select" id="cliente" name="cliente" required>
-                        <?php
+                    <?php
 
-                        if ($t3 >= 1) {
-                            while ($row = $resultado3->fetch_object()) {
-                        ?>
-                                <option value="<?php echo $row->id_cliente ?>"><?php echo $row->n ?></option>
-                        <?php
-                            }
+                    if ($t3 >= 1) {
+                        while ($row = $resultado3->fetch_object()) {
+                    ?>
+                            <option value="<?php echo $row->id_cliente ?>"><?php echo $row->n ?></option>
+                    <?php
                         }
-                        ?>
+                    }
+                    ?>
                     </select>
                 </div>
                 <div class="form-group mb-3">
