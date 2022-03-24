@@ -64,12 +64,55 @@ $mesval = mysqli_fetch_all($mesval, MYSQLI_ASSOC);
 $mesid = json_encode(array_column($mesid, 'Mes'), JSON_NUMERIC_CHECK);
 $mesval = json_encode(array_column($mesval, 'total_mes'), JSON_NUMERIC_CHECK);
 
+
+/* Registro ultimos 30 dias gertson*/
+
+
+$sql = "SELECT DAY(fecha_pago) dia, SUM(total) total_dia,users.name as user_venta
+FROM ficha
+INNER JOIN users ON users.id = ficha.user_ficha_out
+WHERE  ficha.fecha_pago between curdate() - interval 30 day and curdate() AND
+users.id = 16
+group by user_venta,DIA,DAYNAME(fecha_pago)
+order by dia";
+$sql2 = "SELECT DAY(fecha_pago) dia, SUM(total) total_dia,users.name as user_venta
+FROM ficha
+INNER JOIN users ON users.id = ficha.user_ficha_out
+WHERE  ficha.fecha_pago between curdate() - interval 30 day and curdate() AND
+users.id = 17
+group by user_venta,DIA,DAYNAME(fecha_pago)
+order by dia";
+
+
+
+$userid = mysqli_query($conn, $sql);
+$userval = mysqli_query($conn, $sql);
+$username = mysqli_query($conn, $sql);
+$userid = mysqli_fetch_all($userid, MYSQLI_ASSOC);
+$userval = mysqli_fetch_all($userval, MYSQLI_ASSOC);
+$username = mysqli_fetch_all($username, MYSQLI_ASSOC);
+$userid = json_encode(array_column($userid, 'dia'), JSON_NUMERIC_CHECK);
+$userval = json_encode(array_column($userval, 'total_dia'), JSON_NUMERIC_CHECK);
+$username = json_encode(array_column($username, 'user_venta'), JSON_NUMERIC_CHECK);
+
+
+
+$userid2 = mysqli_query($conn, $sql2);
+$userval2 = mysqli_query($conn, $sql2);
+$username2 = mysqli_query($conn, $sql2);
+$userid2 = mysqli_fetch_all($userid2, MYSQLI_ASSOC);
+$userval2= mysqli_fetch_all($userval2, MYSQLI_ASSOC);
+$username2 = mysqli_fetch_all($username2, MYSQLI_ASSOC);
+$userid2 = json_encode(array_column($userid2, 'dia'), JSON_NUMERIC_CHECK);
+$userval2 = json_encode(array_column($userval2, 'total_dia'), JSON_NUMERIC_CHECK);
+$username2 = json_encode(array_column($username2, 'user_venta'), JSON_NUMERIC_CHECK);
+
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Reporte por Mes</title>
+    <title>Estadisticas Estacionamiento Clinica Lircay</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -85,6 +128,8 @@ $mesval = json_encode(array_column($mesval, 'total_mes'), JSON_NUMERIC_CHECK);
 
         var data_viewer = <?php echo $viewer; ?>;
         var data2 = <?php echo $viewer2; ?>;
+        var terminoid = <?php echo $terminoid; ?>;
+        var terminoval = <?php echo $terminoval; ?>;
 
 
         $('#container').highcharts({
@@ -92,10 +137,9 @@ $mesval = json_encode(array_column($mesval, 'total_mes'), JSON_NUMERIC_CHECK);
                 type: 'line'
             },
             title: {
-                text: 'Entradas de los ultimos 7 dias'
+                text: 'Entradas y Salidas de los ultimos 7 dias'
             },
             xAxis: {
-
                 categories: data_viewer
             },
             yAxis: {
@@ -104,8 +148,11 @@ $mesval = json_encode(array_column($mesval, 'total_mes'), JSON_NUMERIC_CHECK);
                 }
             },
             series: [{
-                name: 'Cantidad',
+                name: 'Entrada',
                 data: data2
+            }, {
+                name: 'Salida',
+                data: terminoval
             }]
         });
     });
@@ -173,6 +220,40 @@ $mesval = json_encode(array_column($mesval, 'total_mes'), JSON_NUMERIC_CHECK);
         });
     });
 </script>
+<script>
+    $(function() {
+        var userid = <?php echo $userid; ?>;
+        var userval = <?php echo $userval; ?>;
+        var username = <?php echo $username; ?>;
+
+        var userval2 = <?php echo $userval2; ?>;
+        var username2 = <?php echo $username2; ?>;
+
+        $('#cajeros').highcharts({
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Ingresos ultimos 30 dias'
+            },
+            xAxis: {
+                categories: userid
+            },
+            yAxis: {
+                title: {
+                    text: 'Cantidad'
+                }
+            },
+            series: [{
+                name: username[0],
+                data: userval
+            }, {
+                name: username2[0],
+                data: userval2
+            }]
+        });
+    });
+</script>
 
 <body>
 
@@ -231,9 +312,23 @@ $mesval = json_encode(array_column($mesval, 'total_mes'), JSON_NUMERIC_CHECK);
             margin-top: 1.9em;
         }
     </style>
+     <div class="container">
+        <br />
+        <h2 class="text-center">Movimientos cajeros</h2>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Dashboard</div>
+                    <div class="panel-body">
+                        <div id="cajeros"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <br />
-        <h2 class="text-center">Entradas</h2>
+        <h2 class="text-center">Entradas y Salidas </h2>
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
@@ -245,20 +340,7 @@ $mesval = json_encode(array_column($mesval, 'total_mes'), JSON_NUMERIC_CHECK);
             </div>
         </div>
     </div>
-    <div class="container">
-        <br />
-        <h2 class="text-center">Salidas</h2>
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Dashboard</div>
-                    <div class="panel-body">
-                        <div id="salidas"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="container">
         <br />
         <h2 class="text-center">Ingresos por dias</h2>
@@ -266,9 +348,9 @@ $mesval = json_encode(array_column($mesval, 'total_mes'), JSON_NUMERIC_CHECK);
             <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">Dashboard</div>
-                    <div class="panel-body" style="margin-left: 400px; width: 1000px;" >
+                    <div class="panel-body" style="margin-left: 400px; width: 1000px;">
                         <form method="post">
-                            <div class="row" >
+                            <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label>Desde: </label>
@@ -303,7 +385,7 @@ $mesval = json_encode(array_column($mesval, 'total_mes'), JSON_NUMERIC_CHECK);
         </div>
     </div>
 
- 
+
     <div class="container">
         <h1 class="text-center">Movimientos por usuario</h1>
         <form method="post" class="text-center">
@@ -358,7 +440,7 @@ $mesval = json_encode(array_column($mesval, 'total_mes'), JSON_NUMERIC_CHECK);
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-  <!--   <script>
+    <!--   <script>
         var ctx = document.getElementById("chart1");
         var data = {
             labels: [
@@ -393,7 +475,7 @@ $mesval = json_encode(array_column($mesval, 'total_mes'), JSON_NUMERIC_CHECK);
             options: options
         });
     </script> -->
-   <!--  <script>
+    <!--  <script>
         document.getElementById("date1").addEventListener("input", () => console.log(document.getElementById("date1").value));
         document.getElementById("date2").addEventListener("input", () => console.log(document.getElementById("date2").value));
     </script> -->
