@@ -36,7 +36,7 @@ if (!$cliente) {
             <input type="hidden" name="id" value="<?php echo $cliente["id_cliente"] ?>">
             <div class="form-group">
                 <label for="nombre">RUT</label>
-                <input value="<?php echo $cliente["rut"] ?>" placeholder="" class="form-control" type="text" name="rut" id="rut" disabled>
+                <input value="<?php echo $cliente["rut"] ?>" placeholder="" class="form-control" type="text" name="rut" id="rut" >
             </div>
             <div class="form-group">
                 <label for="descripcion">Nombres</label>
@@ -84,7 +84,7 @@ if (!$cliente) {
                 </div>
                 <div class="form-group">
                     <label for="Default select example">Estado</label>
-                    <select class="form-select mb-3" aria-label="Default select example" id="estado" name="estado" value="<?php echo $cliente["estado"] ?>" disabled>
+                    <select class="form-select mb-3" aria-label="Default select example" id="estado" name="estado" value="<?php echo $cliente["estado"] ?>" >
                         <option value="Activo">Activo</option>
                         <option value="Inactivo">Inactivo</option>
                     </select>

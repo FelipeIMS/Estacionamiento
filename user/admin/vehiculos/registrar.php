@@ -18,7 +18,7 @@
                   $sentencia = $conn->prepare("INSERT INTO vehiculo
           (patente, tipo_vehiculo,marca_vehiculo,cliente,estado_v, observacion)
           VALUES
-          (?, ?,?,?,?)");
+          (?, ?,?,?,?,?)");
                   $sentencia->bind_param("siisss", $patente, $tipo, $marca, $cliente, $estado,$obs);
                   $sentencia->execute();
                   echo '<script>toastr.success("Vehiculo Registrado")</script>';

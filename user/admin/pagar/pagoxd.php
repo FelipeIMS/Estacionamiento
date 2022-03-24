@@ -1,15 +1,33 @@
 <?php
  require ('../autoload.php'); //Nota: si renombraste la carpeta a algo diferente de "ticket" cambia el nombre en esta línea
  use Mike42\Escpos\Printer;
- use Mike42\Escpos\EscposImage;
- use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
- use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
- use Mike42\Escpos\CapabilityProfile;
- 
-//  $nombre_host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
+use Mike42\Escpos\CapabilityProfile;
+
+/*
+     Este ejemplo imprime un hola mundo en una impresora de tickets
+     en Windows.
+     La impresora debe estar instalada como genérica y debe estar
+     compartida
+ */
+
+/*
+     Conectamos con la impresora
+ */
+
+
+/*
+     Aquí, en lugar de "POS-58" (que es el nombre de mi impresora)
+     escribe el nombre de la tuya. Recuerda que debes compartirla
+     desde el panel de control
+ */
+
+// $nombre_host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 // $profile = CapabilityProfile::load("simple");
 // $connector = new WindowsPrintConnector("smb://$nombre_host/boletas");
-//  $printer = new Printer($connector, $profile);
+// $printer = new Printer($connector, $profile);
 
 
 ?>
@@ -19,7 +37,7 @@
 
 <head>
     <title>Pago realizado</title>
-    <?php include('../index/header.php') ?>
+    <?php include('header.php') ?>
 </head>
 
 <body>
@@ -61,7 +79,7 @@
         #Reactivamos cliente, para habilitar patentes asociadas
         $activar_cliente = $conn->prepare("UPDATE cliente c
     JOIN vehiculo v ON c.id_cliente = v.cliente
-    SET c.estado='Activo'
+    SET c.estado='Activo', v.estado_v = 'Activo'
     WHERE v.patente='" . $cliente3['patente'] . "'");
         $activar_cliente->execute();
         $sentencia = $conn->prepare("UPDATE ficha SET
@@ -88,16 +106,16 @@
         $estado_pago = $conn->prepare("UPDATE ficha  SET convenio_sn= ?, convenio_t= ?, convenio_v= ?, fecha_pago = now()  WHERE id_ficha= ?;");
         $estado_pago->bind_param("siii", $convenio_sn, $convenio_t, $convenio_v,$id);
         $estado_pago->execute();
-        $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
-                $resultadoEspacios = mysqli_query($conn, $espacios);
 
         if($totalsinDesc == 0){
             $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
         $desc->bind_param("ii", $totalsinDesc, $id);
         $desc->execute();
 
-            echo '<script>toastr.success("Pago realizado correctamente")</script>';
-            header("refresh: 1; url=../index/index.php");
+        echo '<script>toastr.success("Correcto, Pago realizado correctamente ")</script>';
+        header("refresh: 1; url=../index/index.php");
+            $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
+        $resultadoEspacios = mysqli_query($conn, $espacios);
          
     //     $contador=0;
     // while($contador < 2){
@@ -141,11 +159,13 @@
     
     //     }
         }else{
-            $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
+        $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
         $desc->bind_param("ii", $totalsinDesc, $id);
         $desc->execute();
-            echo '<script>toastr.success("Pago realizado correctamente")</script>';
-            header("refresh: 1; url=../index/index.php");
+        echo '<script>toastr.success("Correcto, Pago realizado correctamente ")</script>';
+        header("refresh: 1; url=../index/index.php");
+            $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
+        $resultadoEspacios = mysqli_query($conn, $espacios);
          
     //     $contador=0;
     // while($contador < 2){
@@ -208,8 +228,6 @@
     
     }else if($sii == 1){
         $sii = null;
-        $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
-                $resultadoEspacios = mysqli_query($conn, $espacios);
         
         $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ? where id_ficha = ?;");
         $numero_boleta->bind_param("ii", $sii, $id);
@@ -233,7 +251,7 @@
         #Reactivamos cliente, para habilitar patentes asociadas
         $activar_cliente = $conn->prepare("UPDATE cliente c
     JOIN vehiculo v ON c.id_cliente = v.cliente
-    SET c.estado='Activo'
+    SET c.estado='Activo', v.estado_v = 'Activo'
     WHERE v.patente='" . $cliente3['patente'] . "'");
         $activar_cliente->execute();
         $sentencia = $conn->prepare("UPDATE ficha SET
@@ -266,8 +284,10 @@
         $desc->bind_param("ii", $totalsinDesc, $id);
         $desc->execute();
 
-        echo '<script>toastr.success("Pago realizado correctamente")</script>';
+        echo '<script>toastr.success("Correcto, Pago realizado correctamente ")</script>';
         header("refresh: 1; url=../index/index.php");
+            $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
+        $resultadoEspacios = mysqli_query($conn, $espacios);
          
     //     $contador=0;
     // while($contador < 2){
@@ -314,8 +334,10 @@
         $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
         $desc->bind_param("ii", $totalsinDesc, $id);
         $desc->execute();
-        echo '<script>toastr.success("Pago realizado correctamente")</script>';
+        echo '<script>toastr.success("Correcto, Pago realizado correctamente ")</script>';
         header("refresh: 1; url=../index/index.php");
+            $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
+        $resultadoEspacios = mysqli_query($conn, $espacios);
          
     //     $contador=0;
     // while($contador < 2){
@@ -383,9 +405,9 @@
             $restaurar->bind_param("i", $id);
             $restaurar->execute();
             echo '<script>toastr.error("Error, numero de boleta ya existe")</script>';
-           
-            $printer->close();
             header("refresh: 1; url=../index/index.php");
+           
+            // $printer->close();
 
         }else{
             
@@ -413,7 +435,7 @@
             #Reactivamos cliente, para habilitar patentes asociadas
             $activar_cliente = $conn->prepare("UPDATE cliente c
             JOIN vehiculo v ON c.id_cliente = v.cliente
-            SET c.estado='Activo'
+            SET c.estado='Activo', v.estado_v = 'Activo'
             WHERE v.patente='" . $cliente3['patente'] . "'");
             $activar_cliente->execute();
             $sentencia = $conn->prepare("UPDATE ficha SET
@@ -440,17 +462,15 @@
             $estado_pago = $conn->prepare("UPDATE ficha  SET convenio_sn= ?, convenio_t= ?, convenio_v= ?, fecha_pago = now(), boleta_sii = ?  WHERE id_ficha= ?;");
             $estado_pago->bind_param("siiii", $convenio_sn, $convenio_t, $convenio_v, $sii,$id);
             $estado_pago->execute();
-            $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
-                $resultadoEspacios = mysqli_query($conn, $espacios);
-        
-            echo '<script>toastr.success("Pago realizado correctamente")</script>';
-            header("refresh: 1; url=../index/index.php");
             if($totalsinDesc == 0){
                 $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
         $desc->bind_param("ii", $totalsinDesc, $id);
         $desc->execute();
-        
-             
+
+        echo '<script>toastr.success("Correcto, Pago realizado correctamente ")</script>';
+        header("refresh: 1; url=../index/index.php");
+                $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
+        $resultadoEspacios = mysqli_query($conn, $espacios);
         //     $contador=0;
         // while($contador < 2){
         //         $printer->setJustification(Printer::JUSTIFY_CENTER);
@@ -493,11 +513,16 @@
         
         //     }
             }else{
-                echo '<script>toastr.success("Pago realizado correctamente")</script>';
-                header("refresh: 1; url=../index/index.php");
                 $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
         $desc->bind_param("ii", $totalsinDesc, $id);
         $desc->execute();
+                $desc = $conn->prepare("UPDATE ficha  SET total_sindesc = ?  WHERE id_ficha= ?;");
+                $desc->bind_param("ii", $totalsinDesc, $id);
+                $desc->execute();
+                echo '<script>toastr.success("Correcto, Pago realizado correctamente ")</script>';
+        header("refresh: 1; url=../index/index.php");
+                $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
+        $resultadoEspacios = mysqli_query($conn, $espacios);
              
         //     $contador=0;
         // while($contador < 2){

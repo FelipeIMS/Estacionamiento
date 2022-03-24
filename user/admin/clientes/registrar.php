@@ -13,7 +13,7 @@ $obs = $_POST["obs"];
 
 if (!empty($_POST)) {
     
-    $resultado = $conn->query("SELECT * FROM cliente  WHERE nombre_cliente ='$nombre'");
+    $resultado = $conn->query("SELECT * FROM cliente  WHERE rut ='$rut'");
     if (mysqli_num_rows($resultado) > 0) {
         echo '<script>toastr.error("Cliente ya existe")</script>';
         header("refresh: 1; url=formulario_registrar.php");
@@ -21,8 +21,8 @@ if (!empty($_POST)) {
         $sentencia = $conn->prepare("INSERT INTO cliente
         (rut, nombre_cliente,apellido_cliente,area,estado,convenio,cargo, observacion)
         VALUES
-        (?, ?,?,?,?,?,?)");
-        $sentencia->bind_param("ssssssss", $rut, $nombre, $apellidos, $area, $estado, $convenio,$cargo,$obs);
+        (?, ?,?,?,?,?,?,?)");
+        $sentencia->bind_param("sssisiis", $rut, $nombre, $apellidos, $area, $estado, $convenio,$cargo,$obs);
         $sentencia->execute();
         echo '<script>toastr.success("Cliente Registrado")</script>';
         header("refresh: 1; url=listar.php");

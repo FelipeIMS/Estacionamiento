@@ -199,28 +199,31 @@
 $(document).ready(function() {
     var diferencia = $("#diferencia").val();
     var total = $("#total").val();
+    var convenio = $("#convenio_sn").val();
 
-    if(diferencia >= 0 && diferencia <=5){
+
+
+    if(diferencia >= 0 && diferencia <=5 && convenio == "Sin convenio"){
         total = 0;
-    }else if (diferencia >= 6 && diferencia <= 10){
+    }else if (diferencia >= 6 && diferencia <= 10 && convenio == "Sin convenio"){
         total = 200;
     }
     $("#total").val(total);
-    
-    $(document).change(function() {
+});
+$(document).change(function() {
     var diferencia = $("#diferencia").val();
     var total = $("#total").val();
+    var convenio = $("#convenio_sn").val();
 
-    if(diferencia >= 0 && diferencia <=5){
+
+    if(diferencia >= 0 && diferencia <=5 && convenio == "Sin convenio"){
         total = 0;
-    }else if (diferencia >= 6 && diferencia <= 10){
+    }else if (diferencia >= 6 && diferencia <= 10 && convenio == "Sin convenio"){
         total = 200;
     }
     $("#total").val(total);
 
     });
-
-});
 </script>
 <script>
 function on() {

@@ -20,31 +20,58 @@ use Mike42\Escpos\CapabilityProfile;
 
     if (!empty($_POST['patente'])) {
         $search = mysqli_real_escape_string($conn, $_POST["patente"]);
-        $registro2 = mysqli_query($conn, "SELECT id_cliente, cliente.nombre_cliente, cliente.apellido_cliente from cliente
-        inner join vehiculo on vehiculo.cliente = cliente.id_cliente
-        where cliente.estado = 'Inactivo' and vehiculo.patente = '$search';");
+
+        #Se llego al acuerdo de que la regla que decia que un cliente no puede tener mas de un auto se cancela. 
+        // $registro2 = mysqli_query($conn, "SELECT id_cliente, cliente.nombre_cliente, cliente.apellido_cliente from cliente
+        // inner join vehiculo on vehiculo.cliente = cliente.id_cliente
+        // where cliente.estado = 'Inactivo' and vehiculo.patente = '$search';");
+        // if (mysqli_num_rows($registro2) > 0) {echo "<script>  Swal.fire({
+        //     position: 'center',
+        //     icon: 'error',
+        //     title: 'Error',
+        //     text: 'Finalize el ingreso anterior',
+        //     showConfirmButton: false,
+        //     timer: 1000
+        //   });</script>";
+        //     echo '<script type="text/JavaScript"> setTimeout(function(){
+        //    window.location="index.php";
+        // }, 1000); </script>';
+            
+        //     }else
+
+        #SELECCION ESTADO DE VEHICULO PARA COMPROBACION DE INGRESO.
+        $select_estado_v = mysqli_query($conn, "SELECT * from vehiculo where patente ='$search' and estado_v = 'Inactivo';");
+        $estado_v = mysqli_num_rows($select_estado_v);
+
+        #COMPRPBACION DE EXISTENCIA PATENTE
         $selectPatente = mysqli_query($conn, "SELECT patente from vehiculo where patente = '$search';");
         $patente = $selectPatente->fetch_all(MYSQLI_ASSOC);
-        if (mysqli_num_rows($registro2) > 0) {
-            echo '<script>toastr.error("Error al ingresar, finalize la boleta anterior")</script>';
+
+        if($estado_v >= 1){
+            
+            echo '<script>toastr.error("Error, finalize la anterior ")</script>';
             header("refresh: 1; url=index.php");
-        }else if($patente  == null) {
-            echo '<script>toastr.error("Error al ingresar, patente ingresada no existe")</script>';
+
+        }else if($patente  == null){
+            echo '<script>toastr.error("Error, Patente no existe ")</script>';
             header("refresh: 1; url=index.php");
-            }else{
-                $espacios = "UPDATE espacios set espacios = espacios + 1  where id = 1;";
-                $resultadoEspacios = mysqli_query($conn, $espacios);
+
+        } 
+        else{
                 $sql = " INSERT INTO ficha(inicio,patente,espacio_ocupado,user_ficha, estado)  VALUES(now(),'$search',1,'{$_SESSION['id']}','No pagado')";
                 $sql2="UPDATE cliente c
                 JOIN vehiculo v  ON c.id_cliente = v.cliente
-                SET c.estado= 'Inactivo'
+                SET c.estado= 'Inactivo', v.estado_v = 'Inactivo'
                 WHERE v.patente='$search';";
                 mysqli_query($conn,$sql2);
                 mysqli_query($conn, $sql);
                 $selectUltimo = "SELECT * from ficha order by id_ficha desc limit 1;";
                 $resultado = mysqli_query($conn, $selectUltimo);
                 $row = mysqli_fetch_array($resultado);
-
+                $espacios = "UPDATE espacios set espacios = espacios + 1  where id = 1;";
+                $resultadoEspacios = mysqli_query($conn, $espacios);
+                echo '<script>toastr.success("Correcto, Ingresado correctamente ")</script>';
+            header("refresh: 1; url=index.php");
 
 
                 $nombre_host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
@@ -96,15 +123,14 @@ use Mike42\Escpos\CapabilityProfile;
                     la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
                 */
                 $printer->close();
-                echo '<script>toastr.success("Boleta generada correctamente")</script>';
-                header("refresh: 1; url=index.php");
+                
             }
 
 
 
     }else{
-        echo '<script>toastr.error("Error al ingresar, rellene todos los campos")</script>';
-        header("refresh: 1; url=index.php");
+        echo '<script>toastr.error("Error, Rellene todos los campos ")</script>';
+            header("refresh: 1; url=index.php");
     }
                 
 
