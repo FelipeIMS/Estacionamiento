@@ -12,12 +12,8 @@ $cargo = $_POST["cargo"];
 $obs = $_POST["obs"];
 
 if (!empty($_POST)) {
-    
-    $resultado = $conn->query("SELECT * FROM cliente  WHERE rut = '$rut';");
-    if (mysqli_num_rows($resultado) > 0) {
-        echo '<script>toastr.error("Cliente ya existe")</script>';
-        header("refresh: 1; url=formulario_registrar.php");
-    }else{
+    if($rut == ''){
+        $rut = null;
         $sentencia = $conn->prepare("INSERT INTO cliente
         (rut, nombre_cliente,apellido_cliente,area,estado,convenio,cargo, observacion)
         VALUES
@@ -26,6 +22,12 @@ if (!empty($_POST)) {
         $sentencia->execute();
         echo '<script>toastr.success("Cliente Registrado")</script>';
         header("refresh: 1; url=listar.php");
+    }else if($rut != '' || $rut != null){
+        $resultado = $conn->query("SELECT * FROM cliente  WHERE rut = '$rut';");
+        if (mysqli_num_rows($resultado) > 0) {
+        echo '<script>toastr.error("Cliente ya existe")</script>';
+        header("refresh: 1; url=formulario_registrar.php");
+        }
     }
 
 }
