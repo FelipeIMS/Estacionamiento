@@ -28,6 +28,11 @@ LIMIT 1; ";
 
     $prueba = mysqli_query($conn, $prueba);
     $arr = mysqli_fetch_array($prueba);
+    if($arr==null){
+        $totalfinal = 0;
+    }else{
+        $totalfinal = $arr[5];
+    };
     
 
 
@@ -72,4 +77,4 @@ LIMIT 1; ";
 
 
     </table>
-    <h2>Total del dia: <?php     echo $arr[5]; ?></h2>
+    <h2>Total del dia: <?php     echo $totalfinal; ?></h2>
