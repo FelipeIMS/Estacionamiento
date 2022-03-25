@@ -40,10 +40,44 @@ $final =  $ocu - $disp;
 $porciones = explode(" ", $final);
 
 
-$query3 = $conn->query($sql3); // Ejecutar la consulta SQL
-$data3 = array(); // Array donde vamos a guardar los datos
-while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la consulta SQL
-    $data3[] = $r; // Guardar los resultados en la variable $data
+$user =  $_SESSION['id'];
+$username = $_SESSION['name'];
+
+
+$ticketsdeldia = "SELECT count(id_ficha) as ficha,users.name
+from ficha
+inner join users on users.id = ficha.user_ficha
+where inicio   BETWEEN CURDATE() and CURDATE() + INTERVAL 1 DAY
+AND users.id = $user
+GROUP BY users.name";
+
+$pordia="SELECT sum(total) as total,users.name
+from ficha
+inner join users on users.id = ficha.user_ficha_out
+where inicio   BETWEEN CURDATE() and CURDATE() + INTERVAL 1 DAY
+AND users.id=$user
+GROUP BY users.name";
+
+$ejecutar2 = mysqli_query($conn,$pordia);
+$listapordia = mysqli_fetch_array($ejecutar2);
+
+
+$ejecutar = mysqli_query($conn, $ticketsdeldia);
+$listar = mysqli_fetch_array($ejecutar);
+
+if($listar == null){
+    $cajero = $username;
+    $cfichas = 0;
+}else{
+    $cajero = $listar [1];
+    $cfichas = $listar [0];
+}
+
+if($listapordia == null){
+    $pordia= 0;
+
+}else{
+    $pordia = $listapordia [0];
 
 }
 
@@ -58,7 +92,7 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
 
 <body>
 
-    <script type="text/javascript">
+    <script>
         $(document).ready(function() {
             var options = {
                 chart: {
@@ -72,7 +106,7 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                 },
                 tooltip: {
                     formatter: function() {
-                        return '<b>' + this.point.name + '</b>: ' + this.y;
+                        return '<b>' + this.series.name + '</b>: ' + this.y;
                     }
                 },
                 plotOptions: {
@@ -182,7 +216,7 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                                 </ul>
                             </div>
                             <br>
-                            <div id="stock" style="width: 270px;height: 270px;" ></div>
+                            <div id="stock" style="width: 270px;height: 270px;"></div>
 
                         </li>
 
@@ -203,16 +237,29 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                 </div>
             </div>
             <div class="col py-3">
-                <div class="form-group mb-5 ">
+                <div class="form-group">
                     <div class="container-fluid ">
                         <div class="row">
-                            <div class="col-8">
+                            <!--   <div class="col-8">
                                 <input disabled class="form-control w-50 text-center position-relative top-50 start-50 translate-middle" id="contador" type="text" name="contador" value="Espacios ocupados: <?php echo $espacios2[0]; ?> de  <?php echo $espacios2[1]; ?>" />
                             </div>
-                    
+ -->
+                            <div style="width: 400px;">
+                                <ul class="list-group">
+                                    <li class="list-group-item active">Cajero:  <?php echo $cajero ?> </li>
+                                    <li class="list-group-item">Cantidad de ingresos hoy: <?php echo $cfichas ?></li>
+                                    <li class="list-group-item">Total hoy: <?php echo $pordia ?> </li>
+                                    <li class="list-group-item">Total en el mes:</li>
+                                  
+                                    <li class="list-group-item">Valor minuto: $20</li>
 
-                         
+                                </ul>
+                            </div>
+
+
+
                         </div>
+                        <br>
 
                     </div>
 
@@ -458,53 +505,7 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
             })
         </script>
 
-        <script>
-            var ctx = document.getElementById("chart3");
-            var data = {
-                labels: ['Ocupados', 'Disponibles'],
-                datasets: [{
-                    label: 'Espacios Estacionamiento:',
-                    data: [
-                        <?php foreach ($data3 as $d) : ?>
-                            <?php echo $d->espacios; ?>,
-                            <?php echo $d->total_espacios; ?>,
-                        <?php endforeach; ?>
-                    ],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            };
-            var options = {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            };
-            var chart2 = new Chart(ctx, {
-                type: 'pie',
-                /* valores: line, bar*/
-                data: data,
-                options: options
-            });
-        </script>
+
 </body>
 
 </html>

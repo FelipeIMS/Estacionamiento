@@ -6,7 +6,10 @@ $result = mysqli_query($conn,"SELECT * FROM espacios");
 
 //$rows = array();
 $rows['type'] = 'pie';
-$rows['name'] = 'Revenue';
+$rows['name'] = 'Disponible';
+$rows['name2'] = 'Ocupado';
+
+
 /* $rows['innerSize'] = '50%'; */
 //$rows['innerSize'] = '50%';
 while ($r = mysqli_fetch_array($result)) {
