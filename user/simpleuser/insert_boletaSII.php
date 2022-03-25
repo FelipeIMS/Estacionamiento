@@ -18,23 +18,8 @@
     $obs = $_POST['obs'];
     
     if(isset($_POST['guardar'])){
-        
-        $select_boleta =  $conn->query("SELECT  * FROM ficha WHERE boleta_sii = '".$nro_boleta."'");
 
-        if(mysqli_num_rows($select_boleta)>0){
-            echo "<script>  Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: 'Error',
-                text: 'Numero de boleta ya existe',
-                showConfirmButton: false,
-                timer: 1000
-              });</script>";
-                echo '<script type="text/JavaScript"> setTimeout(function(){
-               window.location="index.php";
-            }, 1000); </script>';
-        }else{
-
+        if($nro_boleta == 0){
             $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ?, observacion = ? where id_ficha = ?;");
             $numero_boleta->bind_param("isi", $nro_boleta,$obs, $id_ficha);
             $numero_boleta->execute();
@@ -48,6 +33,26 @@
                 echo '<script type="text/JavaScript"> setTimeout(function(){
                window.location="index.php";
             }, 1000); </script>';
+
+
+
+        }else{
+            $select_boleta =  $conn->query("SELECT  * FROM ficha WHERE boleta_sii = '".$nro_boleta."'");
+
+            if(mysqli_num_rows($select_boleta)>0){
+                echo "<script>  Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Numero de boleta ya existe',
+                    showConfirmButton: false,
+                    timer: 1000
+                });</script>";
+                    echo '<script type="text/JavaScript"> setTimeout(function(){
+                window.location="index.php";
+                }, 1000); </script>';
+            }
+
         }
 
     }
