@@ -23,6 +23,23 @@ $tfsii = mysqli_num_rows($ficha_sin_sii);
 
 
 $sql3 = "select * from espacios";
+
+$disponible = mysqli_query($conn, $sql3);
+$ocupado = mysqli_query($conn, $sql3);
+
+$disponible = mysqli_fetch_all($disponible, MYSQLI_ASSOC);
+$ocupado = mysqli_fetch_all($ocupado, MYSQLI_ASSOC);
+$disponible = json_encode(array_column($disponible, 'total_espacios'), JSON_NUMERIC_CHECK);
+$ocupado = json_encode(array_column($ocupado, 'espacios'), JSON_NUMERIC_CHECK);
+$prueba = mysqli_query($conn, $sql3);
+$arr = mysqli_fetch_array($prueba);
+
+$disp = $arr[1];
+$ocu = $arr[2];
+$final =  $ocu - $disp;
+$porciones = explode(" ", $final);
+
+
 $query3 = $conn->query($sql3); // Ejecutar la consulta SQL
 $data3 = array(); // Array donde vamos a guardar los datos
 while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la consulta SQL
@@ -32,6 +49,7 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
 
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <title>Panel administrador</title>
@@ -40,6 +58,47 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
 
 <body>
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var options = {
+                chart: {
+                    renderTo: 'stock',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: 'Espacios'
+                },
+                tooltip: {
+                    formatter: function() {
+                        return '<b>' + this.point.name + '</b>: ' + this.y;
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            formatter: function() {
+                                return '<b>' + this.point.name + '</b>: ' + this.y;
+                            }
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: []
+            };
+
+            $.getJSON("pie-chart.php", function(json) {
+                options.series = json;
+                chart = new Highcharts.Chart(options);
+            });
+        });
+    </script>
 
     <div class="container-fluid">
         <div class="row flex-nowrap">
@@ -95,15 +154,15 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                                     Areas</span></a>
                         </li>
                         <li>
-                                <?php
-                            if ($_SESSION["permiso_salida-manual"]==1) {
+                            <?php
+                            if ($_SESSION["permiso_salida-manual"] == 1) {
                                 echo ' <a href="./ingreso_manual.php" class="nav-link align-middle px-0">
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Ingreso
                                     manual</span>
                             </a>';
                             }
                             ?>
-                            
+
                         </li>
                         <li>
                             <a href="../precio/formulario_precio.php" class="nav-link px-0 align-middle not-active">
@@ -122,6 +181,9 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                                     <li><a class="dropdown-item" href="../reportes/reporte.php">Reporte</a></li>
                                 </ul>
                             </div>
+                            <br>
+                            <div id="stock" style="width: 270px;height: 270px;" ></div>
+
                         </li>
 
 
@@ -142,14 +204,14 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
             </div>
             <div class="col py-3">
                 <div class="form-group mb-5 ">
-                    <div class="container-fluid " >
+                    <div class="container-fluid ">
                         <div class="row">
-                            <div class="col-8" >
+                            <div class="col-8">
                                 <input disabled class="form-control w-50 text-center position-relative top-50 start-50 translate-middle" id="contador" type="text" name="contador" value="Espacios ocupados: <?php echo $espacios2[0]; ?> de  <?php echo $espacios2[1]; ?>" />
                             </div>
-                            <div class="col-4 position-absolute top-0 end-0" style="width: 150px;" >
-                                <canvas id="chart3"></canvas>
-                            </div>
+                    
+
+                         
                         </div>
 
                     </div>
@@ -179,7 +241,7 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                             <th width=15%>Salida</th>
                             <th>Descuento</th>
                             <th>Estado</th>
-                            <th  width=10%">Total</th>
+                            <th width=10%">Total</th>
 
                         </tr>
                     </thead>
@@ -388,12 +450,12 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
             });
         </script>
         <script>
-        var myModal = document.getElementById('exampleModal')
-        var myInput = document.getElementById('search')
+            var myModal = document.getElementById('exampleModal')
+            var myInput = document.getElementById('search')
 
-        myModal.addEventListener('shown.bs.modal', function() {
-            myInput.focus()
-        })
+            myModal.addEventListener('shown.bs.modal', function() {
+                myInput.focus()
+            })
         </script>
 
         <script>
