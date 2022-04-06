@@ -156,7 +156,7 @@ $printer = new Printer($connector, $profile);
          Esto es útil cuando la tenemos conectada
          por ejemplo a un cajón
      */
-        // $printer->pulse();
+        $printer->pulse();
     
         /*
          Para imprimir realmente, tenemos que "cerrar"
@@ -218,7 +218,7 @@ $printer = new Printer($connector, $profile);
          Esto es útil cuando la tenemos conectada
          por ejemplo a un cajón
      */
-        // $printer->pulse();
+        $printer->pulse();
     
         /*
          Para imprimir realmente, tenemos que "cerrar"

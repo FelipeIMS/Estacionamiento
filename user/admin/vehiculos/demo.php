@@ -1,5 +1,5 @@
 <?php
-include_once "settings.php";
+include_once "../settings.php";
 require '../autoload.php';
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;

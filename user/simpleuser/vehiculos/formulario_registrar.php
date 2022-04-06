@@ -107,27 +107,60 @@ Swal.fire({
            success: function(data)            
            {
                if(data == 'SI'){
-                Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Ticket generado correctamente.',
-                showConfirmButton: false,
-                timer: 1500
-                }),function(){ 
-                    location.reload();
-                }
-               }else{
-                Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Auto ingresado ya existe.',
-                showConfirmButton: false,
-                timer: 1500
-                }),
-                function(){ 
-                    location.reload();
-                }
-               }    
+                const Toast = Swal.mixin({
+
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                    })
+
+                    Toast.fire({
+                    icon: 'success',
+                    title: 'TICKET GENERADO CORRECTAMENTE'
+                    })
+               }else if(data == 'ANTERIOR'){
+                const Toast = Swal.mixin({
+
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                    })
+
+                    Toast.fire({
+                    icon: 'error',
+                    title: 'AUTO YA INGRESADO, LIBERE AUTO'
+                    })
+                                }else{
+                    const Toast = Swal.mixin({
+
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                        })
+
+                        Toast.fire({
+                        icon: 'success',
+                        title: 'TICKET GENERADO CORRECTAMENTE'
+                       })
+               } 
            }
          });
 
