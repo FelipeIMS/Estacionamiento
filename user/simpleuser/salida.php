@@ -73,7 +73,7 @@ $printer->setJustification(Printer::JUSTIFY_LEFT);
 $printer->text("\n");
 $printer->text("Ticket:  Salida" . "\n");
 $printer->text("\n");
-$printer->text("Boleta N°: " . $id . "\n");
+$printer->text("Ticket Nro°: " . $id . "\n");
 $printer->text("\n");
 $printer->text("Patente: " . $cliente3['patente']  . "\n");
 $printer->text( "\n");
@@ -112,7 +112,7 @@ $printer->cut();
      Esto es útil cuando la tenemos conectada
      por ejemplo a un cajón
  */
-$printer->pulse();
+// $printer->pulse();
 
 /*
      Para imprimir realmente, tenemos que "cerrar"

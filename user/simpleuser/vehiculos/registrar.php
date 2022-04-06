@@ -7,7 +7,7 @@
       $marca = $_POST["marca"];
       $cliente = $_POST["cliente"];
       $obs=$_POST['obs'];
-
+      
 
       if (!empty($_POST)) {
             $resultado3 = $conn->query("SELECT * FROM vehiculo  WHERE patente ='$patente'");

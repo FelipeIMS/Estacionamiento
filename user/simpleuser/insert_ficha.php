@@ -18,6 +18,8 @@ use Mike42\Escpos\CapabilityProfile;
 <body>
     <?php
 
+
+
     if (!empty($_POST['patente'])) {
         $search = mysqli_real_escape_string($conn, $_POST["patente"]);
 
@@ -112,7 +114,7 @@ use Mike42\Escpos\CapabilityProfile;
                 $printer->text( "\n");
                 $printer->text("Ticket  Entrada" . "\n");
                 $printer->text( "\n");
-                $printer->text("Boleta N°: " . $row['id_ficha'] . "\n");
+                $printer->text("Ticket N°: " . $row['id_ficha'] . "\n");
                 $printer->text( "\n");
                 $printer->text("Inicio: " . $row['inicio']  . "\n");
                 $printer->text( "\n");
@@ -143,7 +145,7 @@ use Mike42\Escpos\CapabilityProfile;
                     Esto es útil cuando la tenemos conectada
                     por ejemplo a un cajón
                 */
-                $printer->pulse();
+                // $printer->pulse();
 
                 /*
                     Para imprimir realmente, tenemos que "cerrar"

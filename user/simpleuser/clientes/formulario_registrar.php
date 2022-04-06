@@ -108,7 +108,7 @@ $t3 = mysqli_num_rows($resultado3);
     dv = valor.slice(-1).toUpperCase();
     
     // Formatear RUN
-    rut.value = cuerpo + '-'+ dv
+    rut.value = cuerpo + '-'+ dv;
     
     // Si no cumple con el mínimo ej. (n.nnn.nnn)
     if(cuerpo.length < 7) { rut.setCustomValidity("RUT Incompleto"); return false;}
