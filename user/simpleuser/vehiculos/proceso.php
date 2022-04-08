@@ -1,6 +1,6 @@
 <?php
 
-include('../settings.php');
+include('settings.php');
 
 if(!isset($_GET['palabraClave'])){ 
     $json = [];

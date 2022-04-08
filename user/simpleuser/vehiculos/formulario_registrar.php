@@ -16,7 +16,8 @@ $t3 = mysqli_num_rows($resultado3);
             <form action="registrar.php" id='demo' method="POST">
                 <div class="form-group mb-3">
                     <label for="nombre">Patente</label>
-                    <input placeholder="INGRESE PATENTE CON EL FORMATO: PP-PP-PP" class="form-control" type="text" name="patente" id="patente"   minlength="6" maxlength="6" size="10"  required>
+                    <input placeholder="INGRESE PATENTE CON EL FORMATO: PP-PP-PP" class="form-control" type="text"
+                        name="patente" id="patente" minlength="6" maxlength="6" size="10" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="descripcion">Tipo Vehiculo</label>
@@ -27,7 +28,7 @@ $t3 = mysqli_num_rows($resultado3);
                         if ($t >= 1) {
                             while ($row = $resultado->fetch_object()) {
                         ?>
-                                <option value="<?php echo $row->id_tpv ?>"><?php echo $row->nombre_tpv ?></option>
+                        <option value="<?php echo $row->id_tpv ?>"><?php echo $row->nombre_tpv ?></option>
                         <?php
                             }
                         }
@@ -43,7 +44,7 @@ $t3 = mysqli_num_rows($resultado3);
                         if ($t2 >= 1) {
                             while ($row = $resultado2->fetch_object()) {
                         ?>
-                                <option value="<?php echo $row->id_mv ?>"><?php echo $row->nombre_marca ?></option>
+                        <option value="<?php echo $row->id_mv ?>"><?php echo $row->nombre_marca ?></option>
                         <?php
                             }
                         }
@@ -53,7 +54,7 @@ $t3 = mysqli_num_rows($resultado3);
                 <div class="form-group mb-3">
                     <label for="descripcion">Cliente</label>
 
-                    <select class="form-select" id="cliente" name="cliente" required>
+                    <!-- <select class="form-select" id="cliente" name="cliente" required>
                     <?php
 
                     if ($t3 >= 1) {
@@ -64,15 +65,18 @@ $t3 = mysqli_num_rows($resultado3);
                         }
                     }
                     ?>
+                    </select> -->
+                    <select id='buscador' name="cliente"class="form-select">
+                        <option value='0'>- Buscar cliente -</option>
                     </select>
                 </div>
                 <div class="form-group mb-3">
-                      <label for="obs" class="form-label">Observacion</label>
-                      <textarea class="form-control" name="obs" id="obs" rows="6" style="resize: none;"></textarea>
+                    <label for="obs" class="form-label">Observacion</label>
+                    <textarea class="form-control" name="obs" id="obs" rows="6" style="resize: none;"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <button class="btn btn-success"  onclick="archiveFunction()">Guardar</button>
+                    <button class="btn btn-success" onclick="archiveFunction()">Guardar</button>
                     <a href="listar.php" class="btn btn-warning" style="float: right;">Volver</a>
                 </div>
             </form>
@@ -80,100 +84,122 @@ $t3 = mysqli_num_rows($resultado3);
         </div>
     </div>
 </div>
-<!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+
 <script>
-    
-    function archiveFunction() {
-        
-event.preventDefault(); // prevent form submit
-var form = event.target.form; // storing the form
-    
-Swal.fire({
-  title: "Pregunta",
-  text: "GENERAR TICKET DE ENTRADA?",
-  type: "info",
-  showDenyButton: true,
-  showCancelButton: true,
-  confirmButtonText: 'Si',
-  denyButtonText: `No`
-}).then((result) => {
-  /* Read more about isConfirmed, isDenied below */
-  if (result.isConfirmed) {
-      const url= 'demo.php';
-    $.ajax({                        
-           type: "POST",                 
-           url: 'demo.php',                    
-           data: $("#demo").serialize(),
-           success: function(data)            
-           {
-               if(data == 'SI'){
-                const Toast = Swal.mixin({
+$(document).ready(function() {
+    $("#buscador").select2({
+        ajax: {
+            url: "proceso.php",
+            type: "get",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    palabraClave: params.term // search term
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
+    });
+});
+</script>
 
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                    })
+<script>
+function archiveFunction() {
 
-                    Toast.fire({
-                    icon: 'success',
-                    title: 'TICKET GENERADO CORRECTAMENTE'
-                    })
-               }else if(data == 'ANTERIOR'){
-                const Toast = Swal.mixin({
+    event.preventDefault(); // prevent form submit
+    var form = event.target.form; // storing the form
 
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                    })
+    Swal.fire({
+        title: "Pregunta",
+        text: "GENERAR TICKET DE ENTRADA?",
+        type: "info",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Si',
+        denyButtonText: `No`
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            const url = 'demo.php';
+            $.ajax({
+                type: "POST",
+                url: 'demo.php',
+                data: $("#demo").serialize(),
+                success: function(data) {
+                    if (data == 'SI') {
+                        const Toast = Swal.mixin({
 
-                    Toast.fire({
-                    icon: 'error',
-                    title: 'AUTO YA INGRESADO, LIBERE AUTO'
-                    })
-                                }else{
-                    const Toast = Swal.mixin({
-
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
                         })
 
                         Toast.fire({
-                        icon: 'success',
-                        title: 'TICKET GENERADO CORRECTAMENTE'
-                       })
-               } 
-           }
-         });
+                            icon: 'success',
+                            title: 'TICKET GENERADO CORRECTAMENTE'
+                        })
+                    } else if (data == 'ANTERIOR') {
+                        const Toast = Swal.mixin({
 
-    
-  } else if (result.isDenied) {
-    form.submit();
-  }
-})
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        })
 
-    }
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'AUTO YA INGRESADO, LIBERE AUTO'
+                        })
+                    } else {
+                        const Toast = Swal.mixin({
+
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        })
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'TICKET GENERADO CORRECTAMENTE'
+                        })
+                    }
+                }
+            });
+
+
+        } else if (result.isDenied) {
+            form.submit();
+        }
+    })
+
+}
 </script>
 <script>
-    const agregarCaracter = (cadena, caracter, pasos) => {
+const agregarCaracter = (cadena, caracter, pasos) => {
     let cadenaConCaracteres = "";
     const longitudCadena = cadena.length;
     for (let i = 0; i < longitudCadena; i += pasos) {
@@ -187,7 +213,7 @@ Swal.fire({
 }
 $('#patente').change(function() {
     let texto = $('#patente').val();
-    let patente = agregarCaracter(texto.toUpperCase(), '-',2)
+    let patente = agregarCaracter(texto.toUpperCase(), '-', 2)
     $('#patente').val(patente);
 });
 </script>
