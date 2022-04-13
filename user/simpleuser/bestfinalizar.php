@@ -175,7 +175,7 @@
                 <form action="pagoxd.php" method="POST">
                     <input type="hidden" name="id" value="<?php echo $cliente["id_ficha"] ?>">
                     <div class="form-group">
-                        <label for="nombre">Nro Boleta: </label>
+                        <label for="nombre">Nro Ticket: </label>
                         <input disabled class="text-center mt-3 w-50" value="<?php echo $cliente["id_ficha"] ?>"
                             placeholder="entrada" class="form-control" type="text" name="entrada" id="entrada">
                     </div>
@@ -234,6 +234,11 @@
                         <input type="number" class="" id="sii" name="sii" placeholder="Ingrese Nro boleta"
                             class="form-control" required>
 
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Copias: </label>
+                        <input class="text-center mt-3 w-50" value="0"  min="0" pattern="^[0-9]+"
+                            placeholder="Nro de copias de ticket" class="form-control" type="number" name="copias" id="copias" required>
                     </div>
                     <!-- <label class="mt-3" for="boleta_sii">Null</label>
                 <input class="mt-3 text-center" id="boleta_sii" type="checkbox"> -->

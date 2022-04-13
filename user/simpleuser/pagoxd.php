@@ -28,6 +28,7 @@ $nombre_host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
 $profile = CapabilityProfile::load("simple");
 $connector = new WindowsPrintConnector("smb://$nombre_host/boletas");
 $printer = new Printer($connector, $profile);
+$printer->close();
 
 
 ?>
@@ -52,21 +53,21 @@ $printer = new Printer($connector, $profile);
     $convenio_v = $_POST["convenio_v"];
     $sii = $_POST["sii"];
     $totalsinDesc = $_POST["total2"];
+    $copias = $_POST["copias"];
 
     if($sii == 0){
         $sii = 0;
-        
-        
+
         $numero_boleta = $conn->prepare("UPDATE ficha set boleta_sii = ? where id_ficha = ?;");
         $numero_boleta->bind_param("ii", $sii, $id);
         $numero_boleta->execute();
         #llamamos a toda la ficha para poder activar al cliente al momento de pagar.
-    $sentencia3 = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, convenios.tiempo, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v from ficha
-    inner join vehiculo on vehiculo.patente = ficha.patente
-    inner join cliente on cliente.id_cliente = vehiculo.cliente
-    inner join area on area.id_area = cliente.area
-    inner join convenios on cliente.convenio = convenios.id_convenio
-    WHERE id_ficha = ?");
+        $sentencia3 = $conn->prepare("SELECT id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, convenios.nombre_convenio as convenion, ficha.estado, convenios.tiempo, ficha.convenio_sn, ficha.convenio_t, ficha.convenio_v from ficha
+        inner join vehiculo on vehiculo.patente = ficha.patente
+        inner join cliente on cliente.id_cliente = vehiculo.cliente
+        inner join area on area.id_area = cliente.area
+        inner join convenios on cliente.convenio = convenios.id_convenio
+        WHERE id_ficha = ?");
         $sentencia3->bind_param("i", $id);
         $sentencia3->execute();
         $resultado3 = $sentencia3->get_result();
@@ -78,13 +79,13 @@ $printer = new Printer($connector, $profile);
         }
         #Reactivamos cliente, para habilitar patentes asociadas
         $activar_cliente = $conn->prepare("UPDATE cliente c
-    JOIN vehiculo v ON c.id_cliente = v.cliente
-    SET c.estado='Activo', v.estado_v = 'Activo'
-    WHERE v.patente='" . $cliente3['patente'] . "'");
+        JOIN vehiculo v ON c.id_cliente = v.cliente
+        SET c.estado='Activo', v.estado_v = 'Activo'
+        WHERE v.patente='" . $cliente3['patente'] . "'");
         $activar_cliente->execute();
         $sentencia = $conn->prepare("UPDATE ficha SET
-    total = ?
-    WHERE id_ficha = ?");
+        total = ?
+        WHERE id_ficha = ?");
         $sentencia->bind_param("ii", $pago, $id);
         $sentencia->execute();
     
@@ -126,44 +127,44 @@ $printer = new Printer($connector, $profile);
         $resultadoEspacios = mysqli_query($conn, $espacios);
          
         $contador=0;
-    while($contador < 1){
+        while($contador < $copias){
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->text("Inmobiliaria Lircay" . "\n");
             $printer->text("2 Poniente 1380, Talca" . "\n");
-        $printer->setJustification(Printer::JUSTIFY_LEFT);
-        $printer->text("Ticket  Salida" . "\n");
-        $printer->text("\n");
-        $printer->text("Ticket N°: " . $id . "\n");
-        $printer->text("\n");
-        $printer->text("Patente: " . $cliente3['patente']  . "\n");
-        $printer->text( "\n");
-        $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
-        $printer->text("\n");
-        $printer->text("Termino: " . $cliente3['termino'] . "\n");
-        $printer->text("\n");
-        $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
-        $printer->text("\n");
-        $printer->text("Descuento: $" . $convenio_v  . "\n");
-        $printer->text("\n");
-        $printer->text("TOTAL: $" . $pago . "\n");
-        $printer->text("\n");
-        $printer->text("Operador: " . $_SESSION['name'] . "\n");
-        $printer->feed(6);
-        $printer->cut();
-    
-        /*
-         Por medio de la impresora mandamos un pulso.
-         Esto es útil cuando la tenemos conectada
-         por ejemplo a un cajón
-     */
-        $printer->pulse();
-    
-        /*
-         Para imprimir realmente, tenemos que "cerrar"
-         la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
-     */
-        $printer->close();
-        $contador++;
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer->text("Ticket  Salida" . "\n");
+            $printer->text("\n");
+            $printer->text("Ticket N°: " . $id . "\n");
+            $printer->text("\n");
+            $printer->text("Patente: " . $cliente3['patente']  . "\n");
+            $printer->text( "\n");
+            $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+            $printer->text("\n");
+            $printer->text("Termino: " . $cliente3['termino'] . "\n");
+            $printer->text("\n");
+            $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
+            $printer->text("\n");
+            $printer->text("Descuento: $" . $convenio_v  . "\n");
+            $printer->text("\n");
+            $printer->text("TOTAL: $" . $pago . "\n");
+            $printer->text("\n");
+            $printer->text("Operador: " . $_SESSION['name'] . "\n");
+            $printer->feed(6);
+            $printer->cut();
+        
+            /*
+            Por medio de la impresora mandamos un pulso.
+            Esto es útil cuando la tenemos conectada
+            por ejemplo a un cajón
+        */
+            $printer->pulse();
+        
+            /*
+            Para imprimir realmente, tenemos que "cerrar"
+            la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
+        */
+            $printer->close();
+            $contador++;
     
         }
         }else{
@@ -184,48 +185,49 @@ $printer = new Printer($connector, $profile);
         $resultadoEspacios = mysqli_query($conn, $espacios);
          
         $contador=0;
-    while($contador < 1){
+        while($contador < $copias){
+
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->text("Inmobiliaria Lircay" . "\n");
             $printer->text("2 Poniente 1380, Talca" . "\n");
-        $printer->setJustification(Printer::JUSTIFY_LEFT);
-        
-        $printer->text("Ticket  Salida" . "\n");
-        $printer->text("\n");
-        $printer->text("Ticket N°: " . $id . "\n");
-        $printer->text("\n");
-        $printer->text("Patente: " . $cliente3['patente']  . "\n");
-        $printer->text( "\n");
-        $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
-        $printer->text("\n");
-        $printer->text("Termino: " . $cliente3['termino'] . "\n");
-        $printer->text("\n");
-        $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
-        $printer->text("\n");
-        $printer->text("Neto: $" . $totalsinDesc  . "\n");
-        $printer->text("\n");
-        $printer->text("Descuento: $" . $convenio_v  . "\n");
-        $printer->text("\n");
-        $printer->text("TOTAL: $" . $pago . "\n");
-        $printer->text("\n");
-        $printer->text("Operador: " . $_SESSION['name'] . "\n");
-        $printer->feed(6);
-        $printer->cut();
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            
+            $printer->text("Ticket  Salida" . "\n");
+            $printer->text("\n");
+            $printer->text("Ticket N°: " . $id . "\n");
+            $printer->text("\n");
+            $printer->text("Patente: " . $cliente3['patente']  . "\n");
+            $printer->text( "\n");
+            $printer->text("Inicio: " . $cliente3['inicio']  . "\n");
+            $printer->text("\n");
+            $printer->text("Termino: " . $cliente3['termino'] . "\n");
+            $printer->text("\n");
+            $printer->text("Minutos: " . $cliente3['diferencia']  . "\n");
+            $printer->text("\n");
+            $printer->text("Neto: $" . $totalsinDesc  . "\n");
+            $printer->text("\n");
+            $printer->text("Descuento: $" . $convenio_v  . "\n");
+            $printer->text("\n");
+            $printer->text("TOTAL: $" . $pago . "\n");
+            $printer->text("\n");
+            $printer->text("Operador: " . $_SESSION['name'] . "\n");
+            $printer->feed(6);
+            $printer->cut();
         
     
-        /*
-         Por medio de la impresora mandamos un pulso.
-         Esto es útil cuando la tenemos conectada
-         por ejemplo a un cajón
-     */
-        $printer->pulse();
-    
-        /*
-         Para imprimir realmente, tenemos que "cerrar"
-         la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
-     */
-        $printer->close();
-        $contador++;
+            /*
+            Por medio de la impresora mandamos un pulso.
+            Esto es útil cuando la tenemos conectada
+            por ejemplo a un cajón
+        */
+            $printer->pulse();
+        
+            /*
+            Para imprimir realmente, tenemos que "cerrar"
+            la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
+        */
+            $printer->close();
+            $contador++;
     
         }
 
@@ -314,7 +316,7 @@ $printer = new Printer($connector, $profile);
         $resultadoEspacios = mysqli_query($conn, $espacios);
          
         $contador=0;
-    while($contador < 1){
+    while($contador < $copias){
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->text("Inmobiliaria Lircay" . "\n");
             $printer->text("2 Poniente 1380, Talca" . "\n");
@@ -372,7 +374,7 @@ $printer = new Printer($connector, $profile);
         $resultadoEspacios = mysqli_query($conn, $espacios);
          
         $contador=0;
-    while($contador < 1){
+    while($contador < $copias){
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->text("Inmobiliaria Lircay" . "\n");
             $printer->text("2 Poniente 1380, Talca" . "\n");
@@ -520,7 +522,7 @@ $printer = new Printer($connector, $profile);
                 $espacios = "UPDATE espacios set espacios = espacios - 1  where id = 1;";
         $resultadoEspacios = mysqli_query($conn, $espacios);
             $contador=0;
-        while($contador < 1){
+        while($contador < $copias){
                 $printer->setJustification(Printer::JUSTIFY_CENTER);
                 $printer->text("Inmobiliaria Lircay" . "\n");
                 $printer->text("2 Poniente 1380, Talca" . "\n");
@@ -581,7 +583,7 @@ $printer = new Printer($connector, $profile);
         $resultadoEspacios = mysqli_query($conn, $espacios);
              
             $contador=0;
-        while($contador < 1){
+        while($contador < $copias){
                 $printer->setJustification(Printer::JUSTIFY_CENTER);
                 $printer->text("Inmobiliaria Lircay" . "\n");
                 $printer->text("2 Poniente 1380, Talca" . "\n");
