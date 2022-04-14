@@ -81,6 +81,18 @@ if($listapordia == null){
 
 }
 
+$accion=(isset($_POST['accion']))?$_POST['accion']:"";
+
+switch($accion){
+    case "Actualizar":
+        $espacios_o = mysqli_query($conn, "SELECT COUNT(espacio_ocupado) espacios from ficha where estado = 'No pagado';");
+        $espacios_restablecer = mysqli_fetch_array($espacios_o);
+        $espacios = $espacios_restablecer[0];
+        $actualizar = mysqli_query($conn, "UPDATE espacios set espacios = '$espacios' where id = 1;");
+        header("Refresh:0");
+        break;
+}
+
 
 ?>
 
@@ -217,6 +229,9 @@ if($listapordia == null){
                             </div>
                             <br>
                             <div id="stock" style="width: 270px;height: 270px;"></div>
+                            <form method="post" >
+                                <button type="submit" name="accion" class="btn btn-primary" value="Actualizar"><i class="fa-solid fa-arrows-rotate"></i> Actualizar contador</button>
+                            </form>
 
                         </li>
 

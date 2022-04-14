@@ -13,6 +13,7 @@ $query2 = "SELECT espacios, total_espacios from espacios where id = 1;";
 $result2 = mysqli_query($conn, $query2);
 $espacios2 = mysqli_fetch_array($result2);
 
+
 $ficha_sin_sii = $conn->query("SELECT ficha.id_ficha, cliente.nombre_cliente, cliente.apellido_cliente,  vehiculo.patente,area.nombre_area,  inicio, termino, diferencia,total, 
 convenios.nombre_convenio, 
 cargo.nombre_cargo, ficha.boleta_sii from ficha
@@ -30,6 +31,24 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
     $data3[] = $r; // Guardar los resultados en la variable $data
 
 }
+
+
+
+
+
+$accion=(isset($_POST['accion']))?$_POST['accion']:"";
+
+switch($accion){
+    case "Actualizar":
+        $espacios_o = mysqli_query($conn, "SELECT COUNT(espacio_ocupado) espacios from ficha where estado = 'No pagado';");
+        $espacios_restablecer = mysqli_fetch_array($espacios_o);
+        $espacios = $espacios_restablecer[0];
+        $actualizar = mysqli_query($conn, "UPDATE espacios set espacios = '$espacios' where id = 1;");
+        header("Refresh:0");
+        break;
+}
+
+
 
 
 
@@ -108,6 +127,9 @@ while ($r = $query3->fetch_object()) { // Recorrer los resultados de Ejecutar la
                                     class="form-control w-50 text-center position-relative top-50 start-50 translate-middle"
                                     id="contador" type="text" name="contador"
                                     value="Espacios ocupados: <?php echo $espacios2[0]; ?> de  <?php echo $espacios2[1]; ?>" />
+                                    <form method="post" >
+                                        <button type="submit" name="accion" class="btn btn-primary" value="Actualizar"><i class="fa-solid fa-arrows-rotate"></i> Actualizar contador</button>
+                                    </form>
                             </div>
                             <div class="col-4 position-absolute top-0 end-0" style="width: 150px;">
                                 <canvas id="chart3"></canvas>
